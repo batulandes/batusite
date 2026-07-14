@@ -1,181 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Batu — Grafik Tasarımcı & YouTube Content Creator</title>
-<meta name="description" content="Batu — cesur görseller, güçlü markalar ve etkileyici dijital içerikler tasarlayan grafik tasarımcı ve YouTube içerik üreticisi.">
-<meta name="author" content="Batu">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Batu — Grafik tasarım, video düzenleme ve dijital içerik alanında özgün çalışmalar." />
+    <title>Batu — Grafik Tasarım & Dijital İçerik</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
 
-<!-- Open Graph -->
-<meta property="og:title" content="Batu — Grafik Tasarımcı & YouTube Content Creator">
-<meta property="og:description" content="Cesur görseller, güçlü markalar ve etkileyici dijital içerikler.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://i.ibb.co/fV7RQvQY/batulogoo.png">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="https://i.ibb.co/fV7RQvQY/batulogoo.png">
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<!-- Loading Screen -->
-<div id="loader" aria-hidden="true">
-  <img src="https://i.ibb.co/fV7RQvQY/batulogoo.png" alt="" class="loader-logo">
-</div>
-
-<!-- Grain overlay -->
-<div class="grain" aria-hidden="true"></div>
-
-<!-- Navigation -->
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#top" class="nav-logo" aria-label="Batu — Ana sayfa">
-      <img src="https://i.ibb.co/fV7RQvQY/batulogoo.png" alt="Batu logo">
-    </a>
-    <nav class="nav-links" id="nav-links">
-      <a href="#work"><span class="idx">01</span>Çalışmalar</a>
-      <a href="#about"><span class="idx">02</span>About</a>
-      <a href="#contact"><span class="idx">03</span>İletişim</a>
-    </nav>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav-links">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<main>
-
-  <!-- Hero -->
-  <section class="hero" id="top">
-    <div class="hero-inner">
-      <img src="https://i.ibb.co/fV7RQvQY/batulogoo.png" alt="Batu" class="hero-logo" id="hero-logo">
-      <div class="hero-roles">
-        <span>Grafik Tasarımcı</span>
-        <span class="hero-divider" aria-hidden="true"></span>
-        <span>YouTube Content Creator</span>
+    <!-- NAV -->
+    <header class="nav" id="nav">
+      <div class="nav__inner">
+        <a href="#home" class="nav__logo" aria-label="Batu ana sayfa">
+          <span class="nav__logo-mark">Batu</span>
+        </a>
+        <nav class="nav__links" id="navLinks" aria-label="Ana menü">
+          <a href="#work" class="nav__link">Çalışmalar</a>
+          <a href="#about" class="nav__link">Hakkımda</a>
+          <a href="#services" class="nav__link">Hizmetler</a>
+          <a href="#contact" class="nav__link">İletişim</a>
+          <a href="#contact" class="nav__cta">İletişime Geç</a>
+        </nav>
+        <button class="nav__toggle" id="navToggle" aria-label="Menüyü aç/kapat" aria-expanded="false">
+          <span></span><span></span>
+        </button>
       </div>
-      <p class="hero-desc" lang="tr">Cesur görseller, güçlü markalar ve etkileyici dijital içerikler.</p>
-      <p class="hero-desc hero-desc-en" lang="en">Bold visuals, memorable brands and engaging digital experiences.</p>
-    </div>
-    <a href="#work" class="scroll-cue" aria-label="Aşağı kaydır">
-      <span></span>
-    </a>
-  </section>
+    </header>
 
-  <!-- Work -->
-  <section class="work" id="work">
-    <div class="section-head reveal">
-      <span class="eyebrow">Çalışmalar</span>
-      <h2>Seçili İşler<br><span class="muted">Selected Work</span></h2>
-    </div>
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="home">
+        <div class="hero__inner">
+          <p class="hero__eyebrow reveal">Portfolyo</p>
+          <h1 class="hero__title reveal">
+            Merhaba, ben <span class="hero__name">Batu</span>.
+          </h1>
+          <p class="hero__desc reveal">
+            Grafik tasarım, video düzenleme ve dijital içerik alanında özgün çalışmalar üretiyorum.
+          </p>
+          <div class="hero__actions reveal">
+            <a href="#work" class="btn btn--primary">Çalışmalarımı İncele</a>
+            <a href="#contact" class="btn btn--ghost">İletişime Geç</a>
+          </div>
+        </div>
+        <div class="hero__scroll" aria-hidden="true">
+          <span class="hero__scroll-line"></span>
+        </div>
+      </section>
 
-    <div class="grid">
+      <!-- WORK -->
+      <section class="section" id="work">
+        <div class="section__head">
+          <span class="section__index reveal">01</span>
+          <h2 class="section__title reveal">Çalışmalar</h2>
+          <p class="section__sub reveal">Seçilmiş proje kartları. Gerçek görseller yakında eklenecek.</p>
+        </div>
+        <div class="work__grid">
+          <article class="card reveal">
+            <div class="card__media"><span class="card__media-tag">Grafik Tasarım</span></div>
+            <div class="card__body">
+              <span class="card__cat">Marka Kimliği</span>
+              <h3 class="card__title">Kafe Marka Kimliği</h3>
+              <p class="card__desc">Sıcak ve minimalist bir kafe için logo, renk paleti ve menü tasarımı.</p>
+              <button class="card__btn">Detayları Gör</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__media"><span class="card__media-tag">Sosyal Medya</span></div>
+            <div class="card__body">
+              <span class="card__cat">Sosyal Medya Tasarımı</span>
+              <h3 class="card__title">Instagram Kampanya Seti</h3>
+              <p class="card__desc">Bir moda markası için 12 gönderilik tutarlı sosyal medya görsel seti.</p>
+              <button class="card__btn">Detayları Gör</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__media"><span class="card__media-tag">YouTube</span></div>
+            <div class="card__body">
+              <span class="card__cat">YouTube Kapak Tasarımı</span>
+              <h3 class="card__title">Kanal Kapak Serisi</h3>
+              <p class="card__desc">Tek kanal için tutarlı, dikkat çekici YouTube kapak tasarımı serisi.</p>
+              <button class="card__btn">Detayları Gör</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__media"><span class="card__media-tag">Video</span></div>
+            <div class="card__body">
+              <span class="card__cat">Video Düzenleme</span>
+              <h3 class="card__title">Ürün Lansman Videosu</h3>
+              <p class="card__desc">Kısa, dinamik ve modern bir ürün tanıtım videosunun kurgu ve renk düzenlemesi.</p>
+              <button class="card__btn">Detayları Gör</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__media"><span class="card__media-tag">Logo</span></div>
+            <div class="card__body">
+              <span class="card__cat">Logo ve Marka Kimliği</span>
+              <h3 class="card__title">Teknoloji Logosu</h3>
+              <p class="card__desc">Bir teknoloji girişimi için sade, ölçeklenebilir ve modern logo tasarımı.</p>
+              <button class="card__btn">Detayları Gör</button>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card__media"><span class="card__media-tag">İçerik</span></div>
+            <div class="card__body">
+              <span class="card__cat">Dijital İçerik</span>
+              <h3 class="card__title">İçerik Stratejisi</h3>
+              <p class="card__desc">Marka hikâyesini anlatan çok kanallı bir dijital içerik planı ve görsel kurgu.</p>
+              <button class="card__btn">Detayları Gör</button>
+            </div>
+          </article>
+        </div>
+      </section>
 
-      <article class="card reveal" data-category="Branding" data-title="Project 01" data-desc="Marka kimliği ve görsel dil çalışması. / Brand identity and visual language study.">
-        <div class="card-visual">
-          <span class="card-num">01</span>
+      <!-- ABOUT -->
+      <section class="section section--about" id="about">
+        <div class="section__head">
+          <span class="section__index reveal">02</span>
+          <h2 class="section__title reveal">Hakkımda</h2>
         </div>
-        <div class="card-meta">
-          <h3>Project 01</h3>
-          <span class="tag">Branding</span>
+        <div class="about__grid">
+          <div class="about__text reveal">
+            <p class="about__lead">
+              Ben Batu. Grafik tasarım ve dijital içerik üretimi üzerine çalışan, sade ama etkileyici işler tasarlamayı seven biriyim.
+            </p>
+            <p class="about__p">
+              Markaların hikâyelerini görsel bir dille anlatmaya odaklanıyorum. Logo ve marka kimliğinden sosyal medya ve YouTube kapaklarına, video kurgudan dijital içerik stratejisine kadar geniş bir yelpazede çalışıyorum.
+            </p>
+            <p class="about__p">
+              Amacım her projede sade, net ve akılda kalıcı bir sonuç ortaya koymak. Detaya önem verir, gereksiz karmaşadan kaçınırım.
+            </p>
+          </div>
+          <ul class="about__stats reveal">
+            <li><span class="about__stat-num">5+</span><span class="about__stat-label">Yıllık deneyim</span></li>
+            <li><span class="about__stat-num">80+</span><span class="about__stat-label">Tamamlanan proje</span></li>
+            <li><span class="about__stat-num">30+</span><span class="about__stat-label">Mutlu müşteri</span></li>
+          </ul>
         </div>
-      </article>
+      </section>
 
-      <article class="card reveal" data-category="Thumbnail" data-title="Project 02" data-desc="YouTube küçük resim serisi. / YouTube thumbnail series." >
-        <div class="card-visual">
-          <span class="card-num">02</span>
+      <!-- SERVICES -->
+      <section class="section" id="services">
+        <div class="section__head">
+          <span class="section__index reveal">03</span>
+          <h2 class="section__title reveal">Hizmetler</h2>
+          <p class="section__sub reveal">Sade ama etkili dijital tasarım hizmetleri.</p>
         </div>
-        <div class="card-meta">
-          <h3>Project 02</h3>
-          <span class="tag">Thumbnail</span>
+        <div class="services__list">
+          <article class="service reveal">
+            <span class="service__num">01</span>
+            <div class="service__body">
+              <h3 class="service__title">Grafik Tasarım</h3>
+              <p class="service__desc">Marka için gerekli tüm görsel materyaller; afiş, broşür, dijital ve baskı tasarımı.</p>
+            </div>
+          </article>
+          <article class="service reveal">
+            <span class="service__num">02</span>
+            <div class="service__body">
+              <h3 class="service__title">Logo ve Marka Kimliği</h3>
+              <p class="service__desc">Sade, akılda kalıcı ve ölçeklenebilir logo ile birlikte marka kimlik kılavuzu.</p>
+            </div>
+          </article>
+          <article class="service reveal">
+            <span class="service__num">03</span>
+            <div class="service__body">
+              <h3 class="service__title">Sosyal Medya Tasarımı</h3>
+              <p class="service__desc">Instagram, X ve diğer platformlar için tutarlı ve dikkat çekici gönderi tasarımları.</p>
+            </div>
+          </article>
+          <article class="service reveal">
+            <span class="service__num">04</span>
+            <div class="service__body">
+              <h3 class="service__title">YouTube Kapak Tasarımı</h3>
+              <p class="service__desc">Tık oranını artıran, kanal kimliğiyle uyumlu YouTube kapak ve küçük resim tasarımları.</p>
+            </div>
+          </article>
+          <article class="service reveal">
+            <span class="service__num">05</span>
+            <div class="service__body">
+              <h3 class="service__title">Video Düzenleme</h3>
+              <p class="service__desc">Kısa video, ürün tanıtımı ve sosyal medya için modern, dinamik video kurgu.</p>
+            </div>
+          </article>
         </div>
-      </article>
+      </section>
 
-      <article class="card reveal" data-category="Graphic Design" data-title="Project 03" data-desc="Editoryal grafik tasarım çalışması. / Editorial graphic design study.">
-        <div class="card-visual">
-          <span class="card-num">03</span>
+      <!-- CONTACT -->
+      <section class="section section--contact" id="contact">
+        <div class="section__head">
+          <span class="section__index reveal">04</span>
+          <h2 class="section__title reveal">İletişim</h2>
+          <p class="section__sub reveal">Bir proje fikrin mi var? Hadi konuşalım.</p>
         </div>
-        <div class="card-meta">
-          <h3>Project 03</h3>
-          <span class="tag">Graphic Design</span>
+        <div class="contact__grid">
+          <a href="mailto:batu@batu.com" class="contact__card reveal">
+            <span class="contact__label">E-posta</span>
+            <span class="contact__value">batu@batu.com</span>
+          </a>
+          <a href="#" class="contact__card reveal" rel="noopener" target="_blank">
+            <span class="contact__label">Instagram</span>
+            <span class="contact__value">@batu</span>
+          </a>
+          <a href="#" class="contact__card reveal" rel="noopener" target="_blank">
+            <span class="contact__label">YouTube</span>
+            <span class="contact__value">@batu</span>
+          </a>
+          <a href="#" class="contact__card reveal" rel="noopener" target="_blank">
+            <span class="contact__label">X</span>
+            <span class="contact__value">@batu</span>
+          </a>
         </div>
-      </article>
+        <div class="contact__cta reveal">
+          <a href="mailto:batu@batu.com" class="btn btn--primary">Projeni Anlat</a>
+        </div>
+      </section>
+    </main>
 
-      <article class="card reveal" data-category="YouTube" data-title="Project 04" data-desc="Kanal görsel kimliği ve video içerikleri. / Channel visual identity and video content.">
-        <div class="card-visual">
-          <span class="card-num">04</span>
-        </div>
-        <div class="card-meta">
-          <h3>Project 04</h3>
-          <span class="tag">YouTube</span>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- About -->
-  <section class="about" id="about">
-    <div class="about-grid">
-      <div class="section-head reveal">
-        <span class="eyebrow">About</span>
-        <h2>Merhaba<br><span class="muted">Hello</span></h2>
+    <footer class="footer">
+      <div class="footer__inner">
+        <span class="footer__logo">Batu</span>
+        <p class="footer__copy">© 2026 Batu. Tüm hakları saklıdır.</p>
       </div>
-      <div class="about-body reveal">
-        <p lang="tr">Ben Batu. Grafik tasarım ve YouTube içerik üretimi üzerine çalışan, sade ama etkileyici dijital deneyimler tasarlıyorum.</p>
-        <p lang="en" class="muted">I'm Batu. A graphic designer and YouTube content creator focused on creating memorable digital experiences.</p>
+    </footer>
 
-        <ul class="skills" aria-label="Yetenekler">
-          <li>Photoshop</li>
-          <li>Illustrator</li>
-          <li>After Effects</li>
-          <li>Premiere Pro</li>
-          <li>DaVinci Resolve</li>
-          <li>Figma</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact" id="contact">
-    <div class="section-head reveal">
-      <span class="eyebrow">İletişim</span>
-      <h2>Konuşalım<br><span class="muted">Let's talk</span></h2>
-    </div>
-    <a href="mailto:hello@batu.design" class="email-btn reveal">hello@batu.design</a>
-
-    <div class="socials reveal">
-      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </div>
-  </section>
-
-</main>
-
-<footer class="footer">
-  <img src="https://i.ibb.co/fV7RQvQY/batulogoo.png" alt="Batu logo" class="footer-logo">
-  <p>&copy; <span id="year"></span> Batu. Tüm hakları saklıdır.</p>
-</footer>
-
-<!-- Modal -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
-  <div class="modal-inner">
-    <button class="modal-close" id="modal-close" aria-label="Kapat">&times;</button>
-    <span class="tag" id="modal-tag"></span>
-    <h3 id="modal-title"></h3>
-    <p id="modal-desc"></p>
-  </div>
-</div>
-
-<script src="script.js"></script>
-</body>
+    <script type="module" src="/script.js"></script>
+  </body>
 </html>

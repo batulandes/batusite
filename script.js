@@ -1,108 +1,56 @@
-// ============================================
-// LOADER
-// ============================================
-document.body.classList.add('loading');
-
-window.addEventListener('load', () => {
-  const loader = document.getElementById('loader');
-  setTimeout(() => {
-    loader.classList.add('fade-out');
-    document.body.classList.remove('loading');
-    loader.addEventListener('transitionend', () => {
-      loader.style.display = 'none';
-      loader.setAttribute('aria-hidden', 'true');
-    }, { once: true });
-  }, 1300);
-});
-
-// ============================================
-// NAV — scroll state + mobile menu
-// ============================================
+// Nav scroll state
 const nav = document.getElementById('nav');
-const navToggle = document.getElementById('nav-toggle');
-const navLinks = document.getElementById('nav-links');
-
 const onScroll = () => {
-  nav.classList.toggle('scrolled', window.scrollY > 20);
+  nav.classList.toggle('is-scrolled', window.scrollY > 40);
 };
-onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
 
-navToggle.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('open');
-  navToggle.classList.toggle('open', isOpen);
-  navToggle.setAttribute('aria-expanded', String(isOpen));
+// Mobile menu
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+
+const closeMenu = () => {
+  toggle.classList.remove('is-open');
+  links.classList.remove('is-open');
+  toggle.setAttribute('aria-expanded', 'false');
+};
+
+toggle.addEventListener('click', () => {
+  const open = toggle.classList.toggle('is-open');
+  links.classList.toggle('is-open', open);
+  toggle.setAttribute('aria-expanded', String(open));
 });
 
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navToggle.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
+links.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
 
-// ============================================
-// SCROLL REVEAL
-// ============================================
-const revealEls = document.querySelectorAll('.reveal');
-
-if ('IntersectionObserver' in window) {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
+        entry.target.classList.add('is-visible');
         io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  },
+  { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+);
+reveals.forEach((el) => io.observe(el));
 
-  revealEls.forEach(el => io.observe(el));
-} else {
-  revealEls.forEach(el => el.classList.add('in-view'));
-}
-
-// ============================================
-// PROJECT MODAL
-// ============================================
-const modal = document.getElementById('modal');
-const modalTitle = document.getElementById('modal-title');
-const modalTag = document.getElementById('modal-tag');
-const modalDesc = document.getElementById('modal-desc');
-const modalClose = document.getElementById('modal-close');
-let lastFocused = null;
-
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('click', () => {
-    modalTitle.textContent = card.dataset.title;
-    modalTag.textContent = card.dataset.category;
-    modalDesc.textContent = card.dataset.desc;
-    lastFocused = document.activeElement;
-    modal.hidden = false;
-    requestAnimationFrame(() => modal.classList.add('show'));
-    modalClose.focus();
-    document.body.style.overflow = 'hidden';
+// Smooth scroll for anchor links (respects reduced motion)
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
   });
-});
-
-function closeModal() {
-  modal.classList.remove('show');
-  document.body.style.overflow = '';
-  modal.addEventListener('transitionend', () => {
-    modal.hidden = true;
-  }, { once: true });
-  if (lastFocused) lastFocused.focus();
 }
-
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => {
-  if (e.target === modal) closeModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !modal.hidden) closeModal();
-});
-
-// ============================================
-// FOOTER YEAR
-// ============================================
-document.getElementById('year').textContent = new Date().getFullYear();
