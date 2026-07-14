@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batu — Graphic Designer &amp; YouTube Content Creator</title>
+<meta name="description" content="Batu is a graphic designer and YouTube content creator specializing in branding, thumbnails and digital content that stands out.">
+<meta name="theme-color" content="#000000">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Batu — Graphic Designer & YouTube Content Creator">
+<meta property="og:description" content="Creating bold visuals, memorable brands and engaging digital content.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/logo.png">
+
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo" aria-label="Batu — home">
+      <img src="assets/logo.png" alt="Batu logo" width="28" height="28">
+      <span>BATU</span>
+    </a>
+
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <img src="assets/logo.png" alt="Batu logo" class="hero-logo" width="120" height="120">
+      <h1 class="hero-roles">
+        <span>Graphic Designer</span>
+        <span class="divider" aria-hidden="true">·</span>
+        <span>YouTube Content Creator</span>
+      </h1>
+      <p class="hero-intro">Creating bold visuals, memorable brands and engaging digital content.</p>
+      <a href="#work" class="hero-scroll" aria-label="Scroll to work section">
+        <span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- WORK / PORTFOLIO -->
+  <section class="work" id="work">
+    <div class="section-inner">
+      <p class="eyebrow">Selected work</p>
+      <h2 class="section-title">Portfolio</h2>
+
+      <div class="filters" role="tablist" aria-label="Filter projects by category">
+        <button class="filter active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="filter" data-filter="branding" role="tab" aria-selected="false">Branding</button>
+        <button class="filter" data-filter="thumbnails" role="tab" aria-selected="false">Thumbnails</button>
+        <button class="filter" data-filter="graphic-design" role="tab" aria-selected="false">Graphic Design</button>
+        <button class="filter" data-filter="youtube" role="tab" aria-selected="false">YouTube</button>
+      </div>
+
+      <div class="grid" id="grid">
+
+        <article class="card" data-category="branding" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Nova Identity" data-category-label="Branding"
+          data-desc="A complete visual identity system built around geometric precision and negative space — logo mark, type scale, color tokens and usage guidelines designed to hold up across every touchpoint."
+          data-img="assets/images/project-1.jpg">
+          <div class="card-media">
+            <img src="assets/images/project-1.jpg" alt="Nova Identity branding project" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Branding</span>
+            <h3>Nova Identity</h3>
+          </div>
+        </article>
+
+        <article class="card" data-category="thumbnails" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="High-Impact Thumbnail Set" data-category-label="Thumbnails"
+          data-desc="A series of click-through optimized thumbnails balancing bold typography and clean composition — built to stand out in a crowded feed without relying on clutter."
+          data-img="assets/images/project-2.jpg">
+          <div class="card-media">
+            <img src="assets/images/project-2.jpg" alt="High-Impact Thumbnail Set" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Thumbnails</span>
+            <h3>High-Impact Thumbnail Set</h3>
+          </div>
+        </article>
+
+        <article class="card" data-category="graphic-design" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Monochrome Poster Series" data-category-label="Graphic Design"
+          data-desc="An exploration in restraint — a poster series using a single typeface, strict grid and no color, letting scale and spacing carry the entire composition."
+          data-img="assets/images/project-3.jpg">
+          <div class="card-media">
+            <img src="assets/images/project-3.jpg" alt="Monochrome Poster Series" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Graphic Design</span>
+            <h3>Monochrome Poster Series</h3>
+          </div>
+        </article>
+
+        <article class="card" data-category="youtube" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Channel Rebrand" data-category-label="YouTube"
+          data-desc="A full channel refresh — banner, avatar, end-screen templates and intro sequence, unified under one consistent visual language across every asset."
+          data-img="assets/images/project-4.jpg">
+          <div class="card-media">
+            <img src="assets/images/project-4.jpg" alt="YouTube Channel Rebrand" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">YouTube</span>
+            <h3>Channel Rebrand</h3>
+          </div>
+        </article>
+
+        <article class="card" data-category="branding" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Studio Mark" data-category-label="Branding"
+          data-desc="A minimal wordmark and monogram system designed for a creative studio, built to scale from a favicon to a storefront sign without losing legibility."
+          data-img="assets/images/project-5.jpg">
+          <div class="card-media">
+            <img src="assets/images/project-5.jpg" alt="Studio Mark branding project" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Branding</span>
+            <h3>Studio Mark</h3>
+          </div>
+        </article>
+
+        <article class="card" data-category="graphic-design" tabindex="0" role="button" aria-haspopup="dialog"
+          data-title="Editorial Layouts" data-category-label="Graphic Design"
+          data-desc="Layout and typographic system for a digital editorial series — focused on rhythm, hierarchy and generous whitespace across long-form reading."
+          data-img="assets/images/project-6.jpg">
+          <div class="card-media">
+            <img src="assets/images/project-6.jpg" alt="Editorial Layouts graphic design project" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-tag">Graphic Design</span>
+            <h3>Editorial Layouts</h3>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-inner about-inner">
+      <div class="about-text">
+        <p class="eyebrow">About</p>
+        <h2 class="section-title">A little about me</h2>
+        <p class="about-bio">
+          I'm Batu — a graphic designer and content creator focused on building visuals
+          that feel considered rather than decorated. My work spans brand identity,
+          thumbnail design and YouTube content, always with the same goal: clarity first,
+          decoration second. I care about the details most people scroll past.
+        </p>
+      </div>
+
+      <div class="about-skills">
+        <p class="skills-label">Tools</p>
+        <ul class="tags">
+          <li class="tag">Adobe Photoshop</li>
+          <li class="tag">Illustrator</li>
+          <li class="tag">Premiere Pro</li>
+          <li class="tag">After Effects</li>
+          <li class="tag">DaVinci Resolve</li>
+          <li class="tag">Figma</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="section-inner contact-inner">
+      <p class="eyebrow">Get in touch</p>
+      <h2 class="section-title">Let's work together</h2>
+      <p class="contact-copy">Have a project in mind? I'd love to hear about it.</p>
+
+      <a class="email-button" href="mailto:team@lemonhota.com">
+        team@lemonhota.com
+      </a>
+
+      <div class="social-links">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; 2026 Batu</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="modal">
+    <button class="modal-close" id="modal-close" aria-label="Close project details">&times;</button>
+    <div class="modal-media">
+      <img id="modal-img" src="" alt="">
+    </div>
+    <div class="modal-body">
+      <span class="card-tag" id="modal-category"></span>
+      <h3 id="modal-title"></h3>
+      <p id="modal-desc"></p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
