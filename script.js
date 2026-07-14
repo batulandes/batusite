@@ -1,3 +1,5 @@
+import './style.css';
+
 // Nav scroll state
 const nav = document.getElementById('nav');
 const onScroll = () => {
