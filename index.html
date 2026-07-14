@@ -1,44 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Batu — Graphic Designer &amp; YouTube Content Creator</title>
-<meta name="description" content="Batu is a graphic designer and YouTube content creator specializing in branding, thumbnails and digital content that stands out.">
+<title>Batu — Grafik Tasarımcı &amp; YouTube İçerik Üreticisi</title>
+<meta name="description" content="Batu; marka kimliği, thumbnail tasarımı ve dijital içerik üreten bir grafik tasarımcı ve YouTube içerik üreticisidir.">
 <meta name="theme-color" content="#000000">
 
 <!-- Open Graph -->
-<meta property="og:title" content="Batu — Graphic Designer & YouTube Content Creator">
-<meta property="og:description" content="Creating bold visuals, memorable brands and engaging digital content.">
+<meta property="og:title" content="Batu — Grafik Tasarımcı & YouTube İçerik Üreticisi">
+<meta property="og:description" content="Cesur görseller, akılda kalıcı markalar ve etkileyici dijital içerikler üretiyorum.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/logo.png">
 
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="grain" aria-hidden="true"></div>
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main">İçeriğe geç</a>
 
 <header class="nav" id="nav">
   <div class="nav-inner">
-    <a href="#top" class="nav-logo" aria-label="Batu — home">
-      <img src="assets/logo.png" alt="Batu logo" width="28" height="28">
+    <a href="#top" class="nav-logo" aria-label="Batu — ana sayfa">
+      <img src="assets/logo.png" alt="Batu logosu" width="28" height="28">
       <span>BATU</span>
     </a>
 
-    <nav class="nav-links" id="nav-links" aria-label="Primary">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+    <nav class="nav-links" id="nav-links" aria-label="Ana menü">
+      <a href="#work">Çalışmalar</a>
+      <a href="#about">Hakkımda</a>
+      <a href="#contact">İletişim</a>
     </nav>
 
-    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav-links">
       <span></span>
       <span></span>
       <span></span>
@@ -50,111 +52,130 @@
 
   <!-- HERO -->
   <section class="hero" id="top">
+    <div class="hero-bg-text" aria-hidden="true">
+      <span>TASARIM · İÇERİK · MARKA · TASARIM · İÇERİK · MARKA · </span>
+      <span>TASARIM · İÇERİK · MARKA · TASARIM · İÇERİK · MARKA · </span>
+    </div>
+
     <div class="hero-inner">
-      <img src="assets/logo.png" alt="Batu logo" class="hero-logo" width="120" height="120">
+      <div class="hero-logo-wrap" id="hero-logo-wrap">
+        <img src="assets/logo.png" alt="Batu logosu" class="hero-logo" width="120" height="120">
+      </div>
+
       <h1 class="hero-roles">
-        <span>Graphic Designer</span>
-        <span class="divider" aria-hidden="true">·</span>
-        <span>YouTube Content Creator</span>
+        <span class="role-flip" id="role-flip">
+          <span class="role active">Grafik Tasarımcı</span>
+          <span class="role">YouTube İçerik Üreticisi</span>
+        </span>
       </h1>
-      <p class="hero-intro">Creating bold visuals, memorable brands and engaging digital content.</p>
-      <a href="#work" class="hero-scroll" aria-label="Scroll to work section">
+
+      <p class="hero-intro">Cesur görseller, akılda kalıcı markalar ve etkileyici dijital içerikler üretiyorum.</p>
+
+      <a href="#work" class="hero-scroll" aria-label="Çalışmalar bölümüne kaydır">
         <span></span>
       </a>
     </div>
   </section>
 
+  <!-- MARQUEE TICKER -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Marka Kimliği</span><span>Thumbnail Tasarımı</span><span>Grafik Tasarım</span><span>YouTube İçeriği</span><span>Video Kurgu</span><span>Görsel Kimlik</span>
+      <span>Marka Kimliği</span><span>Thumbnail Tasarımı</span><span>Grafik Tasarım</span><span>YouTube İçeriği</span><span>Video Kurgu</span><span>Görsel Kimlik</span>
+    </div>
+  </div>
+
   <!-- WORK / PORTFOLIO -->
   <section class="work" id="work">
     <div class="section-inner">
-      <p class="eyebrow">Selected work</p>
-      <h2 class="section-title">Portfolio</h2>
+      <p class="eyebrow">Seçilmiş Çalışmalar</p>
+      <h2 class="section-title">Portföy</h2>
 
-      <div class="filters" role="tablist" aria-label="Filter projects by category">
-        <button class="filter active" data-filter="all" role="tab" aria-selected="true">All</button>
-        <button class="filter" data-filter="branding" role="tab" aria-selected="false">Branding</button>
-        <button class="filter" data-filter="thumbnails" role="tab" aria-selected="false">Thumbnails</button>
-        <button class="filter" data-filter="graphic-design" role="tab" aria-selected="false">Graphic Design</button>
+      <div class="filters" role="tablist" aria-label="Kategoriye göre filtrele">
+        <button class="filter active" data-filter="all" role="tab" aria-selected="true">Tümü</button>
+        <button class="filter" data-filter="branding" role="tab" aria-selected="false">Marka Kimliği</button>
+        <button class="filter" data-filter="thumbnails" role="tab" aria-selected="false">Thumbnail</button>
+        <button class="filter" data-filter="graphic-design" role="tab" aria-selected="false">Grafik Tasarım</button>
         <button class="filter" data-filter="youtube" role="tab" aria-selected="false">YouTube</button>
       </div>
 
       <div class="grid" id="grid">
 
         <article class="card" data-category="branding" tabindex="0" role="button" aria-haspopup="dialog"
-          data-title="Nova Identity" data-category-label="Branding"
-          data-desc="A complete visual identity system built around geometric precision and negative space — logo mark, type scale, color tokens and usage guidelines designed to hold up across every touchpoint."
+          data-title="Nova Kimlik" data-category-label="Marka Kimliği"
+          data-desc="Geometrik hassasiyet ve negatif alan üzerine kurulu eksiksiz bir görsel kimlik sistemi — logo, tipografi ölçeği ve her mecrada tutarlı kalacak kullanım kılavuzu."
           data-img="assets/images/project-1.jpg">
           <div class="card-media">
-            <img src="assets/images/project-1.jpg" alt="Nova Identity branding project" loading="lazy">
+            <img src="assets/images/project-1.jpg" alt="Nova Kimlik marka projesi" loading="lazy">
           </div>
           <div class="card-body">
-            <span class="card-tag">Branding</span>
-            <h3>Nova Identity</h3>
+            <span class="card-tag">Marka Kimliği</span>
+            <h3>Nova Kimlik</h3>
           </div>
         </article>
 
         <article class="card" data-category="thumbnails" tabindex="0" role="button" aria-haspopup="dialog"
-          data-title="High-Impact Thumbnail Set" data-category-label="Thumbnails"
-          data-desc="A series of click-through optimized thumbnails balancing bold typography and clean composition — built to stand out in a crowded feed without relying on clutter."
+          data-title="Yüksek Etkili Thumbnail Seti" data-category-label="Thumbnail"
+          data-desc="Kalabalık bir akışta öne çıkmak için tasarlanmış, güçlü tipografi ve temiz kompozisyonu dengeleyen tıklama odaklı thumbnail serisi."
           data-img="assets/images/project-2.jpg">
           <div class="card-media">
-            <img src="assets/images/project-2.jpg" alt="High-Impact Thumbnail Set" loading="lazy">
+            <img src="assets/images/project-2.jpg" alt="Yüksek Etkili Thumbnail Seti" loading="lazy">
           </div>
           <div class="card-body">
-            <span class="card-tag">Thumbnails</span>
-            <h3>High-Impact Thumbnail Set</h3>
+            <span class="card-tag">Thumbnail</span>
+            <h3>Yüksek Etkili Thumbnail Seti</h3>
           </div>
         </article>
 
         <article class="card" data-category="graphic-design" tabindex="0" role="button" aria-haspopup="dialog"
-          data-title="Monochrome Poster Series" data-category-label="Graphic Design"
-          data-desc="An exploration in restraint — a poster series using a single typeface, strict grid and no color, letting scale and spacing carry the entire composition."
+          data-title="Monokrom Poster Serisi" data-category-label="Grafik Tasarım"
+          data-desc="Sadelik üzerine bir deneme — tek yazı tipi, sıkı bir ızgara ve renksiz bir yaklaşımla, ölçek ve boşluğun kompozisyonu taşıdığı poster serisi."
           data-img="assets/images/project-3.jpg">
           <div class="card-media">
-            <img src="assets/images/project-3.jpg" alt="Monochrome Poster Series" loading="lazy">
+            <img src="assets/images/project-3.jpg" alt="Monokrom Poster Serisi" loading="lazy">
           </div>
           <div class="card-body">
-            <span class="card-tag">Graphic Design</span>
-            <h3>Monochrome Poster Series</h3>
+            <span class="card-tag">Grafik Tasarım</span>
+            <h3>Monokrom Poster Serisi</h3>
           </div>
         </article>
 
         <article class="card" data-category="youtube" tabindex="0" role="button" aria-haspopup="dialog"
-          data-title="Channel Rebrand" data-category-label="YouTube"
-          data-desc="A full channel refresh — banner, avatar, end-screen templates and intro sequence, unified under one consistent visual language across every asset."
+          data-title="Kanal Yenileme" data-category-label="YouTube"
+          data-desc="Banner, profil görseli, bitiş ekranı şablonları ve giriş sekansını kapsayan; tüm materyalleri tek bir görsel dil altında birleştiren kapsamlı kanal yenileme çalışması."
           data-img="assets/images/project-4.jpg">
           <div class="card-media">
-            <img src="assets/images/project-4.jpg" alt="YouTube Channel Rebrand" loading="lazy">
+            <img src="assets/images/project-4.jpg" alt="YouTube Kanal Yenileme" loading="lazy">
           </div>
           <div class="card-body">
             <span class="card-tag">YouTube</span>
-            <h3>Channel Rebrand</h3>
+            <h3>Kanal Yenileme</h3>
           </div>
         </article>
 
         <article class="card" data-category="branding" tabindex="0" role="button" aria-haspopup="dialog"
-          data-title="Studio Mark" data-category-label="Branding"
-          data-desc="A minimal wordmark and monogram system designed for a creative studio, built to scale from a favicon to a storefront sign without losing legibility."
+          data-title="Stüdyo Amblemi" data-category-label="Marka Kimliği"
+          data-desc="Bir favicondan bir tabelaya kadar okunabilirliğini kaybetmeden ölçeklenebilen, yaratıcı bir stüdyo için tasarlanmış minimal logotype ve monogram sistemi."
           data-img="assets/images/project-5.jpg">
           <div class="card-media">
-            <img src="assets/images/project-5.jpg" alt="Studio Mark branding project" loading="lazy">
+            <img src="assets/images/project-5.jpg" alt="Stüdyo Amblemi marka projesi" loading="lazy">
           </div>
           <div class="card-body">
-            <span class="card-tag">Branding</span>
-            <h3>Studio Mark</h3>
+            <span class="card-tag">Marka Kimliği</span>
+            <h3>Stüdyo Amblemi</h3>
           </div>
         </article>
 
         <article class="card" data-category="graphic-design" tabindex="0" role="button" aria-haspopup="dialog"
-          data-title="Editorial Layouts" data-category-label="Graphic Design"
-          data-desc="Layout and typographic system for a digital editorial series — focused on rhythm, hierarchy and generous whitespace across long-form reading."
+          data-title="Editoryal Yerleşimler" data-category-label="Grafik Tasarım"
+          data-desc="Uzun metinli okuma deneyiminde ritim, hiyerarşi ve geniş boşluklara odaklanan; dijital bir editoryal seri için geliştirilmiş yerleşim ve tipografi sistemi."
           data-img="assets/images/project-6.jpg">
           <div class="card-media">
-            <img src="assets/images/project-6.jpg" alt="Editorial Layouts graphic design project" loading="lazy">
+            <img src="assets/images/project-6.jpg" alt="Editoryal Yerleşimler grafik tasarım projesi" loading="lazy">
           </div>
           <div class="card-body">
-            <span class="card-tag">Graphic Design</span>
-            <h3>Editorial Layouts</h3>
+            <span class="card-tag">Grafik Tasarım</span>
+            <h3>Editoryal Yerleşimler</h3>
           </div>
         </article>
 
@@ -166,18 +187,33 @@
   <section class="about" id="about">
     <div class="section-inner about-inner">
       <div class="about-text">
-        <p class="eyebrow">About</p>
-        <h2 class="section-title">A little about me</h2>
+        <p class="eyebrow">Hakkımda</p>
+        <h2 class="section-title">Biraz kendimden bahsedeyim</h2>
         <p class="about-bio">
-          I'm Batu — a graphic designer and content creator focused on building visuals
-          that feel considered rather than decorated. My work spans brand identity,
-          thumbnail design and YouTube content, always with the same goal: clarity first,
-          decoration second. I care about the details most people scroll past.
+          Ben Batu — süslemeden çok, üzerine düşünülmüş görseller üretmeye odaklanan
+          bir grafik tasarımcı ve içerik üreticisiyim. Çalışmalarım marka kimliğinden
+          thumbnail tasarımına ve YouTube içeriğine kadar uzanıyor, ama hedef hep aynı:
+          önce netlik, sonra süsleme. Çoğu kişinin gözden kaçırdığı detaylar benim işim.
         </p>
+
+        <div class="stats" id="stats">
+          <div class="stat">
+            <span class="stat-number" data-target="40">0</span><span class="stat-plus">+</span>
+            <p class="stat-label">Tamamlanan Proje</p>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="6">0</span>
+            <p class="stat-label">Uzmanlık Alanı</p>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="100">0</span><span class="stat-plus">%</span>
+            <p class="stat-label">Özenli İşçilik</p>
+          </div>
+        </div>
       </div>
 
       <div class="about-skills">
-        <p class="skills-label">Tools</p>
+        <p class="skills-label">Kullandığım Araçlar</p>
         <ul class="tags">
           <li class="tag">Adobe Photoshop</li>
           <li class="tag">Illustrator</li>
@@ -193,12 +229,12 @@
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="section-inner contact-inner">
-      <p class="eyebrow">Get in touch</p>
-      <h2 class="section-title">Let's work together</h2>
-      <p class="contact-copy">Have a project in mind? I'd love to hear about it.</p>
+      <p class="eyebrow">İletişime Geç</p>
+      <h2 class="section-title">Birlikte çalışalım</h2>
+      <p class="contact-copy">Aklında bir proje mi var? Duymak isterim.</p>
 
-      <a class="email-button" href="mailto:team@lemonhota.com">
-        team@lemonhota.com
+      <a class="email-button" href="mailto:team@lemonhota.com" data-magnetic>
+        <span>team@lemonhota.com</span>
       </a>
 
       <div class="social-links">
@@ -213,12 +249,13 @@
 
 <footer class="footer">
   <p>&copy; 2026 Batu</p>
+  <button class="back-to-top" id="back-to-top" aria-label="Yukarı çık">↑</button>
 </footer>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
   <div class="modal">
-    <button class="modal-close" id="modal-close" aria-label="Close project details">&times;</button>
+    <button class="modal-close" id="modal-close" aria-label="Proje detayını kapat">&times;</button>
     <div class="modal-media">
       <img id="modal-img" src="" alt="">
     </div>
