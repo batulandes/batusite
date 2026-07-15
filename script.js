@@ -1,250 +1,309 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const nav =
-    document.getElementById("nav");
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    const nav =
+      document.getElementById("nav");
 
-  const navToggle =
-    document.getElementById("nav-toggle");
-
-  const navLinks =
-    document.getElementById("nav-links");
-
-  const scrollProgress =
-    document.getElementById("scroll-progress");
-
-  /*
-   * Mobil menü
-   */
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", () => {
-      const isOpen =
-        navLinks.classList.toggle("open");
-
-      navToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
+    const navToggle =
+      document.getElementById(
+        "nav-toggle"
       );
 
-      navToggle.setAttribute(
-        "aria-label",
-        isOpen
-          ? "Menüyü kapat"
-          : "Menüyü aç"
+    const navLinks =
+      document.getElementById(
+        "nav-links"
       );
-    });
 
-    navLinks
-      .querySelectorAll("a")
-      .forEach((link) => {
-        link.addEventListener("click", () => {
-          navLinks.classList.remove("open");
+    const scrollProgress =
+      document.getElementById(
+        "scroll-progress"
+      );
+
+    /*
+     * Mobil menü
+     */
+    if (navToggle && navLinks) {
+      navToggle.addEventListener(
+        "click",
+        () => {
+          const isOpen =
+            navLinks.classList.toggle(
+              "open"
+            );
 
           navToggle.setAttribute(
             "aria-expanded",
-            "false"
+            String(isOpen)
           );
 
           navToggle.setAttribute(
             "aria-label",
-            "Menüyü aç"
+            isOpen
+              ? "Menüyü kapat"
+              : "Menüyü aç"
+          );
+        }
+      );
+
+      navLinks
+        .querySelectorAll("a")
+        .forEach((link) => {
+          link.addEventListener(
+            "click",
+            () => {
+              navLinks.classList.remove(
+                "open"
+              );
+
+              navToggle.setAttribute(
+                "aria-expanded",
+                "false"
+              );
+
+              navToggle.setAttribute(
+                "aria-label",
+                "Menüyü aç"
+              );
+            }
           );
         });
-      });
-  }
+    }
 
-  /*
-   * Fade efektli başlıklar
-   */
-  const rotatingText =
-    document.getElementById("rotating-text");
+    /*
+     * Fade efektli başlık
+     */
+    const rotatingText =
+      document.getElementById(
+        "rotating-text"
+      );
 
-  const roleProgressBar =
-    document.getElementById("role-progress-bar");
+    const roleProgressBar =
+      document.getElementById(
+        "role-progress-bar"
+      );
 
-  if (rotatingText) {
-    const words = [
-      "Grafik Tasarım",
-      "Video Düzenleme",
-      "İçerik Üretimi",
-      "Web Site Tasarımı",
-      "3D Modelleme"
-    ];
+    if (rotatingText) {
+      const words = [
+        "Grafik Tasarım",
+        "Video Düzenleme",
+        "İçerik Üretimi",
+        "Web Site Tasarımı",
+        "3D Modelleme"
+      ];
 
-    let currentIndex = 0;
+      let currentIndex = 0;
 
-    const intervalDuration = 2700;
-    const fadeDuration = 380;
+      const intervalDuration = 2700;
+      const fadeDuration = 380;
 
-    const restartProgress = () => {
-      if (!roleProgressBar) return;
+      const restartProgress = () => {
+        if (!roleProgressBar) {
+          return;
+        }
 
-      roleProgressBar.classList.remove("running");
+        roleProgressBar.classList.remove(
+          "running"
+        );
 
-      void roleProgressBar.offsetWidth;
+        void roleProgressBar.offsetWidth;
 
-      roleProgressBar.classList.add("running");
-    };
+        roleProgressBar.classList.add(
+          "running"
+        );
+      };
 
-    const changeWord = () => {
-      rotatingText.classList.add("is-changing");
-
-      window.setTimeout(() => {
-        currentIndex =
-          (currentIndex + 1) % words.length;
-
-        rotatingText.textContent =
-          words[currentIndex];
-
-        rotatingText.classList.remove(
+      const changeWord = () => {
+        rotatingText.classList.add(
           "is-changing"
         );
 
-        restartProgress();
-      }, fadeDuration);
+        window.setTimeout(() => {
+          currentIndex =
+            (currentIndex + 1) %
+            words.length;
+
+          rotatingText.textContent =
+            words[currentIndex];
+
+          rotatingText.classList.remove(
+            "is-changing"
+          );
+
+          restartProgress();
+        }, fadeDuration);
+      };
+
+      restartProgress();
+
+      window.setInterval(
+        changeWord,
+        intervalDuration
+      );
+    }
+
+    /*
+     * Üst menü küçülmesi
+     * ve kaydırma çizgisi
+     */
+    const updateScrollState = () => {
+      const scrollTop =
+        window.scrollY;
+
+      if (nav) {
+        nav.classList.toggle(
+          "compact",
+          scrollTop > 60
+        );
+      }
+
+      if (scrollProgress) {
+        const maximumScroll =
+          document.documentElement
+            .scrollHeight -
+          window.innerHeight;
+
+        const progress =
+          maximumScroll > 0
+            ? (
+                scrollTop /
+                maximumScroll
+              ) * 100
+            : 0;
+
+        scrollProgress.style.width =
+          `${progress}%`;
+      }
     };
 
-    restartProgress();
-
-    window.setInterval(
-      changeWord,
-      intervalDuration
+    window.addEventListener(
+      "scroll",
+      updateScrollState,
+      {
+        passive: true
+      }
     );
-  }
 
-  /*
-   * Üst menü ve ilerleme çizgisi
-   */
-  const updateScrollState = () => {
-    const scrollTop = window.scrollY;
+    updateScrollState();
 
-    if (nav) {
-      nav.classList.toggle(
-        "compact",
-        scrollTop > 60
+    /*
+     * Aktif menü bağlantısı
+     */
+    const sectionLinks =
+      document.querySelectorAll(
+        ".nav-links a[data-section]"
       );
-    }
 
-    if (scrollProgress) {
-      const maximumScroll =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+    const sections =
+      [...sectionLinks]
+        .map((link) => {
+          return document.getElementById(
+            link.dataset.section
+          );
+        })
+        .filter(Boolean);
 
-      const progress =
-        maximumScroll > 0
-          ? (scrollTop / maximumScroll) * 100
-          : 0;
+    if (
+      sections.length > 0 &&
+      "IntersectionObserver" in window
+    ) {
+      const observer =
+        new IntersectionObserver(
+          (entries) => {
+            const visibleEntry =
+              entries
+                .filter((entry) => {
+                  return (
+                    entry.isIntersecting
+                  );
+                })
+                .sort(
+                  (
+                    first,
+                    second
+                  ) => {
+                    return (
+                      second
+                        .intersectionRatio -
+                      first
+                        .intersectionRatio
+                    );
+                  }
+                )[0];
 
-      scrollProgress.style.width =
-        `${progress}%`;
-    }
-  };
+            if (!visibleEntry) {
+              return;
+            }
 
-  window.addEventListener(
-    "scroll",
-    updateScrollState,
-    {
-      passive: true
-    }
-  );
+            sectionLinks.forEach(
+              (link) => {
+                const isActive =
+                  link.dataset.section ===
+                  visibleEntry.target.id;
 
-  updateScrollState();
-
-  /*
-   * Aktif menü bağlantısı
-   */
-  const sectionLinks =
-    document.querySelectorAll(
-      ".nav-links a[data-section]"
-    );
-
-  const sections =
-    [...sectionLinks]
-      .map((link) => {
-        return document.getElementById(
-          link.dataset.section
-        );
-      })
-      .filter(Boolean);
-
-  if (
-    sections.length > 0 &&
-    "IntersectionObserver" in window
-  ) {
-    const observer =
-      new IntersectionObserver(
-        (entries) => {
-          const visibleEntry =
-            entries
-              .filter((entry) => {
-                return entry.isIntersecting;
-              })
-              .sort((first, second) => {
-                return (
-                  second.intersectionRatio -
-                  first.intersectionRatio
+                link.classList.toggle(
+                  "active",
+                  isActive
                 );
-              })[0];
-
-          if (!visibleEntry) return;
-
-          sectionLinks.forEach((link) => {
-            const isActive =
-              link.dataset.section ===
-              visibleEntry.target.id;
-
-            link.classList.toggle(
-              "active",
-              isActive
+              }
             );
-          });
-        },
-        {
-          rootMargin:
-            "-35% 0px -50% 0px",
+          },
+          {
+            rootMargin:
+              "-35% 0px -50% 0px",
 
-          threshold: [
-            0.01,
-            0.25,
-            0.5
-          ]
-        }
-      );
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-  }
-
-  /*
-   * Sayfa içi yumuşak kaydırma
-   */
-  document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((anchor) => {
-      anchor.addEventListener(
-        "click",
-        (event) => {
-          const targetId =
-            anchor.getAttribute("href");
-
-          if (
-            !targetId ||
-            targetId === "#"
-          ) {
-            return;
+            threshold: [
+              0.01,
+              0.25,
+              0.5
+            ]
           }
+        );
 
-          const target =
-            document.querySelector(targetId);
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+    }
 
-          if (!target) return;
+    /*
+     * Sayfa içi yumuşak kaydırma
+     */
+    document
+      .querySelectorAll(
+        'a[href^="#"]'
+      )
+      .forEach((anchor) => {
+        anchor.addEventListener(
+          "click",
+          (event) => {
+            const targetId =
+              anchor.getAttribute(
+                "href"
+              );
 
-          event.preventDefault();
+            if (
+              !targetId ||
+              targetId === "#"
+            ) {
+              return;
+            }
 
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        }
-      );
-    });
-});
+            const target =
+              document.querySelector(
+                targetId
+              );
+
+            if (!target) {
+              return;
+            }
+
+            event.preventDefault();
+
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }
+        );
+      });
+  }
+);
