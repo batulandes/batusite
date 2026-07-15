@@ -1,12 +1,12 @@
 :root {
   --background: #000;
   --surface: #090909;
-  --surface-soft: #111;
+  --surface-light: #101010;
   --text: #fff;
-  --muted: #9a9a9a;
+  --muted: #999;
   --border: rgba(255, 255, 255, 0.13);
-  --border-strong: rgba(255, 255, 255, 0.25);
-  --container: 1240px;
+  --border-strong: rgba(255, 255, 255, 0.26);
+  --container: 1280px;
 }
 
 * {
@@ -56,7 +56,7 @@ button {
 }
 
 .narrow {
-  width: min(920px, calc(100% - 64px));
+  width: min(980px, calc(100% - 64px));
 }
 
 .grain {
@@ -66,25 +66,31 @@ button {
   pointer-events: none;
   opacity: 0.025;
   background-image:
-    radial-gradient(circle at center, #fff 0.5px, transparent 0.5px);
+    radial-gradient(
+      circle at center,
+      #fff 0.5px,
+      transparent 0.5px
+    );
   background-size: 8px 8px;
 }
 
 .page-loader {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 9999;
   display: grid;
   place-items: center;
   pointer-events: none;
   background: #000;
-  animation: loader-hide 0.8s ease 0.35s forwards;
+  animation:
+    loader-hide 0.75s ease 0.35s forwards;
 }
 
 .page-loader img {
-  width: 110px;
+  width: 105px;
   opacity: 0;
-  animation: loader-logo 0.6s ease forwards;
+  animation:
+    loader-logo 0.55s ease forwards;
 }
 
 @keyframes loader-logo {
@@ -124,8 +130,8 @@ button {
   left: 0;
   z-index: 100;
   width: 100%;
-  border-bottom: 1px solid transparent;
   background: rgba(0, 0, 0, 0.62);
+  border-bottom: 1px solid transparent;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   transition:
@@ -140,7 +146,7 @@ button {
 
 .nav-inner {
   position: relative;
-  min-height: 86px;
+  min-height: 88px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -153,10 +159,10 @@ button {
 
 .nav-logo {
   position: absolute;
-  left: 50%;
   top: 50%;
-  width: 54px;
-  height: 54px;
+  left: 50%;
+  width: 59px;
+  height: 59px;
   transform: translate(-50%, -50%);
   transition:
     width 0.25s ease,
@@ -164,8 +170,8 @@ button {
 }
 
 .nav.compact .nav-logo {
-  width: 47px;
-  height: 47px;
+  width: 51px;
+  height: 51px;
 }
 
 .nav-logo picture,
@@ -181,13 +187,13 @@ button {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 26px;
 }
 
 .nav-links a {
   position: relative;
   color: #aaa;
-  font-size: 14px;
+  font-size: 13px;
   transition: color 0.2s ease;
 }
 
@@ -249,15 +255,15 @@ button {
 
 .hero-kicker {
   margin-bottom: 20px;
-  color: #8d8d8d;
+  color: #858585;
   font-size: 12px;
   letter-spacing: 0.2em;
 }
 
 .hero-title {
   min-height: 1.05em;
-  max-width: 1100px;
-  font-size: clamp(62px, 8vw, 126px);
+  max-width: 1150px;
+  font-size: clamp(64px, 8vw, 126px);
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.065em;
@@ -307,7 +313,7 @@ button {
 }
 
 .hero-desc {
-  max-width: 600px;
+  max-width: 620px;
   color: var(--muted);
   font-size: 18px;
 }
@@ -350,11 +356,12 @@ button {
 }
 
 .section {
-  padding: 90px 0;
+  padding: 82px 0;
+  scroll-margin-top: 82px;
 }
 
 .section-head {
-  margin-bottom: 38px;
+  margin-bottom: 36px;
 }
 
 .section-eyebrow {
@@ -366,15 +373,127 @@ button {
 }
 
 .section-title {
-  max-width: 900px;
-  font-size: clamp(42px, 6vw, 78px);
+  max-width: 920px;
+  font-size: clamp(42px, 5.8vw, 76px);
   line-height: 1;
   letter-spacing: -0.045em;
 }
 
+.section-description {
+  max-width: 610px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* BAŞARILAR */
+
+.highlights {
+  padding-top: 34px;
+}
+
+.highlights-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.highlights-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.highlights-badge {
+  width: 62px;
+  height: 62px;
+  margin-top: 4px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.highlights-head .section-description {
+  width: min(100%, 430px);
+  margin: 0 0 4px;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.highlight-card {
+  min-height: 205px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-4px);
+  background: var(--surface-light);
+  border-color: var(--border-strong);
+}
+
+.highlight-large {
+  grid-column: span 1;
+  min-height: 245px;
+}
+
+.highlight-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.highlight-avatars img {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  background: #111;
+  border: 2px solid #1b1b1b;
+  border-radius: 50%;
+}
+
+.highlight-avatars img + img {
+  margin-left: -11px;
+}
+
+.highlight-card strong {
+  display: block;
+  color: #fff;
+  font-size: clamp(24px, 2.3vw, 35px);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+}
+
+.highlight-card p {
+  max-width: 34ch;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* PROJELER */
+
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 
@@ -421,10 +540,10 @@ button {
 .project-hover {
   position: absolute;
   inset: 0;
+  padding: 22px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 22px;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -452,13 +571,13 @@ button {
   gap: 20px;
   color: #888;
   font-size: 12px;
-  text-transform: uppercase;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .project-content h3 {
   margin-bottom: 14px;
-  font-size: clamp(24px, 2.6vw, 34px);
+  font-size: clamp(25px, 2.5vw, 35px);
   line-height: 1.05;
   letter-spacing: -0.035em;
 }
@@ -477,19 +596,20 @@ button {
 }
 
 .project-social-link {
-  min-height: 40px;
+  min-height: 41px;
+  padding: 0 14px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 9px;
-  padding: 0 14px;
+  color: #ddd;
   border: 1px solid var(--border);
   border-radius: 999px;
-  color: #ddd;
   font-size: 13px;
   transition:
+    color 0.2s ease,
     background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
+    border-color 0.2s ease;
 }
 
 .project-social-link:hover {
@@ -508,6 +628,8 @@ button {
   filter: invert(1);
 }
 
+/* HAKKIMDA */
+
 .about-text {
   color: #777;
   font-size: clamp(31px, 4.2vw, 58px);
@@ -520,6 +642,8 @@ button {
   font-weight: 600;
 }
 
+/* ARAÇLAR */
+
 .tools-marquee {
   width: 100%;
   overflow: hidden;
@@ -527,8 +651,8 @@ button {
     linear-gradient(
       to right,
       transparent,
-      #000 8%,
-      #000 92%,
+      #000 7%,
+      #000 93%,
       transparent
     );
 }
@@ -536,7 +660,8 @@ button {
 .tools-track {
   width: max-content;
   display: flex;
-  animation: tools-scroll 28s linear infinite;
+  animation:
+    tools-scroll 29s linear infinite;
 }
 
 .tools-marquee:hover .tools-track {
@@ -550,13 +675,13 @@ button {
 }
 
 .tool-card {
-  min-width: 170px;
+  min-width: 174px;
   min-height: 108px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 13px;
-  padding: 20px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -571,8 +696,8 @@ button {
 }
 
 .tool-card img {
-  width: 33px;
-  height: 33px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
 }
 
@@ -590,6 +715,8 @@ button {
   }
 }
 
+/* İLETİŞİM */
+
 .contact {
   padding-bottom: 80px;
 }
@@ -606,7 +733,7 @@ button {
 }
 
 .contact-text {
-  max-width: 520px;
+  max-width: 540px;
   margin: 0 auto 25px;
   color: var(--muted);
   font-size: 17px;
@@ -631,8 +758,8 @@ button {
 }
 
 .social-links a {
-  width: 48px;
-  height: 48px;
+  width: 49px;
+  height: 49px;
   display: grid;
   place-items: center;
   border: 1px solid var(--border);
@@ -669,52 +796,67 @@ button {
 }
 
 .footer-logo {
-  width: 70px;
+  width: 72px;
   margin-top: 14px;
   opacity: 0.5;
 }
 
-@media (max-width: 900px) {
+/* TABLET */
+
+@media (max-width: 1000px) {
   .container,
   .narrow {
-    width: min(100% - 32px, var(--container));
+    width: min(
+      100% - 34px,
+      var(--container)
+    );
   }
 
   .nav-links {
-    gap: 19px;
+    gap: 18px;
+  }
+
+  .highlights-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero {
-    min-height: 82vh;
+  .project-image-wrap {
+    aspect-ratio: 16 / 8;
   }
 }
 
-@media (max-width: 680px) {
+/* MOBİL */
+
+@media (max-width: 720px) {
   .container,
   .narrow {
-    width: min(100% - 22px, var(--container));
+    width: min(
+      100% - 22px,
+      var(--container)
+    );
   }
 
   .nav-inner {
-    min-height: 72px;
+    min-height: 74px;
   }
 
   .nav.compact .nav-inner {
-    min-height: 64px;
+    min-height: 65px;
   }
 
   .nav-logo {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
   }
 
   .nav.compact .nav-logo {
-    width: 43px;
-    height: 43px;
+    width: 46px;
+    height: 46px;
   }
 
   .nav-links {
@@ -722,15 +864,15 @@ button {
     top: calc(100% + 8px);
     left: 11px;
     right: 11px;
+    padding: 9px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 9px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
-    background: rgba(10, 10, 10, 0.97);
+    background: rgba(10, 10, 10, 0.98);
     border: 1px solid var(--border);
     border-radius: 17px;
     transition:
@@ -760,16 +902,16 @@ button {
 
   .hero {
     min-height: auto;
-    padding: 135px 0 70px;
+    padding: 135px 0 66px;
   }
 
   .hero-kicker {
-    margin-bottom: 17px;
+    margin-bottom: 16px;
     font-size: 10px;
   }
 
   .hero-title {
-    font-size: clamp(48px, 15vw, 72px);
+    font-size: clamp(45px, 14vw, 70px);
   }
 
   .hero-desc {
@@ -786,7 +928,7 @@ button {
   }
 
   .section {
-    padding: 62px 0;
+    padding: 58px 0;
   }
 
   .section-head {
@@ -794,7 +936,59 @@ button {
   }
 
   .section-title {
-    font-size: 42px;
+    font-size: 41px;
+  }
+
+  .section-description {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  .highlights {
+    padding-top: 16px;
+  }
+
+  .highlights-head {
+    display: block;
+  }
+
+  .highlights-heading {
+    gap: 13px;
+  }
+
+  .highlights-badge {
+    width: 47px;
+    height: 47px;
+  }
+
+  .highlights-head .section-description {
+    margin-top: 16px;
+  }
+
+  .highlights-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .highlight-card,
+  .highlight-large {
+    min-height: 170px;
+    padding: 18px;
+    gap: 20px;
+    border-radius: 18px;
+  }
+
+  .highlight-avatars img {
+    width: 41px;
+    height: 41px;
+  }
+
+  .highlight-card strong {
+    font-size: 26px;
+  }
+
+  .highlight-card p {
+    font-size: 14px;
   }
 
   .projects-grid {
@@ -829,17 +1023,17 @@ button {
   .project-links {
     margin-top: 18px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .project-social-link {
-    justify-content: center;
-    padding: 0 10px;
+    padding: 0 9px;
     font-size: 12px;
   }
 
   .about-text {
-    font-size: 32px;
+    font-size: 31px;
   }
 
   .tool-card {
@@ -849,12 +1043,12 @@ button {
   }
 
   .tool-card img {
-    width: 28px;
-    height: 28px;
+    width: 29px;
+    height: 29px;
   }
 
   .contact-title {
-    font-size: 58px;
+    font-size: 56px;
   }
 
   .email-link {
@@ -865,6 +1059,14 @@ button {
 @media (max-width: 390px) {
   .project-links {
     grid-template-columns: 1fr;
+  }
+
+  .highlights-heading {
+    display: block;
+  }
+
+  .highlights-badge {
+    margin-bottom: 14px;
   }
 }
 
