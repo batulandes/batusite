@@ -1,30 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const body = document.body;
   const nav = document.getElementById("nav");
   const navToggle = document.getElementById("nav-toggle");
   const navLinks = document.getElementById("nav-links");
   const scrollProgress = document.getElementById("scroll-progress");
 
-  let loadingFinished = false;
-
-  const finishLoading = () => {
-    if (loadingFinished) return;
-
-    loadingFinished = true;
-    body.classList.add("loaded");
-    body.classList.remove("is-loading");
-  };
-
-  window.addEventListener(
-    "load",
-    () => {
-      window.setTimeout(finishLoading, 500);
-    },
-    { once: true }
-  );
-
-  window.setTimeout(finishLoading, 1800);
-
+  /*
+   * Mobil menü
+   */
   if (navToggle && navLinks) {
     navToggle.addEventListener("click", () => {
       const isOpen = navLinks.classList.toggle("open");
@@ -57,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /*
+   * Değişen ana başlık
+   */
   const rotatingText =
     document.getElementById("rotating-text");
 
@@ -72,9 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "Uygulama Tasarımı"
     ];
 
-    let index = 0;
-    const interval = 2800;
-    const transitionDuration = 420;
+    let currentIndex = 0;
+    const intervalDuration = 2700;
+    const fadeDuration = 380;
 
     const restartProgress = () => {
       if (!roleProgressBar) return;
@@ -85,41 +70,55 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const changeWord = () => {
-      restartProgress();
+      rotatingText.classList.add("is-changing");
 
       window.setTimeout(() => {
-        rotatingText.classList.add("is-changing");
+        currentIndex =
+          (currentIndex + 1) % words.length;
 
-        window.setTimeout(() => {
-          index = (index + 1) % words.length;
-          rotatingText.textContent = words[index];
-          rotatingText.classList.remove("is-changing");
-        }, transitionDuration);
-      }, interval - transitionDuration);
+        rotatingText.textContent =
+          words[currentIndex];
+
+        rotatingText.classList.remove("is-changing");
+
+        restartProgress();
+      }, fadeDuration);
     };
 
     restartProgress();
-    window.setInterval(changeWord, interval);
+
+    window.setInterval(
+      changeWord,
+      intervalDuration
+    );
   }
 
+  /*
+   * Üst menü küçülmesi ve
+   * kaydırma ilerleme çizgisi
+   */
   const updateScrollState = () => {
     const scrollTop = window.scrollY;
 
     if (nav) {
-      nav.classList.toggle("compact", scrollTop > 60);
+      nav.classList.toggle(
+        "compact",
+        scrollTop > 60
+      );
     }
 
     if (scrollProgress) {
-      const maxScroll =
+      const maximumScroll =
         document.documentElement.scrollHeight -
         window.innerHeight;
 
-      const percentage =
-        maxScroll > 0
-          ? (scrollTop / maxScroll) * 100
+      const progress =
+        maximumScroll > 0
+          ? (scrollTop / maximumScroll) * 100
           : 0;
 
-      scrollProgress.style.width = `${percentage}%`;
+      scrollProgress.style.width =
+        `${progress}%`;
     }
   };
 
@@ -131,6 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateScrollState();
 
+  /*
+   * Menüde aktif bölümü göster
+   */
   const sectionLinks =
     document.querySelectorAll(
       ".nav-links a[data-section]"
@@ -145,29 +147,29 @@ document.addEventListener("DOMContentLoaded", () => {
     .filter(Boolean);
 
   if (
-    sections.length &&
+    sections.length > 0 &&
     "IntersectionObserver" in window
   ) {
     const sectionObserver =
       new IntersectionObserver(
         (entries) => {
-          const visible = entries
+          const visibleEntry = entries
             .filter((entry) => {
               return entry.isIntersecting;
             })
-            .sort((a, b) => {
+            .sort((first, second) => {
               return (
-                b.intersectionRatio -
-                a.intersectionRatio
+                second.intersectionRatio -
+                first.intersectionRatio
               );
             })[0];
 
-          if (!visible) return;
+          if (!visibleEntry) return;
 
           sectionLinks.forEach((link) => {
             const isActive =
               link.dataset.section ===
-              visible.target.id;
+              visibleEntry.target.id;
 
             link.classList.toggle(
               "active",
@@ -186,31 +188,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /*
+   * Sayfa içi yumuşak kaydırma
+   */
   document
     .querySelectorAll('a[href^="#"]')
     .forEach((anchor) => {
-      anchor.addEventListener(
-        "click",
-        (event) => {
-          const targetId =
-            anchor.getAttribute("href");
+      anchor.addEventListener("click", (event) => {
+        const targetId =
+          anchor.getAttribute("href");
 
-          if (!targetId || targetId === "#") {
-            return;
-          }
-
-          const target =
-            document.querySelector(targetId);
-
-          if (!target) return;
-
-          event.preventDefault();
-
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
+        if (!targetId || targetId === "#") {
+          return;
         }
-      );
+
+        const target =
+          document.querySelector(targetId);
+
+        if (!target) return;
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
     });
 });
