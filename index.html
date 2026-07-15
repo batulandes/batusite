@@ -1,42 +1,79 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Batu — Grafik Tasarım</title>
-  <meta name="description" content="Batu'nun grafik tasarım, dijital içerik üretimi, web tasarım ve uygulama tasarımı alanlarındaki portfolyo sitesi." />
-  <meta name="theme-color" content="#000000" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta property="og:title" content="Batu — Grafik Tasarım" />
-  <meta property="og:description" content="Grafik tasarım, dijital içerik üretimi, web tasarım ve uygulama tasarımı." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://i.ibb.co/fV7RQvQY/batulogoo.png" />
+  <title>Batu — Tasarım ve Dijital İçerik</title>
 
-  <link rel="icon" type="image/png" href="https://i.ibb.co/fV7RQvQY/batulogoo.png" />
+  <meta
+    name="description"
+    content="Batu'nun grafik tasarım, içerik üretimi, video düzenleme, web tasarım ve uygulama tasarımı çalışmalarını içeren portfolyo sitesi."
+  >
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <meta name="theme-color" content="#000000">
 
-  <link rel="stylesheet" href="style.css" />
+  <meta property="og:title" content="Batu — Tasarım ve Dijital İçerik">
+  <meta
+    property="og:description"
+    content="Grafik tasarım, içerik üretimi, video düzenleme, web tasarım ve uygulama tasarımı."
+  >
+  <meta property="og:type" content="website">
+  <meta
+    property="og:image"
+    content="https://i.ibb.co/fV7RQvQY/batulogoo.png"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/fV7RQvQY/batulogoo.png"
+  >
+
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+
+<body class="is-loading">
+  <div class="page-loader" id="page-loader" aria-hidden="true">
+    <img
+      src="https://i.ibb.co/hR1sF79y/BATUDUZ.png"
+      alt=""
+    >
+  </div>
+
+  <div
+    class="scroll-progress"
+    id="scroll-progress"
+    aria-hidden="true"
+  ></div>
+
   <div class="grain" aria-hidden="true"></div>
 
-  <header class="nav">
+  <header class="nav" id="nav">
     <div class="container nav-inner">
-      <a href="#top" class="nav-logo" aria-label="Ana sayfa">
-        <img src="https://i.ibb.co/fV7RQvQY/batulogoo.png" alt="Batu logosu" />
+      <div class="nav-spacer" aria-hidden="true"></div>
+
+      <a href="#top" class="nav-logo" aria-label="Batu ana sayfa">
+        <img
+          src="https://i.ibb.co/fV7RQvQY/batulogoo.png"
+          alt="Batu logosu"
+        >
       </a>
 
       <nav class="nav-links" id="nav-links" aria-label="Ana menü">
-        <a href="#work">Portfolyo</a>
-        <a href="#about">Hakkımda</a>
-        <a href="#tools">Araçlar</a>
-        <a href="#contact">İletişim</a>
+        <a href="#work" data-section="work">Portfolyo</a>
+        <a href="#about" data-section="about">Hakkımda</a>
+        <a href="#tools" data-section="tools">Araçlar</a>
+        <a href="#contact" data-section="contact">İletişim</a>
       </nav>
 
-      <button class="nav-toggle" id="nav-toggle" aria-label="Menüyü aç" aria-expanded="false" aria-controls="nav-links">
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Menüyü aç"
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -45,21 +82,34 @@
   </header>
 
   <main id="top">
-    <section class="hero">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="container hero-inner">
-        <p class="hero-kicker">BATU</p>
+        <p class="hero-kicker">
+          TASARIM · İÇERİK · DİJİTAL DENEYİM
+        </p>
 
-        <h1 class="hero-title">
-          <span id="rotating-text" class="fade-text">Grafik Tasarım</span>
+        <h1 class="hero-title" id="hero-title">
+          <span id="rotating-text" class="fade-text">
+            Grafik Tasarım
+          </span>
         </h1>
 
+        <div class="role-progress" aria-hidden="true">
+          <span id="role-progress-bar"></span>
+        </div>
+
         <p class="hero-desc">
-          Yaratıcı, sade ve akılda kalıcı dijital deneyimler.
+          Uzun yılların deneyimi ve birikiminin merkezindesiniz.
         </p>
 
         <div class="hero-actions">
-          <a href="#work" class="btn btn-primary">Portfolyoyu Gör</a>
-          <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+          <a href="#work" class="btn btn-primary">
+            Portfolyoyu Gör
+          </a>
+
+          <a href="#contact" class="btn btn-secondary">
+            İletişime Geç
+          </a>
         </div>
       </div>
     </section>
@@ -67,58 +117,82 @@
     <section class="section work" id="work">
       <div class="container">
         <div class="section-head">
-          <p class="section-eyebrow">Portfolyo</p>
-          <h2 class="section-title">Seçilmiş çalışma</h2>
+          <p class="section-eyebrow">
+            01 · Portfolyo
+          </p>
+
+          <h2 class="section-title">
+            Seçilmiş çalışma
+          </h2>
         </div>
 
-        <div class="portfolio-grid">
-          <article class="project-card">
-            <div class="project-image-wrap">
-              <img
-                src="https://i.ibb.co/SDmcm9V3/Lemonhota-57-Resmi-Kapak.jpg"
-                alt="Lemonhota YouTube kanalı kapak görseli"
-                class="project-image"
-              />
-            </div>
+        <a
+          class="project-card"
+          href="lemonhota.html"
+          aria-label="Lemonhota YouTube Kanalı projesini görüntüle"
+        >
+          <div class="project-image-wrap">
+            <img
+              src="https://i.ibb.co/SDmcm9V3/Lemonhota-57-Resmi-Kapak.jpg"
+              alt="Lemonhota YouTube kanalı kapak görseli"
+              class="project-image"
+            >
 
-            <div class="project-content">
-              <div class="project-top">
-                <span class="project-tag">YouTube</span>
-                <h3>Lemonhota YouTube Kanalı</h3>
-                <p>
-                  Lemonhota için hazırlanan YouTube kapak görseli.
-                  Şimdilik portfolyoda öne çıkan çalışma olarak burada yer alıyor.
-                </p>
+            <div class="project-hover" aria-hidden="true">
+              <span>Projeyi Gör</span>
+              <strong>↗</strong>
+            </div>
+          </div>
+
+          <div class="project-content">
+            <div>
+              <div class="project-meta">
+                <span>YouTube Tasarımı</span>
+                <span>2026</span>
               </div>
 
-              <a
-                href="https://youtube.com/@lemonhota"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="project-link"
-                aria-label="Lemonhota YouTube kanalına git"
-              >
-                <img src="https://cdn.simpleicons.org/youtube/white" alt="YouTube logosu" />
-                <span>Lemonhota YouTube Kanalına Git</span>
-              </a>
+              <h3>Lemonhota YouTube Kanalı</h3>
+
+              <p>
+                Lemonhota kanalının güncel yayın kimliği için hazırlanan
+                resmi YouTube bölüm kapağı. Kanalın görsel dilini güçlü,
+                net ve dikkat çekici bir tasarımla destekleyen çalışma.
+              </p>
             </div>
-          </article>
-        </div>
+
+            <span class="project-detail-link">
+              Proje detayına git <b>↗</b>
+            </span>
+          </div>
+        </a>
       </div>
     </section>
 
     <section class="section about" id="about">
       <div class="container narrow">
         <div class="section-head">
-          <p class="section-eyebrow">Hakkımda</p>
-          <h2 class="section-title">Ben kimim?</h2>
+          <p class="section-eyebrow">
+            02 · Hakkımda
+          </p>
+
+          <h2 class="section-title">
+            Ben kimim?
+          </h2>
         </div>
 
         <p class="about-text">
-          Merhaba, ben Batu. Tasarım benim için sadece güzel görünen işler üretmek değil,
-          insanların aklında kalacak deneyimler oluşturmaktır. Grafik tasarım, video düzenleme
-          ve dijital içerik üretimi alanlarında çalışıyor; her projeye yaratıcılık, detaylara
-          önem ve sürekli gelişme tutkusu katıyorum.
+          Merhaba, ben Batu. Tasarım benim için yalnızca güzel görünen
+          işler üretmek değil,
+          <strong>
+            insanların aklında kalacak deneyimler oluşturmaktır.
+          </strong>
+
+          Grafik tasarım, video düzenleme ve dijital içerik üretimi
+          alanlarında çalışıyorum. Her projeye
+          <strong>
+            yaratıcılık, detaylara önem ve sürekli gelişme tutkusu
+          </strong>
+          katıyorum.
         </p>
       </div>
     </section>
@@ -126,36 +200,82 @@
     <section class="section tools" id="tools">
       <div class="container">
         <div class="section-head">
-          <p class="section-eyebrow">Kullandığım Araçlar</p>
-          <h2 class="section-title">Araçlar</h2>
-        </div>
+          <p class="section-eyebrow">
+            03 · Kullandığım Araçlar
+          </p>
 
-        <div class="tools-grid">
+          <h2 class="section-title">
+            Üretim araçlarım
+          </h2>
+        </div>
+      </div>
+
+      <div
+        class="tools-marquee"
+        aria-label="Kullandığım tasarım ve içerik üretim araçları"
+      >
+        <div class="tools-track">
           <div class="tool-card">
-            <div class="tool-icon">
-              <img src="https://cdn.simpleicons.org/figma/white" alt="Figma logosu" />
-            </div>
+            <img
+              src="https://cdn.simpleicons.org/figma/white"
+              alt="Figma logosu"
+            >
             <span>Figma</span>
           </div>
 
           <div class="tool-card">
-            <div class="tool-icon">
-              <img src="https://cdn.simpleicons.org/adobeillustrator/white" alt="Adobe Illustrator logosu" />
-            </div>
-            <span>Adobe Illustrator</span>
+            <img
+              src="https://i.ibb.co/Nn6LjTV7/icons8-adobe-photoshop-480.png"
+              alt="Adobe Photoshop logosu"
+            >
+            <span>Photoshop</span>
           </div>
 
           <div class="tool-card">
-            <div class="tool-icon">
-              <img src="https://cdn.simpleicons.org/adobephotoshop/white" alt="Adobe Photoshop logosu" />
-            </div>
-            <span>Adobe Photoshop</span>
+            <img
+              src="https://i.ibb.co/KxYZRFvj/icons8-adobe-illustrator-480.png"
+              alt="Adobe Illustrator logosu"
+            >
+            <span>Illustrator</span>
           </div>
 
           <div class="tool-card">
-            <div class="tool-icon">
-              <img src="https://cdn.simpleicons.org/capcut/white" alt="CapCut logosu" />
-            </div>
+            <img
+              src="https://cdn.simpleicons.org/capcut/white"
+              alt="CapCut logosu"
+            >
+            <span>CapCut</span>
+          </div>
+
+          <div class="tool-card" aria-hidden="true">
+            <img
+              src="https://cdn.simpleicons.org/figma/white"
+              alt=""
+            >
+            <span>Figma</span>
+          </div>
+
+          <div class="tool-card" aria-hidden="true">
+            <img
+              src="https://cdn.simpleicons.org/adobephotoshop/white"
+              alt=""
+            >
+            <span>Photoshop</span>
+          </div>
+
+          <div class="tool-card" aria-hidden="true">
+            <img
+              src="https://cdn.simpleicons.org/adobeillustrator/white"
+              alt=""
+            >
+            <span>Illustrator</span>
+          </div>
+
+          <div class="tool-card" aria-hidden="true">
+            <img
+              src="https://i.ibb.co/Kx2J4CPp/capcut-326x256.png"
+              alt=""
+            >
             <span>CapCut</span>
           </div>
         </div>
@@ -163,25 +283,62 @@
     </section>
 
     <section class="section contact" id="contact">
-      <div class="container narrow">
-        <div class="section-head">
-          <p class="section-eyebrow">İletişim</p>
-          <h2 class="section-title">Birlikte çalışalım</h2>
-        </div>
-
-        <p class="contact-text">
-          Bir proje, fikir veya iş birliği için bana ulaşabilirsin.
+      <div class="container narrow contact-inner">
+        <p class="section-eyebrow">
+          04 · İletişim
         </p>
 
-        <div class="contact-actions">
-          <a href="mailto:team@lemonhota.com" class="btn btn-primary">team@lemonhota.com</a>
+        <h2 class="contact-title">
+          Bana Ulaşın
+        </h2>
+
+        <p class="contact-text">
+          Bir proje, fikir veya iş birliği için doğrudan iletişime
+          geçebilirsin.
+        </p>
+
+        <a
+          href="mailto:team@lemonhota.com"
+          class="email-link"
+        >
+          team@lemonhota.com
+        </a>
+
+        <div class="social-links" aria-label="Sosyal medya bağlantıları">
+          <a
+            href="https://instagram.com/batulandes"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram batulandes"
+          >
+            <img
+              src="https://cdn.simpleicons.org/instagram/white"
+              alt=""
+            >
+          </a>
+
           <a
             href="https://youtube.com/@lemonhota"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-secondary"
+            aria-label="Lemonhota YouTube kanalı"
           >
-            Lemonhota YouTube
+            <img
+              src="https://cdn.simpleicons.org/youtube/white"
+              alt=""
+            >
+          </a>
+
+          <a
+            href="https://github.com/batulandes"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub batulandes"
+          >
+            <img
+              src="https://i.ibb.co/zHTxrvPH/icons8-github-480.png"
+              alt=""
+            >
           </a>
         </div>
       </div>
@@ -190,11 +347,12 @@
 
   <footer class="footer">
     <p class="footer-copy">© 2026 BATU</p>
+
     <img
       src="https://i.ibb.co/hR1sF79y/BATUDUZ.png"
-      alt="Batu yatay logosu"
+      alt="Batu"
       class="footer-logo"
-    />
+    >
   </footer>
 
   <script src="script.js"></script>
