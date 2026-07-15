@@ -1,12 +1,12 @@
 :root {
   --background: #000;
   --surface: #090909;
-  --surface-light: #101010;
+  --surface-hover: #0e0e0e;
   --text: #fff;
   --muted: #999;
-  --border: rgba(255, 255, 255, 0.13);
-  --border-strong: rgba(255, 255, 255, 0.26);
-  --container: 1280px;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.24);
+  --container: 1240px;
 }
 
 * {
@@ -26,7 +26,6 @@ body {
   color: var(--text);
   background: var(--background);
   font-family:
-    "TT Firs Neue",
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
@@ -47,6 +46,7 @@ a {
 }
 
 button {
+  color: inherit;
   font: inherit;
 }
 
@@ -56,7 +56,7 @@ button {
 }
 
 .narrow {
-  width: min(980px, calc(100% - 64px));
+  width: min(940px, calc(100% - 64px));
 }
 
 .grain {
@@ -64,13 +64,9 @@ button {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.022;
   background-image:
-    radial-gradient(
-      circle at center,
-      #fff 0.5px,
-      transparent 0.5px
-    );
+    radial-gradient(circle at center, #fff 0.5px, transparent 0.5px);
   background-size: 8px 8px;
 }
 
@@ -82,15 +78,13 @@ button {
   place-items: center;
   pointer-events: none;
   background: #000;
-  animation:
-    loader-hide 0.75s ease 0.35s forwards;
+  animation: loader-hide 0.7s ease 0.35s forwards;
 }
 
 .page-loader img {
   width: 105px;
   opacity: 0;
-  animation:
-    loader-logo 0.55s ease forwards;
+  animation: loader-logo 0.55s ease forwards;
 }
 
 @keyframes loader-logo {
@@ -118,7 +112,7 @@ button {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1100;
   width: 0;
   height: 2px;
   background: #fff;
@@ -128,9 +122,9 @@ button {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 1000;
   width: 100%;
-  background: rgba(0, 0, 0, 0.62);
+  background: rgba(0, 0, 0, 0.64);
   border-bottom: 1px solid transparent;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -140,7 +134,7 @@ button {
 }
 
 .nav.compact {
-  background: rgba(0, 0, 0, 0.88);
+  background: rgba(0, 0, 0, 0.9);
   border-color: var(--border);
 }
 
@@ -161,8 +155,8 @@ button {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 59px;
-  height: 59px;
+  width: 58px;
+  height: 58px;
   transform: translate(-50%, -50%);
   transition:
     width 0.25s ease,
@@ -170,8 +164,8 @@ button {
 }
 
 .nav.compact .nav-logo {
-  width: 51px;
-  height: 51px;
+  width: 50px;
+  height: 50px;
 }
 
 .nav-logo picture,
@@ -187,7 +181,7 @@ button {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 25px;
 }
 
 .nav-links a {
@@ -255,7 +249,7 @@ button {
 
 .hero-kicker {
   margin-bottom: 20px;
-  color: #858585;
+  color: #888;
   font-size: 12px;
   letter-spacing: 0.2em;
 }
@@ -263,7 +257,7 @@ button {
 .hero-title {
   min-height: 1.05em;
   max-width: 1150px;
-  font-size: clamp(64px, 8vw, 126px);
+  font-size: clamp(62px, 8vw, 126px);
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.065em;
@@ -373,8 +367,8 @@ button {
 }
 
 .section-title {
-  max-width: 920px;
-  font-size: clamp(42px, 5.8vw, 76px);
+  max-width: 900px;
+  font-size: clamp(42px, 5.7vw, 76px);
   line-height: 1;
   letter-spacing: -0.045em;
 }
@@ -390,110 +384,136 @@ button {
 /* BAŞARILAR */
 
 .highlights {
-  padding-top: 34px;
+  padding-top: 35px;
 }
 
-.highlights-head {
+.highlights-header {
+  max-width: 850px;
+  margin: 0 auto 38px;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 40px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.highlights-heading {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-}
-
-.highlights-badge {
-  width: 62px;
-  height: 62px;
-  margin-top: 4px;
+.highlights-icon {
+  width: 38px !important;
+  height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  margin-bottom: 17px;
   object-fit: contain;
-  flex-shrink: 0;
+  flex: 0 0 38px;
 }
 
-.highlights-head .section-description {
-  width: min(100%, 430px);
-  margin: 0 0 4px;
+.centered-title {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.centered-description {
+  margin-inline: auto;
+  text-align: center;
 }
 
 .highlights-grid {
   display: grid;
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .highlight-card {
   min-height: 205px;
-  padding: 22px;
+  padding: 26px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 28px;
-  background: var(--surface);
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  overflow: hidden;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 255, 255, 0.055),
+      transparent 58%
+    ),
+    #080808;
   border: 1px solid var(--border);
   border-radius: 22px;
   transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    background 0.28s ease;
 }
 
 .highlight-card:hover {
   transform: translateY(-4px);
-  background: var(--surface-light);
   border-color: var(--border-strong);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 255, 255, 0.085),
+      transparent 60%
+    ),
+    #0b0b0b;
 }
 
-.highlight-large {
-  grid-column: span 1;
-  min-height: 245px;
-}
-
-.highlight-avatars {
+.highlight-logos {
+  min-height: 38px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.highlight-avatars img {
-  width: 46px;
-  height: 46px;
+.highlight-logos img {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px !important;
+  max-height: 36px !important;
   object-fit: cover;
-  background: #111;
-  border: 2px solid #1b1b1b;
+  border: 2px solid #121212;
   border-radius: 50%;
+  background: #111;
+  flex: 0 0 36px;
 }
 
-.highlight-avatars img + img {
-  margin-left: -11px;
+.highlight-logos img + img {
+  margin-left: -8px;
 }
 
 .highlight-card strong {
-  display: block;
+  max-width: 100%;
   color: #fff;
-  font-size: clamp(24px, 2.3vw, 35px);
+  font-size: clamp(24px, 2vw, 32px);
   font-weight: 700;
-  line-height: 1.03;
-  letter-spacing: -0.04em;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.highlight-card .highlight-date {
+  font-size: clamp(21px, 1.8vw, 28px);
+  line-height: 1.15;
 }
 
 .highlight-card p {
-  max-width: 34ch;
-  margin-top: 9px;
+  max-width: 31ch;
+  margin: 0 auto;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.5;
+  text-align: center;
 }
 
 /* PROJELER */
 
 .projects-grid {
   display: grid;
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 
@@ -660,8 +680,7 @@ button {
 .tools-track {
   width: max-content;
   display: flex;
-  animation:
-    tools-scroll 29s linear infinite;
+  animation: tools-scroll 29s linear infinite;
 }
 
 .tools-marquee:hover .tools-track {
@@ -801,15 +820,10 @@ button {
   opacity: 0.5;
 }
 
-/* TABLET */
-
 @media (max-width: 1000px) {
   .container,
   .narrow {
-    width: min(
-      100% - 34px,
-      var(--container)
-    );
+    width: min(100% - 34px, var(--container));
   }
 
   .nav-links {
@@ -817,8 +831,7 @@ button {
   }
 
   .highlights-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .projects-grid {
@@ -830,15 +843,10 @@ button {
   }
 }
 
-/* MOBİL */
-
 @media (max-width: 720px) {
   .container,
   .narrow {
-    width: min(
-      100% - 22px,
-      var(--container)
-    );
+    width: min(100% - 22px, var(--container));
   }
 
   .nav-inner {
@@ -945,50 +953,58 @@ button {
   }
 
   .highlights {
-    padding-top: 16px;
+    padding-top: 20px;
   }
 
-  .highlights-head {
-    display: block;
+  .highlights-header {
+    margin-bottom: 26px;
   }
 
-  .highlights-heading {
-    gap: 13px;
-  }
-
-  .highlights-badge {
-    width: 47px;
-    height: 47px;
-  }
-
-  .highlights-head .section-description {
-    margin-top: 16px;
+  .highlights-icon {
+    width: 32px !important;
+    height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    margin-bottom: 14px;
+    flex-basis: 32px;
   }
 
   .highlights-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 11px;
   }
 
-  .highlight-card,
-  .highlight-large {
+  .highlight-card {
     min-height: 170px;
-    padding: 18px;
-    gap: 20px;
-    border-radius: 18px;
+    padding: 22px 18px;
+    gap: 13px;
+    border-radius: 19px;
   }
 
-  .highlight-avatars img {
-    width: 41px;
-    height: 41px;
+  .highlight-logos {
+    min-height: 34px;
+  }
+
+  .highlight-logos img {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px;
+    min-height: 32px;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    flex-basis: 32px;
   }
 
   .highlight-card strong {
-    font-size: 26px;
+    font-size: 25px;
+  }
+
+  .highlight-card .highlight-date {
+    font-size: 22px;
   }
 
   .highlight-card p {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .projects-grid {
@@ -1023,8 +1039,7 @@ button {
   .project-links {
     margin-top: 18px;
     display: grid;
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .project-social-link {
@@ -1061,12 +1076,14 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .highlights-heading {
-    display: block;
+  .highlight-card {
+    min-height: 160px;
   }
+}
 
-  .highlights-badge {
-    margin-bottom: 14px;
+@media (hover: none) {
+  .project-hover {
+    display: none;
   }
 }
 
