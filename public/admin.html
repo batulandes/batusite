@@ -2,20 +2,26 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta name="robots" content="noindex, nofollow">
+
   <title>BATU — Yönetim Paneli</title>
 
   <style>
     :root {
       --bg: #000;
-      --panel: #0b0b0b;
-      --panel-2: #131313;
+      --panel: #0c0c0c;
+      --panel-2: #141414;
       --text: #fff;
-      --muted: #9a9a9a;
-      --border: #2a2a2a;
-      --danger: #ff6969;
-      --success: #72df98;
+      --muted: #999;
+      --border: #292929;
+      --danger: #ff6b6b;
+      --success: #65dd91;
     }
 
     * {
@@ -36,79 +42,72 @@
       font: inherit;
     }
 
-    .hidden {
+    button {
+      cursor: pointer;
+    }
+
+    [hidden] {
       display: none !important;
     }
 
-    .wrap {
-      width: min(1100px, calc(100% - 24px));
-      margin: auto;
+    .container {
+      width: min(1080px, calc(100% - 24px));
+      margin: 0 auto;
     }
 
-    .login {
+    .login-screen {
       min-height: 100vh;
       display: grid;
       place-items: center;
       padding: 20px;
     }
 
-    .card,
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-    }
-
     .login-card {
       width: min(420px, 100%);
       padding: 26px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 22px;
     }
 
     .logo {
       display: block;
-      width: 62px;
-      height: 62px;
-      object-fit: contain;
+      width: 64px;
+      height: 64px;
       margin: 0 auto 20px;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
+      object-fit: contain;
     }
 
     .login-card h1 {
+      margin: 0 0 8px;
       text-align: center;
-      margin-bottom: 8px;
     }
 
     .login-card > p {
-      text-align: center;
+      margin: 0 0 24px;
       color: var(--muted);
-      margin-bottom: 24px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: #d4d4d4;
-      margin-bottom: 7px;
+      text-align: center;
     }
 
     .field {
       margin-bottom: 15px;
     }
 
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #ddd;
+      font-size: 13px;
+    }
+
     input,
     textarea {
       width: 100%;
+      padding: 13px;
+      color: #fff;
       background: var(--panel-2);
       border: 1px solid var(--border);
-      color: #fff;
       border-radius: 12px;
-      padding: 13px;
       outline: none;
     }
 
@@ -122,29 +121,28 @@
       resize: vertical;
     }
 
-    .btn {
-      border: 1px solid #444;
-      background: transparent;
-      color: #fff;
-      border-radius: 999px;
+    .button {
       padding: 11px 16px;
-      cursor: pointer;
+      color: #fff;
+      background: transparent;
+      border: 1px solid #444;
+      border-radius: 999px;
     }
 
-    .btn.primary {
-      background: #fff;
+    .button.primary {
       color: #000;
+      background: #fff;
       border-color: #fff;
-      font-weight: 700;
+      font-weight: bold;
     }
 
-    .btn.danger {
+    .button.danger {
       color: var(--danger);
     }
 
-    .btn:disabled {
-      opacity: 0.55;
+    .button:disabled {
       cursor: not-allowed;
+      opacity: 0.55;
     }
 
     .full {
@@ -152,30 +150,30 @@
     }
 
     .message {
-      min-height: 21px;
+      min-height: 22px;
+      margin: 13px 0 0;
       font-size: 13px;
-      margin: 12px 0 0;
     }
 
-    .error {
+    .message.error {
       color: var(--danger);
     }
 
-    .success {
+    .message.success {
       color: var(--success);
     }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 5;
+      z-index: 20;
       background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(15px);
     }
 
     .topbar-inner {
-      height: 68px;
+      min-height: 68px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -190,14 +188,20 @@
 
     .brand img {
       width: 34px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .brand strong,
+    .brand small {
+      display: block;
     }
 
     .brand small {
-      display: block;
       color: var(--muted);
     }
 
-    .actions {
+    .top-actions {
       display: flex;
       gap: 8px;
     }
@@ -206,29 +210,46 @@
       padding: 28px 0 70px;
     }
 
+    .intro h1 {
+      margin: 0 0 8px;
+      font-size: clamp(34px, 8vw, 58px);
+    }
+
     .intro p {
+      margin: 0 0 26px;
       color: var(--muted);
     }
 
-    .grid {
+    .layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 360px;
       gap: 20px;
       align-items: start;
     }
 
+    .panel {
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
     .panel-head {
       padding: 18px;
-      border-bottom: 1px solid var(--border);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
+      border-bottom: 1px solid var(--border);
     }
 
     .panel-head h2 {
       margin: 0;
       font-size: 18px;
+    }
+
+    .panel-head small {
+      color: var(--muted);
     }
 
     .form {
@@ -245,10 +266,28 @@
       grid-column: 1 / -1;
     }
 
-    .checks {
+    .preview {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin-bottom: 10px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--muted);
+      border: 1px dashed #444;
+      border-radius: 12px;
+    }
+
+    .preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .checkboxes {
       display: flex;
-      gap: 16px;
       flex-wrap: wrap;
+      gap: 16px;
     }
 
     .check {
@@ -264,80 +303,62 @@
       height: 18px;
     }
 
-    .preview {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: 1px dashed #444;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      color: var(--muted);
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-
-    .preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
     .form-actions {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
       margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
     }
 
-    .project {
-      display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 12px;
+    .project-item {
       padding: 14px;
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr);
+      gap: 12px;
       border-bottom: 1px solid var(--border);
     }
 
-    .project:last-child {
+    .project-item:last-child {
       border-bottom: 0;
     }
 
-    .project img {
+    .project-item img {
       width: 90px;
       aspect-ratio: 16 / 10;
       object-fit: cover;
-      border-radius: 10px;
       background: #111;
+      border-radius: 10px;
     }
 
-    .project h3 {
-      margin: 0 0 4px;
+    .project-item h3 {
+      margin: 0 0 5px;
       font-size: 15px;
     }
 
-    .project p {
+    .project-item p {
       margin: 0;
       color: var(--muted);
       font-size: 12px;
     }
 
     .project-actions {
+      margin-top: 10px;
       display: flex;
       gap: 7px;
-      margin-top: 10px;
     }
 
     .empty {
-      padding: 30px;
-      text-align: center;
+      padding: 30px 18px;
       color: var(--muted);
+      text-align: center;
     }
 
     @media (max-width: 820px) {
-      .grid {
+      .layout {
         grid-template-columns: 1fr;
       }
 
-      .list-panel {
+      .projects-panel {
         order: -1;
       }
     }
@@ -355,11 +376,11 @@
         flex-direction: column;
       }
 
-      .form-actions .btn {
+      .form-actions .button {
         width: 100%;
       }
 
-      .view-site {
+      .site-button {
         display: none;
       }
     }
@@ -368,11 +389,13 @@
 
 <body>
 
-  <section id="loginScreen" class="login">
+  <section
+    class="login-screen"
+    id="loginScreen"
+  >
     <form
+      class="login-card"
       id="loginForm"
-      class="card login-card"
-      onsubmit="return false;"
     >
       <img
         class="logo"
@@ -385,7 +408,9 @@
       <p>Projelerini telefondan yönet.</p>
 
       <div class="field">
-        <label for="email">E-posta</label>
+        <label for="email">
+          E-posta
+        </label>
 
         <input
           id="email"
@@ -396,7 +421,9 @@
       </div>
 
       <div class="field">
-        <label for="password">Şifre</label>
+        <label for="password">
+          Şifre
+        </label>
 
         <input
           id="password"
@@ -407,21 +434,26 @@
       </div>
 
       <button
-        id="loginBtn"
-        class="btn primary full"
-        type="button"
+        class="button primary full"
+        id="loginButton"
+        type="submit"
       >
         Giriş Yap
       </button>
 
-      <p id="loginMessage" class="message"></p>
+      <p
+        class="message"
+        id="loginMessage"
+      ></p>
     </form>
   </section>
 
-  <div id="dashboard" class="hidden">
-
+  <div
+    id="dashboard"
+    hidden
+  >
     <header class="topbar">
-      <div class="wrap topbar-inner">
+      <div class="container topbar-inner">
 
         <div class="brand">
           <img
@@ -435,9 +467,9 @@
           </div>
         </div>
 
-        <div class="actions">
+        <div class="top-actions">
           <a
-            class="btn view-site"
+            class="button site-button"
             href="/"
             target="_blank"
           >
@@ -445,8 +477,8 @@
           </a>
 
           <button
-            id="logoutBtn"
-            class="btn"
+            class="button"
+            id="logoutButton"
             type="button"
           >
             Çıkış
@@ -456,49 +488,78 @@
       </div>
     </header>
 
-    <main class="wrap main">
+    <main class="container main">
 
       <section class="intro">
         <h1>Projeler</h1>
-        <p>Yeni proje ekle veya mevcut projeleri düzenle.</p>
+        <p>Yeni proje ekle veya mevcut projelerini düzenle.</p>
       </section>
 
-      <div class="grid">
+      <div class="layout">
 
         <section class="panel">
 
           <div class="panel-head">
-            <h2 id="formTitle">Yeni proje</h2>
+            <h2 id="formTitle">
+              Yeni proje
+            </h2>
           </div>
 
           <form
-            id="projectForm"
             class="form"
-            onsubmit="return false;"
+            id="projectForm"
           >
+            <input
+              id="projectId"
+              type="hidden"
+            >
 
-            <input id="projectId" type="hidden">
-            <input id="existingImage" type="hidden">
+            <input
+              id="existingImage"
+              type="hidden"
+            >
 
             <div class="fields">
 
               <div>
-                <label for="title">Proje başlığı *</label>
-                <input id="title" required>
+                <label for="title">
+                  Proje başlığı *
+                </label>
+
+                <input
+                  id="title"
+                  type="text"
+                  required
+                >
               </div>
 
               <div>
-                <label for="slug">Bağlantı adı *</label>
-                <input id="slug" required>
+                <label for="slug">
+                  Bağlantı adı *
+                </label>
+
+                <input
+                  id="slug"
+                  type="text"
+                  required
+                >
               </div>
 
               <div>
-                <label for="category">Kategori</label>
-                <input id="category">
+                <label for="category">
+                  Kategori
+                </label>
+
+                <input
+                  id="category"
+                  type="text"
+                >
               </div>
 
               <div>
-                <label for="year">Yıl</label>
+                <label for="year">
+                  Yıl
+                </label>
 
                 <input
                   id="year"
@@ -512,7 +573,9 @@
                   Kısa açıklama
                 </label>
 
-                <textarea id="shortDescription"></textarea>
+                <textarea
+                  id="shortDescription"
+                ></textarea>
               </div>
 
               <div class="span-2">
@@ -520,13 +583,20 @@
                   Detaylı açıklama
                 </label>
 
-                <textarea id="description"></textarea>
+                <textarea
+                  id="description"
+                ></textarea>
               </div>
 
               <div class="span-2">
-                <label for="coverFile">Kapak görseli</label>
+                <label for="coverFile">
+                  Kapak görseli
+                </label>
 
-                <div id="preview" class="preview">
+                <div
+                  class="preview"
+                  id="preview"
+                >
                   Görsel seçilmedi
                 </div>
 
@@ -550,7 +620,9 @@
               </div>
 
               <div>
-                <label for="sortOrder">Sıralama</label>
+                <label for="sortOrder">
+                  Sıralama
+                </label>
 
                 <input
                   id="sortOrder"
@@ -562,7 +634,7 @@
               <div>
                 <label>Yayın ayarları</label>
 
-                <div class="checks">
+                <div class="checkboxes">
 
                   <label class="check">
                     <input
@@ -589,24 +661,25 @@
             <div class="form-actions">
 
               <button
-                id="saveBtn"
-                class="btn primary"
-                type="button"
+                class="button primary"
+                id="saveButton"
+                type="submit"
               >
                 Projeyi Kaydet
               </button>
 
               <button
-                id="cancelBtn"
-                class="btn hidden"
+                class="button"
+                id="cancelButton"
                 type="button"
+                hidden
               >
                 Düzenlemeyi İptal Et
               </button>
 
               <button
-                id="clearBtn"
-                class="btn"
+                class="button"
+                id="clearButton"
                 type="button"
               >
                 Formu Temizle
@@ -614,23 +687,28 @@
 
             </div>
 
-            <p id="formMessage" class="message"></p>
+            <p
+              class="message"
+              id="formMessage"
+            ></p>
 
           </form>
         </section>
 
-        <aside class="panel list-panel">
+        <aside class="panel projects-panel">
 
           <div class="panel-head">
 
             <div>
               <h2>Mevcut projeler</h2>
-              <small id="projectCount">Yükleniyor…</small>
+              <small id="projectCount">
+                Yükleniyor…
+              </small>
             </div>
 
             <button
-              id="refreshBtn"
-              class="btn"
+              class="button"
+              id="refreshButton"
               type="button"
             >
               Yenile
@@ -648,11 +726,11 @@
 
       </div>
     </main>
-
   </div>
 
+  <!-- SUPABASE RESMÎ CDN -->
   <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
   ></script>
 
   <script>
@@ -662,15 +740,72 @@
     const SUPABASE_KEY =
       "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae";
 
-    const $ = (id) => document.getElementById(id);
+    const loginScreen =
+      document.getElementById("loginScreen");
 
-    let sb;
+    const dashboard =
+      document.getElementById("dashboard");
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const loginMessage =
+      document.getElementById("loginMessage");
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+    const adminEmail =
+      document.getElementById("adminEmail");
+
+    const projectForm =
+      document.getElementById("projectForm");
+
+    const projectList =
+      document.getElementById("projectList");
+
+    const projectCount =
+      document.getElementById("projectCount");
+
+    const formMessage =
+      document.getElementById("formMessage");
+
+    const formTitle =
+      document.getElementById("formTitle");
+
+    const saveButton =
+      document.getElementById("saveButton");
+
+    const cancelButton =
+      document.getElementById("cancelButton");
+
+    const clearButton =
+      document.getElementById("clearButton");
+
+    const refreshButton =
+      document.getElementById("refreshButton");
+
+    const coverFile =
+      document.getElementById("coverFile");
+
+    const preview =
+      document.getElementById("preview");
+
+    let supabaseClient;
     let projects = [];
     let previewUrl = "";
 
-    function setMessage(element, text, type = "") {
+    function setMessage(
+      element,
+      text,
+      type = ""
+    ) {
       element.textContent = text;
-      element.className = `message ${type}`;
+      element.className =
+        `message${type ? ` ${type}` : ""}`;
     }
 
     function escapeHTML(value = "") {
@@ -701,113 +836,199 @@
     }
 
     function showLogin() {
-      $("loginScreen").classList.remove("hidden");
-      $("dashboard").classList.add("hidden");
+      loginScreen.hidden = false;
+      dashboard.hidden = true;
     }
 
     function showDashboard(user) {
-      $("loginScreen").classList.add("hidden");
-      $("dashboard").classList.remove("hidden");
-      $("adminEmail").textContent = user.email || "";
+      loginScreen.hidden = true;
+      dashboard.hidden = false;
+
+      adminEmail.textContent =
+        user.email || "";
 
       loadProjects();
     }
 
-    async function login() {
-      setMessage($("loginMessage"), "");
+    loginForm.addEventListener(
+      "submit",
+      async (event) => {
+        event.preventDefault();
 
-      const email = $("email").value.trim();
-      const password = $("password").value;
+        setMessage(loginMessage, "");
 
-      if (!email || !password) {
-        setMessage(
-          $("loginMessage"),
-          "E-posta ve şifreyi doldur.",
-          "error"
-        );
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
 
-        return;
-      }
+        const password =
+          document
+            .getElementById("password")
+            .value;
 
-      $("loginBtn").disabled = true;
-      $("loginBtn").textContent = "Giriş yapılıyor…";
+        if (!email || !password) {
+          setMessage(
+            loginMessage,
+            "E-posta ve şifreyi doldur.",
+            "error"
+          );
 
-      try {
-        const { data, error } =
-          await sb.auth.signInWithPassword({
-            email,
-            password
-          });
-
-        if (error) {
-          throw error;
+          return;
         }
 
-        showDashboard(data.user);
-      } catch (error) {
-        setMessage(
-          $("loginMessage"),
-          error.message || "Giriş başarısız.",
-          "error"
-        );
-      } finally {
-        $("loginBtn").disabled = false;
-        $("loginBtn").textContent = "Giriş Yap";
+        loginButton.disabled = true;
+        loginButton.textContent =
+          "Giriş yapılıyor…";
+
+        try {
+          const { data, error } =
+            await supabaseClient.auth
+              .signInWithPassword({
+                email,
+                password
+              });
+
+          if (error) {
+            throw error;
+          }
+
+          showDashboard(data.user);
+        } catch (error) {
+          console.error(error);
+
+          setMessage(
+            loginMessage,
+            error.message ||
+              "Giriş yapılamadı.",
+            "error"
+          );
+        } finally {
+          loginButton.disabled = false;
+          loginButton.textContent =
+            "Giriş Yap";
+        }
       }
-    }
+    );
 
-    async function loadProjects() {
-      $("projectList").innerHTML =
-        '<div class="empty">Projeler yükleniyor…</div>';
+    logoutButton.addEventListener(
+      "click",
+      async () => {
+        await supabaseClient.auth.signOut();
+        showLogin();
+      }
+    );
 
-      const { data, error } = await sb
-        .from("projects")
-        .select("*")
-        .order("sort_order", {
-          ascending: true
-        })
-        .order("created_at", {
-          ascending: false
-        });
+    document
+      .getElementById("title")
+      .addEventListener(
+        "input",
+        (event) => {
+          const slugInput =
+            document.getElementById("slug");
+
+          if (!slugInput.dataset.manual) {
+            slugInput.value =
+              slugify(event.target.value);
+          }
+        }
+      );
+
+    document
+      .getElementById("slug")
+      .addEventListener(
+        "input",
+        (event) => {
+          event.target.dataset.manual = "1";
+
+          event.target.value =
+            slugify(event.target.value);
+        }
+      );
+
+    coverFile.addEventListener(
+      "change",
+      () => {
+        const file =
+          coverFile.files[0];
+
+        if (!file) {
+          return;
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+          alert(
+            "Görsel 10 MB'dan büyük olamaz."
+          );
+
+          coverFile.value = "";
+
+          return;
+        }
+
+        if (previewUrl) {
+          URL.revokeObjectURL(previewUrl);
+        }
+
+        previewUrl =
+          URL.createObjectURL(file);
+
+        preview.innerHTML =
+          `<img src="${previewUrl}" alt="Önizleme">`;
+      }
+    );
+
+    async function uploadImage(file) {
+      const extension =
+        (file.name.split(".").pop() || "jpg")
+          .replace(/[^a-z0-9]/gi, "");
+
+      const filePath =
+        `projects/${crypto.randomUUID()}.${extension}`;
+
+      const { error } =
+        await supabaseClient.storage
+          .from("project-images")
+          .upload(filePath, file, {
+            contentType: file.type,
+            upsert: false
+          });
 
       if (error) {
-        $("projectList").innerHTML =
-          `<div class="empty">${escapeHTML(error.message)}</div>`;
-
-        return;
+        throw error;
       }
 
-      projects = data || [];
+      const { data } =
+        supabaseClient.storage
+          .from("project-images")
+          .getPublicUrl(filePath);
 
-      renderProjects();
+      return data.publicUrl;
     }
 
-    function renderProjects() {
-      $("projectCount").textContent =
-        `${projects.length} proje`;
+    projectForm.addEventListener(
+      "submit",
+      async (event) => {
+        event.preventDefault();
 
-      if (!projects.length) {
-        $("projectList").innerHTML =
-          '<div class="empty">Henüz proje yok.</div>';
+        setMessage(formMessage, "");
 
-        return;
-      }
+        const projectId =
+          document
+            .getElementById("projectId")
+            .value;
 
-      $("projectList").innerHTML = projects
-        .map((project) => `
-          <article class="project">
+        const existingImage =
+          document
+            .getElementById("existingImage")
+            .value;
 
-            <img
-              src="${escapeHTML(project.cover_image)}"
-              alt=""
-            >
+        const title =
+          document
+            .getElementById("title")
+            .value
+            .trim();
 
-            <div>
-
-              <h3>
-                ${escapeHTML(project.title)}
-              </h3>
-
-              <p>
-                ${escapeHTML(project.category || "Kategorisiz")}
-                ${
+        const slug =
+          
