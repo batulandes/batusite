@@ -4,37 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Batu — Tasarım ve Dijital İçerik</title>
+  <title>BATU Resmi Portfolyo Sitesi</title>
 
   <meta
     name="description"
-    content="Batu'nun grafik tasarım, içerik üretimi, video düzenleme, web tasarım ve uygulama tasarımı çalışmalarını içeren portfolyo sitesi."
+    content="Batu'nun grafik tasarım, içerik üretimi, video düzenleme, web tasarım ve uygulama tasarımı çalışmalarını içeren resmi portfolyo sitesi."
   >
 
   <meta name="theme-color" content="#000000">
 
-  <meta property="og:title" content="Batu — Tasarım ve Dijital İçerik">
+  <meta property="og:title" content="BATU Resmi Portfolyo Sitesi">
+
   <meta
     property="og:description"
     content="Grafik tasarım, içerik üretimi, video düzenleme, web tasarım ve uygulama tasarımı."
   >
+
   <meta property="og:type" content="website">
+
   <meta
     property="og:image"
-    content="https://i.ibb.co/fV7RQvQY/batulogoo.png"
+    content="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
   >
 
+  <!-- Açık temada siyah favicon -->
   <link
     rel="icon"
     type="image/png"
-    href="https://i.ibb.co/fV7RQvQY/batulogoo.png"
+    href="https://i.ibb.co/PZFY1NmJ/batulogo2026png.png"
+    media="(prefers-color-scheme: light)"
   >
 
-  <link rel="stylesheet" href="style.css?v=4">
+  <!-- Karanlık temada beyaz favicon -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
+    media="(prefers-color-scheme: dark)"
+  >
+
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
-  <!-- Kısa ve güvenli açılış ekranı -->
+  <!-- Kısa açılış ekranı -->
   <div class="page-loader" aria-hidden="true">
     <img
       src="https://i.ibb.co/hR1sF79y/BATUDUZ.png"
@@ -54,15 +67,25 @@
   <!-- Üst menü -->
   <header class="nav" id="nav">
     <div class="container nav-inner">
+
       <a
         href="#top"
         class="nav-logo"
         aria-label="Batu ana sayfa"
       >
-        <img
-          src="https://i.ibb.co/fV7RQvQY/batulogoo.png"
-          alt="Batu logosu"
-        >
+        <picture>
+          <!-- Açık temada siyah kare logo -->
+          <source
+            srcset="https://i.ibb.co/PZFY1NmJ/batulogo2026png.png"
+            media="(prefers-color-scheme: light)"
+          >
+
+          <!-- Karanlık temada beyaz kare logo -->
+          <img
+            src="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
+            alt="Batu logosu"
+          >
+        </picture>
       </a>
 
       <nav
@@ -70,10 +93,21 @@
         id="nav-links"
         aria-label="Ana menü"
       >
-        <a href="#work" data-section="work">Portfolyo</a>
-        <a href="#about" data-section="about">Hakkımda</a>
-        <a href="#tools" data-section="tools">Araçlar</a>
-        <a href="#contact" data-section="contact">İletişim</a>
+        <a href="#work" data-section="work">
+          Portfolyo
+        </a>
+
+        <a href="#about" data-section="about">
+          Hakkımda
+        </a>
+
+        <a href="#tools" data-section="tools">
+          Araçlar
+        </a>
+
+        <a href="#contact" data-section="contact">
+          İletişim
+        </a>
       </nav>
 
       <button
@@ -87,13 +121,16 @@
         <span></span>
         <span></span>
       </button>
+
     </div>
   </header>
 
   <main id="top">
+
     <!-- Ana giriş -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero-inner">
+
         <p class="hero-kicker">
           TASARIM · İÇERİK · DİJİTAL DENEYİM
         </p>
@@ -121,15 +158,22 @@
             İletişime Geç
           </a>
         </div>
+
       </div>
     </section>
 
     <!-- Portfolyo -->
     <section class="section work" id="work">
       <div class="container">
+
         <div class="section-head">
-          <p class="section-eyebrow">01 · Portfolyo</p>
-          <h2 class="section-title">Seçilmiş çalışma</h2>
+          <p class="section-eyebrow">
+            01 · Portfolyo
+          </p>
+
+          <h2 class="section-title">
+            Seçilmiş çalışma
+          </h2>
         </div>
 
         <a
@@ -138,6 +182,7 @@
           aria-label="Lemonhota YouTube Kanalı projesini görüntüle"
         >
           <div class="project-image-wrap">
+
             <img
               src="https://i.ibb.co/SDmcm9V3/Lemonhota-57-Resmi-Kapak.jpg"
               alt="Lemonhota YouTube kanalı kapak görseli"
@@ -148,16 +193,20 @@
               <span>Projeyi Gör</span>
               <strong>↗</strong>
             </div>
+
           </div>
 
           <div class="project-content">
             <div>
+
               <div class="project-meta">
                 <span>YouTube Tasarımı</span>
                 <span>2026</span>
               </div>
 
-              <h3>Lemonhota YouTube Kanalı</h3>
+              <h3>
+                Lemonhota YouTube Kanalı
+              </h3>
 
               <p>
                 Lemonhota kanalının güncel yayın kimliği için
@@ -165,45 +214,60 @@
                 görsel dilini güçlü, net ve dikkat çekici bir
                 tasarımla destekleyen çalışma.
               </p>
+
             </div>
 
             <span class="project-detail-link">
               Proje detayına git <b>↗</b>
             </span>
           </div>
+
         </a>
+
       </div>
     </section>
 
     <!-- Hakkımda -->
     <section class="section about" id="about">
       <div class="container narrow">
+
         <div class="section-head">
-          <p class="section-eyebrow">02 · Hakkımda</p>
-          <h2 class="section-title">Ben kimim?</h2>
+          <p class="section-eyebrow">
+            02 · Hakkımda
+          </p>
+
+          <h2 class="section-title">
+            Ben kimim?
+          </h2>
         </div>
 
         <p class="about-text">
           Merhaba, ben Batu. Tasarım benim için yalnızca güzel
           görünen işler üretmek değil,
+
           <strong>
             insanların aklında kalacak deneyimler oluşturmaktır.
           </strong>
 
           Grafik tasarım, video düzenleme ve dijital içerik
           üretimi alanlarında çalışıyorum. Her projeye
+
           <strong>
             yaratıcılık, detaylara önem ve sürekli gelişme tutkusu
           </strong>
+
           katıyorum.
         </p>
+
       </div>
     </section>
 
     <!-- Araçlar -->
     <section class="section tools" id="tools">
+
       <div class="container">
         <div class="section-head">
+
           <p class="section-eyebrow">
             03 · Kullandığım Araçlar
           </p>
@@ -211,6 +275,7 @@
           <h2 class="section-title">
             Üretim araçlarım
           </h2>
+
         </div>
       </div>
 
@@ -219,7 +284,9 @@
         aria-label="Kullandığım tasarım ve içerik üretim araçları"
       >
         <div class="tools-track">
+
           <!-- İlk grup -->
+
           <div class="tool-card">
             <img
               src="https://cdn.simpleicons.org/figma/white"
@@ -252,7 +319,8 @@
             <span>CapCut</span>
           </div>
 
-          <!-- Kesintisiz animasyon için aynı grup -->
+          <!-- Kesintisiz animasyon için tekrar -->
+
           <div class="tool-card" aria-hidden="true">
             <img
               src="https://cdn.simpleicons.org/figma/white"
@@ -284,14 +352,19 @@
             >
             <span>CapCut</span>
           </div>
+
         </div>
       </div>
+
     </section>
 
     <!-- İletişim -->
     <section class="section contact" id="contact">
       <div class="container narrow contact-inner">
-        <p class="section-eyebrow">04 · İletişim</p>
+
+        <p class="section-eyebrow">
+          04 · İletişim
+        </p>
 
         <h2 class="contact-title">
           Bana Ulaşın
@@ -313,6 +386,7 @@
           class="social-links"
           aria-label="Sosyal medya bağlantıları"
         >
+
           <a
             href="https://instagram.com/batulandes"
             target="_blank"
@@ -348,21 +422,28 @@
               alt=""
             >
           </a>
+
         </div>
+
       </div>
     </section>
+
   </main>
 
   <footer class="footer">
-    <p class="footer-copy">© 2026 BATU</p>
+
+    <p class="footer-copy">
+      © 2026 BATU
+    </p>
 
     <img
       src="https://i.ibb.co/hR1sF79y/BATUDUZ.png"
       alt="Batu"
       class="footer-logo"
     >
+
   </footer>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
