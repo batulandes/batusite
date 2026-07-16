@@ -31,13 +31,21 @@
 
   <meta
     property="og:image"
-    content="https://static.wixstatic.com/media/6fb8dd_ba1ab4d0ce5d438da81f532034305b91~mv2.jpg"
+    content="https://i.ibb.co/zq12TxH/Screenshot-20260716-224309-Chrome.jpg"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/PZFY1NmJ/batulogo2026png.png"
+    media="(prefers-color-scheme: light)"
   >
 
   <link
     rel="icon"
     type="image/png"
     href="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
+    media="(prefers-color-scheme: dark)"
   >
 
   <style>
@@ -45,9 +53,9 @@
       --background: #000000;
       --text: #ffffff;
       --muted: #a0a0a0;
-      --line: rgba(255, 255, 255, 0.12);
-      --line-strong: rgba(255, 255, 255, 0.24);
-      --container: 1180px;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-strong: rgba(255, 255, 255, 0.24);
+      --container: 1240px;
     }
 
     * {
@@ -90,7 +98,7 @@
     .container {
       width: min(
         var(--container),
-        calc(100% - 48px)
+        calc(100% - 64px)
       );
       margin-inline: auto;
     }
@@ -110,59 +118,149 @@
       background-size: 8px 8px;
     }
 
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 50;
-  width: 100%;
-  padding: 12px 0;
-  pointer-events: none;
+    /*
+      ANA SAYFADAKİ MENÜYLE BİREBİR:
+      Normal yükseklik: 88px
+      Normal logo: 58px
+      Compact yükseklik: 72px
+      Compact logo: 50px
+      Blur: 18px
+    */
 
-  background: rgba(0, 0, 0, 0.46);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.64);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition:
+        background 0.25s ease,
+        border-color 0.25s ease;
+    }
 
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
+    .topbar.compact {
+      background: rgba(0, 0, 0, 0.9);
+      border-color: var(--border);
+    }
 
-.topbar-inner {
-  min-height: 52px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 12px;
-}
+    .topbar-inner {
+      position: relative;
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: min-height 0.25s ease;
+    }
 
-.topbar-inner > .top-link:first-child {
-  justify-self: start;
-}
+    .topbar.compact .topbar-inner {
+      min-height: 72px;
+    }
 
-.topbar-inner > .top-link:last-child {
-  justify-self: end;
-}
+    .top-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 58px;
+      height: 58px;
+      transform: translate(-50%, -50%);
+      transition:
+        width 0.25s ease,
+        height 0.25s ease;
+    }
 
-.top-logo {
-  pointer-events: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
+    .topbar.compact .top-logo {
+      width: 50px;
+      height: 50px;
+    }
 
-.top-logo img {
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
+    .top-logo picture,
+    .top-logo img {
+      width: 100%;
+      height: 100%;
+    }
 
-.top-logo:hover img {
-  transform: scale(1.05);
-  opacity: 0.86;
-}
+    .top-logo img {
+      object-fit: contain;
+    }
+
+    .top-link {
+      min-height: 42px;
+      padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #aaaaaa;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .top-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .top-link img {
+      width: 17px;
+      height: 17px;
+      object-fit: contain;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 138px 0 64px;
+      isolation: isolate;
+    }
+
+    .hero-background {
+      position: absolute;
+      inset: -6%;
+      z-index: -3;
+      transform: scale(1.05);
+      will-change: transform;
+    }
+
+    .hero-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.27) 0%,
+          rgba(0, 0, 0, 0.5) 54%,
+          rgba(0, 0, 0, 0.98) 100%
+        ),
+        radial-gradient(
+          circle at center,
+          rgba(0, 0, 0, 0.05),
+          rgba(0, 0, 0, 0.52)
+        );
+    }
 
     .hero-inner {
       max-width: 920px;
@@ -240,7 +338,7 @@
     .button-secondary {
       color: #ffffff;
       background: rgba(0, 0, 0, 0.38);
-      border: 1px solid var(--line);
+      border: 1px solid var(--border);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
@@ -314,8 +412,8 @@
       display: grid;
       grid-template-columns:
         repeat(4, minmax(0, 1fr));
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     .metric {
@@ -326,7 +424,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      border-right: 1px solid var(--line);
+      border-right: 1px solid var(--border);
     }
 
     .metric:last-child {
@@ -401,7 +499,7 @@
     .gallery-card {
       overflow: hidden;
       background: #050505;
-      border: 1px solid var(--line);
+      border: 1px solid var(--border);
       border-radius: 22px;
     }
 
@@ -452,7 +550,7 @@
 
     .footer {
       padding: 34px 24px 44px;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid var(--border);
       text-align: center;
     }
 
@@ -478,7 +576,7 @@
       }
 
       .metric:nth-child(-n + 2) {
-        border-bottom: 1px solid var(--line);
+        border-bottom: 1px solid var(--border);
       }
     }
 
@@ -490,23 +588,30 @@
         );
       }
 
-      .topbar {
-        padding-top: 12px;
+      .topbar-inner {
+        min-height: 74px;
       }
 
-      .topbar-inner {
-        gap: 8px;
+      .topbar.compact .topbar-inner {
+        min-height: 65px;
+      }
+
+      .top-logo {
+        width: 52px;
+        height: 52px;
+      }
+
+      .topbar.compact .top-logo {
+        width: 46px;
+        height: 46px;
       }
 
       .top-link {
-        min-height: 40px;
-        padding: 0 13px;
-        font-size: 12px;
-      }
-
-      .top-logo img {
         width: 42px;
         height: 42px;
+        min-height: 42px;
+        padding: 0;
+        border-radius: 50%;
       }
 
       .desktop-label {
@@ -515,7 +620,7 @@
 
       .hero {
         min-height: 100svh;
-        padding: 108px 0 58px;
+        padding: 112px 0 58px;
       }
 
       .project-eyebrow {
@@ -583,11 +688,11 @@
       .metric {
         min-height: 135px;
         border-right: 0;
-        border-bottom: 1px solid var(--line);
+        border-bottom: 1px solid var(--border);
       }
 
       .metric:nth-child(2) {
-        border-bottom: 1px solid var(--line);
+        border-bottom: 1px solid var(--border);
       }
 
       .metric:last-child {
@@ -617,7 +722,10 @@
     aria-hidden="true"
   ></div>
 
-  <header class="topbar">
+  <header
+    class="topbar"
+    id="topbar"
+  >
     <div class="container topbar-inner">
 
       <a
@@ -625,7 +733,7 @@
         class="top-link"
         aria-label="Portfolyoya dön"
       >
-        <span>←</span>
+        <span aria-hidden="true">←</span>
 
         <span class="desktop-label">
           Portfolyoya dön
@@ -828,6 +936,7 @@
 
           <div class="metric">
             <strong>#1</strong>
+
             <span>
               Lemonhota tarihinin en çok izlenen ve beğenilen
               içeriği
@@ -844,11 +953,15 @@
         </div>
 
         <div class="collaboration-text">
-          <small>Proje iş birliği</small>
+
+          <small>
+            Proje iş birliği
+          </small>
 
           <strong>
             Lemonhota × Hawk Gaming Chair
           </strong>
+
         </div>
 
       </div>
@@ -898,7 +1011,8 @@
           </figure>
 
           <figure class="gallery-card">
-                        <div class="gallery-image">
+
+            <div class="gallery-image">
               <img
                 src="https://static.wixstatic.com/media/6fb8dd_8968844ca27d449ab9dd2630c00f5aaa~mv2.png"
                 alt="Limon Tayfa Özeti 2025 facecamli gösterim anı"
@@ -975,15 +1089,28 @@
     const heroBackground =
       document.getElementById("hero-background");
 
+    const topbar =
+      document.getElementById("topbar");
+
     const reduceMotion =
       window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
 
+    const updateTopbar = () => {
+      if (!topbar) return;
+
+      topbar.classList.toggle(
+        "compact",
+        window.scrollY > 35
+      );
+    };
+
     if (heroBackground && !reduceMotion) {
       const updateParallax = () => {
         const scrollY = window.scrollY;
-        const offset = Math.min(scrollY * 0.12, 90);
+        const offset =
+          Math.min(scrollY * 0.12, 90);
 
         heroBackground.style.transform =
           `translateY(${offset}px) scale(1.05)`;
@@ -997,9 +1124,15 @@
         { passive: true }
       );
     }
+
+    updateTopbar();
+
+    window.addEventListener(
+      "scroll",
+      updateTopbar,
+      { passive: true }
+    );
   </script>
 
 </body>
 </html>
-
-           
