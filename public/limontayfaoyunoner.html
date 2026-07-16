@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Lemonhota Limon Tayfa Oyun Öneri — BATU</title>
+
+  <meta
+    name="description"
+    content="Limon Tayfa topluluğunun yüzlerce oyun önerisini tek bir çatı altında toplayan, 45 binden fazla oy kullanılan özel Lemonhota projesi."
+  >
+
+  <meta name="theme-color" content="#000000">
+
+  <meta
+    property="og:title"
+    content="Lemonhota Limon Tayfa Oyun Öneri — BATU"
+  >
+
+  <meta
+    property="og:description"
+    content="350'den fazla oyun, 45 binden fazla oy ve Google Trends Türkiye görünürlüğü elde eden topluluk odaklı Lemonhota projesi."
+  >
+
+  <meta property="og:type" content="website">
+
+  <meta
+    property="og:image"
+    content="https://cdn.discordapp.com/attachments/1255133297277796474/1527413979251474475/Screenshot_20260716_233717_Figma.jpg"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/PZFY1NmJ/batulogo2026png.png"
+    media="(prefers-color-scheme: light)"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
+    media="(prefers-color-scheme: dark)"
+  >
+
+  <style>
+    :root {
+      --background: #000000;
+      --text: #ffffff;
+      --muted: #a0a0a0;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-strong: rgba(255, 255, 255, 0.24);
+      --container: 1240px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--background);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(
+        var(--container),
+        calc(100% - 64px)
+      );
+      margin-inline: auto;
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0.018;
+      background-image:
+        radial-gradient(
+          circle at center,
+          #ffffff 0.5px,
+          transparent 0.5px
+        );
+      background-size: 8px 8px;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.64);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition:
+        background 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .topbar.compact {
+      background: rgba(0, 0, 0, 0.9);
+      border-color: var(--border);
+    }
+
+    .topbar-inner {
+      position: relative;
+      min-height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: min-height 0.25s ease;
+    }
+
+    .topbar.compact .topbar-inner {
+      min-height: 72px;
+    }
+
+    .top-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 58px;
+      height: 58px;
+      transform: translate(-50%, -50%);
+      transition:
+        width 0.25s ease,
+        height 0.25s ease;
+    }
+
+    .topbar.compact .top-logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    .top-logo picture,
+    .top-logo img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .top-logo img {
+      object-fit: contain;
+    }
+
+    .top-link {
+      min-height: 42px;
+      padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #aaaaaa;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .top-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 138px 0 64px;
+      isolation: isolate;
+    }
+
+    .hero-background {
+      position: absolute;
+      inset: -6%;
+      z-index: -3;
+      transform: scale(1.05);
+      will-change: transform;
+    }
+
+    .hero-background img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.24) 0%,
+          rgba(0, 0, 0, 0.56) 58%,
+          rgba(0, 0, 0, 0.99) 100%
+        ),
+        radial-gradient(
+          circle at center,
+          rgba(0, 0, 0, 0.08),
+          rgba(0, 0, 0, 0.58)
+        );
+    }
+
+    .hero-inner {
+      max-width: 940px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .project-eyebrow {
+      margin-bottom: 24px;
+      color: #d0d0d0;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .project-logo {
+      width: min(680px, 88vw);
+      height: auto;
+      margin: 0 auto 26px;
+      object-fit: contain;
+      filter:
+        drop-shadow(
+          0 22px 55px rgba(0, 0, 0, 0.72)
+        );
+    }
+
+    .hero-description {
+      max-width: 800px;
+      margin: 0 auto;
+      color: #e7e7e7;
+      font-size: clamp(17px, 2vw, 23px);
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .hero-actions {
+      margin-top: 29px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      min-height: 48px;
+      padding: 0 21px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      font-size: 14px;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #000000;
+      background: #ffffff;
+      border: 1px solid #ffffff;
+    }
+
+    .button-secondary {
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.38);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .scroll-note {
+      margin-top: 34px;
+      color: #8f8f8f;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: 92px 0;
+    }
+
+    .section-header {
+      max-width: 880px;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+
+    .section-eyebrow {
+      margin-bottom: 12px;
+      color: #777777;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: clamp(42px, 5.7vw, 74px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      text-align: center;
+    }
+
+    .section-description {
+      max-width: 780px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .project-story {
+      max-width: 950px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .project-story p {
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.85;
+      text-align: center;
+    }
+
+    .project-story p + p {
+      margin-top: 22px;
+    }
+
+    .project-story strong {
+      color: #ffffff;
+      font-weight: 650;
+    }
+
+    .metrics {
+      margin-top: 52px;
+      display: grid;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metric {
+      min-height: 150px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .metric:last-child {
+      border-right: 0;
+    }
+
+    .metric strong {
+      color: #ffffff;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .metric span {
+      max-width: 23ch;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .project-meta {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      color: #c8c8c8;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .project-meta span {
+      position: relative;
+    }
+
+    .project-meta span:not(:last-child)::after {
+      content: "•";
+      position: absolute;
+      right: -17px;
+      color: #555555;
+    }
+
+    .approval {
+      max-width: 980px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .approval-profile {
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 24px;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      border-radius: 50%;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .approval-profile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .approval-title {
+      font-size: clamp(38px, 5vw, 68px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .approval-text {
+      max-width: 780px;
+      margin: 22px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .video-card {
+      margin-top: 42px;
+      overflow: hidden;
+      background: #050505;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+    }
+
+    .video-card video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      object-fit: cover;
+    }
+
+    .video-caption {
+      padding: 18px 22px 21px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .closing-section {
+      max-width: 930px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .closing-section p {
+      color: #d2d2d2;
+      font-size: clamp(20px, 2.2vw, 27px);
+      line-height: 1.75;
+      text-align: center;
+    }
+
+    .closing-section strong {
+      color: #ffffff;
+    }
+
+    .footer {
+      padding: 34px 24px 44px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-logo {
+      width: 72px;
+      margin: 0 auto 14px;
+      opacity: 0.6;
+    }
+
+    .footer p {
+      color: #737373;
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .metrics {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .metric:nth-child(2) {
+        border-right: 0;
+      }
+
+      .metric:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(
+          100% - 22px,
+          var(--container)
+        );
+      }
+
+      .topbar-inner {
+        min-height: 74px;
+      }
+
+      .topbar.compact .topbar-inner {
+        min-height: 65px;
+      }
+
+      .top-logo {
+        width: 52px;
+        height: 52px;
+      }
+
+      .topbar.compact .top-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .top-link {
+        width: 42px;
+        height: 42px;
+        min-height: 42px;
+        padding: 0;
+        border-radius: 50%;
+      }
+
+      .desktop-label {
+        display: none;
+      }
+
+      .hero {
+        min-height: 100svh;
+        padding: 112px 0 58px;
+      }
+
+      .project-eyebrow {
+        margin-bottom: 21px;
+        font-size: 10px;
+      }
+
+      .project-logo {
+        width: min(94vw, 650px);
+        margin-bottom: 22px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .section {
+        padding: 66px 0;
+      }
+
+      .section-header {
+        margin-bottom: 32px;
+      }
+
+      .section-title {
+        font-size: 42px;
+      }
+
+      .section-description {
+        font-size: 15px;
+      }
+
+      .project-story p {
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .project-meta {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .project-meta span::after {
+        display: none;
+      }
+
+      .approval-profile {
+        width: 92px;
+        height: 92px;
+      }
+
+      .approval-text {
+        font-size: 16px;
+      }
+
+      .video-card {
+        border-radius: 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .metric {
+        min-height: 135px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .metric:nth-child(2) {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .metric:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .hero-background {
+        transform: scale(1.05) !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div
+    class="grain"
+    aria-hidden="true"
+  ></div>
+
+  <header
+    class="topbar"
+    id="topbar"
+  >
+    <div class="container topbar-inner">
+
+      <a
+        href="/#work"
+        class="top-link"
+        aria-label="Portfolyoya dön"
+      >
+        <span aria-hidden="true">←</span>
+
+        <span class="desktop-label">
+          Portfolyoya dön
+        </span>
+      </a>
+
+      <a
+        href="/"
+        class="top-logo"
+        aria-label="BATU ana sayfa"
+      >
+        <picture>
+
+          <source
+            srcset="https://i.ibb.co/PZFY1NmJ/batulogo2026png.png"
+            media="(prefers-color-scheme: light)"
+          >
+
+          <img
+            src="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
+            alt="BATU logosu"
+          >
+
+        </picture>
+      </a>
+
+      <a
+        href="#rraenee"
+        class="top-link"
+        aria-label="RRaenee bölümüne git"
+      >
+        <span aria-hidden="true">▶</span>
+
+        <span class="desktop-label">
+          RRaenee Yayını
+        </span>
+      </a>
+
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+
+      <div
+        class="hero-background"
+        id="hero-background"
+        aria-hidden="true"
+      >
+        <img
+          src="https://cdn.discordapp.com/attachments/1255133297277796474/1527413979251474475/Screenshot_20260716_233717_Figma.jpg"
+          alt=""
+        >
+      </div>
+
+      <div
+        class="hero-overlay"
+        aria-hidden="true"
+      ></div>
+
+      <div class="container hero-inner">
+
+        <p class="project-eyebrow">
+          Lemonhota · Topluluk Odaklı Web Projesi
+        </p>
+
+        <img
+          src="https://static.wixstatic.com/media/6fb8dd_99611bac48a74b62a75ffdf61ac8b3cf~mv2.png"
+          alt="Lemonhota Limon Tayfa Oyun Öneri logosu"
+          class="project-logo"
+        >
+
+        <p class="hero-description">
+          Limon Tayfa topluluğunun yüzlerce oyun önerisini
+          tek bir çatı altında toplayan, binlerce etkileşim
+          alan özel Lemonhota platformu.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="#project-story"
+            class="button button-primary"
+          >
+            Projeyi İncele
+          </a>
+
+          <a
+            href="#rraenee"
+            class="button button-secondary"
+          >
+            RRaenee Yayını
+          </a>
+
+        </div>
+
+        <p class="scroll-note">
+          Aşağı kaydır
+        </p>
+
+      </div>
+    </section>
+
+    <section
+      class="section"
+      id="project-story"
+    >
+      <div class="container">
+
+        <div class="section-header">
+
+          <p class="section-eyebrow">
+            01 · Proje Hikâyesi
+          </p>
+
+          <h1 class="section-title">
+            Dağınık önerilerden ortak bir sisteme
+          </h1>
+
+          <p class="section-description">
+            Limon Tayfa izleyicilerinin farklı platformlarda
+            yaptığı oyun önerilerini daha düzenli, erişilebilir
+            ve topluluk odaklı hale getirmek amacıyla geliştirildi.
+          </p>
+
+        </div>
+
+        <div class="project-story">
+
+          <p>
+            Limon Tayfa izleyicileri uzun süredir yayıncılara
+            farklı platformlar üzerinden oyun öneriyordu.
+            Ancak bu önerilerin toplandığı ortak bir sistem
+            olmadığı için süreç oldukça
+            <strong>dağınık ve takip edilmesi zor</strong>
+            hale gelmişti.
+          </p>
+
+          <p>
+            Bu sorunu çözmek için Lemonhota sitesi üzerinde
+            özel bir oyun öneri sistemi geliştirildi.
+            İzleyiciler yalnızca
+            <strong>“Oy Ver”</strong>
+            butonuna basarak listedeki oyunları destekleyebiliyor,
+            isterlerse kendi oyun önerilerini de sisteme
+            gönderebiliyordu.
+          </p>
+
+          <p>
+            Gönderilen öneriler manuel olarak incelendi,
+            filtrelendi ve
+            <strong>350'den fazla oyun</strong>
+            sisteme eklendi. Böylece tüm Limon Tayfa yayıncıları
+            için ortak, düzenli ve topluluk tarafından şekillenen
+            büyük bir oyun havuzu oluşturuldu.
+          </p>
+
+          <p>
+            Proje, Limon Tayfa özelinde topluluk katılımını
+            merkeze alan
+            <strong>ilk büyük iç çalışmalardan biri</strong>
+            oldu. Lemonhota üzerinden yürütülen sistem,
+            izleyicileri yalnızca takipçi olmaktan çıkarıp
+            doğrudan sürecin bir parçası haline getirdi.
+          </p>
+
+                <div class="metrics">
+
+          <div class="metric">
+            <strong>45.000+</strong>
+            <span>Toplam kullanılan oy</span>
+          </div>
+
+          <div class="metric">
+            <strong>350+</strong>
+            <span>Filtrelenerek sisteme eklenen oyun</span>
+          </div>
+
+          <div class="metric">
+            <strong>Mart–Haziran</strong>
+            <span>Projenin aktif kaldığı dönem</span>
+          </div>
+
+          <div class="metric">
+            <strong>Google Trends</strong>
+            <span>Türkiye trend aramalarında görünürlük</span>
+          </div>
+
+        </div>
+
+        <div class="project-meta">
+          <span>Lemonhota</span>
+          <span>Topluluk platformu</span>
+          <span>Oylama sistemi</span>
+          <span>2026</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section
+      class="section"
+      id="rraenee"
+    >
+      <div class="container">
+
+        <div class="approval">
+
+          <div class="approval-profile">
+            <img
+              src="https://files.kick.com/images/user/27259381/profile_image/conversion/b2f4bde9-a1e6-48d4-934d-d9d7c6e39a09-fullsize.webp"
+              alt="RRaenee logosu"
+              loading="lazy"
+            >
+          </div>
+
+          <p class="section-eyebrow">
+            02 · Yayında Tanıtım
+          </p>
+
+          <h2 class="approval-title">
+            RRaenee tarafından onaylandı
+          </h2>
+
+          <p class="approval-text">
+            Proje, RRaenee tarafından yayında tanıtılarak
+            Limon Tayfa topluluğuyla paylaşıldı. Yayının ardından
+            büyük ilgi gördü ve aynı gün Google Trends Türkiye
+            trend aramaları arasında yer almayı başardı.
+          </p>
+
+          <div class="video-card">
+
+            <video
+              controls
+              playsinline
+              preload="metadata"
+            >
+              <source
+                src="https://video.wixstatic.com/video/6fb8dd_f9e6c43dbdde4c37ba17b56b0bd1b015/1080p/mp4/file.mp4"
+                type="video/mp4"
+              >
+
+              Tarayıcınız video etiketini desteklemiyor.
+            </video>
+
+            <p class="video-caption">
+              RRaenee'nin yayında Limon Tayfa Oyun Öneri
+              sistemini tanıttığı bölüm.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+
+        <div class="closing-section">
+
+          <p>
+            <strong>
+              Lemonhota Limon Tayfa Oyun Öneri
+            </strong>,
+            yalnızca bir oyun listesi değil; topluluğun doğrudan
+            katkı sağladığı, izleyicileri sürecin parçası haline
+            getiren özel bir platform deneyimiydi.
+          </p>
+
+        </div>
+
+      </div>
+    </
