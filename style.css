@@ -57,6 +57,7 @@ button {
 
 .narrow {
   width: min(940px, calc(100% - 64px));
+  margin-inline: auto;
 }
 
 .grain {
@@ -181,6 +182,7 @@ button {
 .nav-links {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 25px;
 }
 
@@ -237,6 +239,7 @@ button {
   min-height: 88vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 140px 0 70px;
 }
 
@@ -249,9 +252,12 @@ button {
 
 .hero-kicker {
   margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
   color: #888;
   font-size: 12px;
   letter-spacing: 0.2em;
+  text-align: center;
 }
 
 .hero-title {
@@ -261,6 +267,9 @@ button {
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.065em;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .fade-text {
@@ -280,7 +289,7 @@ button {
 .role-progress {
   width: min(330px, 65vw);
   height: 1px;
-  margin: 30px 0 24px;
+  margin: 30px auto 24px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.16);
 }
@@ -308,14 +317,18 @@ button {
 
 .hero-desc {
   max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
   color: var(--muted);
   font-size: 18px;
+  text-align: center;
 }
 
 .hero-actions {
   margin-top: 32px;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 12px;
 }
 
@@ -356,6 +369,9 @@ button {
 
 .section-head {
   margin-bottom: 36px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .section-eyebrow {
@@ -364,6 +380,7 @@ button {
   font-size: 12px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .section-title {
@@ -371,14 +388,18 @@ button {
   font-size: clamp(42px, 5.7vw, 76px);
   line-height: 1;
   letter-spacing: -0.045em;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .section-description {
   max-width: 610px;
-  margin-top: 18px;
+  margin: 18px auto 0;
   color: var(--muted);
   font-size: 16px;
   line-height: 1.65;
+  text-align: center;
 }
 
 /* BAŞARILAR */
@@ -420,6 +441,8 @@ button {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .highlight-card {
@@ -515,6 +538,8 @@ button {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .project-card {
@@ -582,12 +607,13 @@ button {
 
 .project-content {
   padding: 24px;
+  text-align: center;
 }
 
 .project-meta {
   margin-bottom: 14px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
   color: #888;
   font-size: 12px;
@@ -600,18 +626,21 @@ button {
   font-size: clamp(25px, 2.5vw, 35px);
   line-height: 1.05;
   letter-spacing: -0.035em;
+  text-align: center;
 }
 
 .project-content p {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.65;
+  text-align: center;
 }
 
 .project-links {
   margin-top: 22px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 9px;
 }
 
@@ -655,6 +684,9 @@ button {
   font-size: clamp(31px, 4.2vw, 58px);
   line-height: 1.17;
   letter-spacing: -0.04em;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .about-text strong {
@@ -722,6 +754,7 @@ button {
 
 .tool-card span {
   font-size: 15px;
+  text-align: center;
 }
 
 @keyframes tools-scroll {
@@ -749,6 +782,7 @@ button {
   font-size: clamp(56px, 8vw, 108px);
   line-height: 0.95;
   letter-spacing: -0.06em;
+  text-align: center;
 }
 
 .contact-text {
@@ -756,6 +790,7 @@ button {
   margin: 0 auto 25px;
   color: var(--muted);
   font-size: 17px;
+  text-align: center;
 }
 
 .email-link {
@@ -763,6 +798,7 @@ button {
   font-size: clamp(22px, 3vw, 36px);
   border-bottom: 1px solid #555;
   transition: border-color 0.2s ease;
+  text-align: center;
 }
 
 .email-link:hover {
@@ -807,11 +843,13 @@ button {
   flex-direction: column;
   align-items: center;
   border-top: 1px solid var(--border);
+  text-align: center;
 }
 
 .footer-copy {
   color: #777;
   font-size: 12px;
+  text-align: center;
 }
 
 .footer-logo {
@@ -824,6 +862,7 @@ button {
   .container,
   .narrow {
     width: min(100% - 34px, var(--container));
+    margin-inline: auto;
   }
 
   .nav-links {
@@ -847,6 +886,7 @@ button {
   .container,
   .narrow {
     width: min(100% - 22px, var(--container));
+    margin-inline: auto;
   }
 
   .nav-inner {
@@ -876,6 +916,7 @@ button {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    justify-content: center;
     gap: 0;
     opacity: 0;
     visibility: hidden;
@@ -898,6 +939,7 @@ button {
   .nav-links a {
     padding: 13px 14px;
     border-radius: 10px;
+    text-align: center;
   }
 
   .nav-links a::after {
@@ -997,103 +1039,5 @@ button {
 
   .highlight-card strong {
     font-size: 25px;
-  }
-
-  .highlight-card .highlight-date {
-    font-size: 22px;
-  }
-
-  .highlight-card p {
-    font-size: 13px;
-  }
-
-  .projects-grid {
-    gap: 16px;
-  }
-
-  .project-card {
-    border-radius: 18px;
-  }
-
-  .project-image-wrap {
-    aspect-ratio: 16 / 10;
-  }
-
-  .project-content {
-    padding: 18px;
-  }
-
-  .project-content h3 {
-    font-size: 27px;
-  }
-
-  .project-content p {
-    font-size: 14px;
-    line-height: 1.55;
-  }
-
-  .project-hover {
-    display: none;
-  }
-
-  .project-links {
-    margin-top: 18px;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .project-social-link {
-    padding: 0 9px;
-    font-size: 12px;
-  }
-
-  .about-text {
-    font-size: 31px;
-  }
-
-  .tool-card {
-    min-width: 145px;
-    min-height: 92px;
-    padding: 16px;
-  }
-
-  .tool-card img {
-    width: 29px;
-    height: 29px;
-  }
-
-  .contact-title {
-    font-size: 56px;
-  }
-
-  .email-link {
-    font-size: 21px;
-  }
-}
-
-@media (max-width: 390px) {
-  .project-links {
-    grid-template-columns: 1fr;
-  }
-
-  .highlight-card {
-    min-height: 160px;
-  }
-}
-
-@media (hover: none) {
-  .project-hover {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
   }
 }
