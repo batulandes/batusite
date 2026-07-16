@@ -1,12 +1,83 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const nav = document.getElementById("nav");
-  const navToggle = document.getElementById("nav-toggle");
-  const navLinks = document.getElementById("nav-links");
-  const scrollProgress = document.getElementById("scroll-progress");
+"use strict";
 
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", () => {
-      const isOpen = navLinks.classList.toggle("open");
+const nav = document.getElementById("nav");
+const navToggle = document.getElementById("nav-toggle");
+const navLinks = document.getElementById("nav-links");
+const scrollProgress =
+  document.getElementById("scroll-progress");
+const heroGlow =
+  document.getElementById("hero-glow");
+
+const reduceMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+const updateScrollState = () => {
+  const scrollTop =
+    window.scrollY ||
+    document.documentElement.scrollTop;
+
+  if (nav) {
+    nav.classList.toggle(
+      "compact",
+      scrollTop > 35
+    );
+  }
+
+  if (scrollProgress) {
+    const documentHeight =
+      document.documentElement.scrollHeight -
+      window.innerHeight;
+
+    const progress =
+      documentHeight > 0
+        ? (scrollTop / documentHeight) * 100
+        : 0;
+
+    scrollProgress.style.width =
+      `${Math.min(progress, 100)}%`;
+  }
+};
+
+updateScrollState();
+
+window.addEventListener(
+  "scroll",
+  updateScrollState,
+  { passive: true }
+);
+
+if (navToggle && navLinks) {
+  const closeMenu = () => {
+    navLinks.classList.remove("open");
+    navToggle.classList.remove("active");
+
+    navToggle.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    navToggle.setAttribute(
+      "aria-label",
+      "Menüyü aç"
+    );
+
+    document.body.classList.remove(
+      "menu-open"
+    );
+  };
+
+  navToggle.addEventListener(
+    "click",
+    () => {
+      const isOpen =
+        navLinks.classList.toggle("open");
+
+      navToggle.classList.toggle(
+        "active",
+        isOpen
+      );
 
       navToggle.setAttribute(
         "aria-expanded",
@@ -15,209 +86,216 @@ document.addEventListener("DOMContentLoaded", () => {
 
       navToggle.setAttribute(
         "aria-label",
-        isOpen ? "Menüyü kapat" : "Menüyü aç"
+        isOpen
+          ? "Menüyü kapat"
+          : "Menüyü aç"
       );
-    });
 
-    navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-
-        navToggle.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-
-        navToggle.setAttribute(
-          "aria-label",
-          "Menüyü aç"
-        );
-      });
-    });
-  }
-
-  const rotatingText =
-    document.getElementById("rotating-text");
-
-  const roleProgressBar =
-    document.getElementById("role-progress-bar");
-
-  if (rotatingText) {
-    const words = [
-      "Grafik Tasarım",
-      "Video Düzenleme",
-      "İçerik Üretimi",
-      "Web Site Tasarımı",
-      "3D Modelleme"
-    ];
-
-    let currentIndex = 0;
-
-    const intervalDuration = 2700;
-    const fadeDuration = 380;
-
-    const restartProgress = () => {
-      if (!roleProgressBar) {
-        return;
-      }
-
-      roleProgressBar.classList.remove("running");
-
-      void roleProgressBar.offsetWidth;
-
-      roleProgressBar.classList.add("running");
-    };
-
-    const changeWord = () => {
-      rotatingText.classList.add("is-changing");
-
-      window.setTimeout(() => {
-        currentIndex =
-          (currentIndex + 1) % words.length;
-
-        rotatingText.textContent =
-          words[currentIndex];
-
-        rotatingText.classList.remove(
-          "is-changing"
-        );
-
-        restartProgress();
-      }, fadeDuration);
-    };
-
-    restartProgress();
-
-    window.setInterval(
-      changeWord,
-      intervalDuration
-    );
-  }
-
-  const updateScrollState = () => {
-    const scrollTop = window.scrollY;
-
-    if (nav) {
-      nav.classList.toggle(
-        "compact",
-        scrollTop > 60
+      document.body.classList.toggle(
+        "menu-open",
+        isOpen
       );
-    }
-
-    if (scrollProgress) {
-      const maximumScroll =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
-
-      const progress =
-        maximumScroll > 0
-          ? (scrollTop / maximumScroll) * 100
-          : 0;
-
-      scrollProgress.style.width =
-        `${progress}%`;
-    }
-  };
-
-  window.addEventListener(
-    "scroll",
-    updateScrollState,
-    {
-      passive: true
     }
   );
 
-  updateScrollState();
+  navLinks
+    .querySelectorAll("a")
+    .forEach((link) => {
+      link.addEventListener(
+        "click",
+        closeMenu
+      );
+    });
 
-  const sectionLinks =
-    document.querySelectorAll(
-      ".nav-links a[data-section]"
+  window.addEventListener(
+    "resize",
+    () => {
+      if (window.innerWidth > 720) {
+        closeMenu();
+      }
+    }
+  );
+
+  document.addEventListener(
+    "click",
+    (event) => {
+      const clickedInsideMenu =
+        navLinks.contains(event.target);
+
+      const clickedToggle =
+        navToggle.contains(event.target);
+
+      if (
+        navLinks.classList.contains("open") &&
+        !clickedInsideMenu &&
+        !clickedToggle
+      ) {
+        closeMenu();
+      }
+    }
+  );
+}
+
+const revealItems =
+  document.querySelectorAll(".reveal");
+
+if (reduceMotion) {
+  revealItems.forEach((item) => {
+    item.classList.add("visible");
+  });
+} else {
+  const revealObserver =
+    new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add(
+            "visible"
+          );
+
+          observer.unobserve(
+            entry.target
+          );
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin:
+          "0px 0px -35px 0px"
+      }
     );
 
-  const sections =
-    [...sectionLinks]
-      .map((link) => {
-        return document.getElementById(
-          link.dataset.section
-        );
-      })
-      .filter(Boolean);
+  revealItems.forEach((item) => {
+    revealObserver.observe(item);
+  });
+}
 
-  if (
-    sections.length > 0 &&
-    "IntersectionObserver" in window
-  ) {
-    const observer =
-      new IntersectionObserver(
-        (entries) => {
-          const visibleEntry =
-            entries
-              .filter((entry) => {
-                return entry.isIntersecting;
-              })
-              .sort((first, second) => {
-                return (
-                  second.intersectionRatio -
-                  first.intersectionRatio
-                );
-              })[0];
+const sections =
+  document.querySelectorAll(
+    "main section[id]"
+  );
 
-          if (!visibleEntry) {
+const menuLinks =
+  document.querySelectorAll(
+    ".nav-links a[data-section]"
+  );
+
+if (sections.length && menuLinks.length) {
+  const sectionObserver =
+    new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
             return;
           }
 
-          sectionLinks.forEach((link) => {
-            const isActive =
-              link.dataset.section ===
-              visibleEntry.target.id;
+          const sectionId =
+            entry.target.id;
 
+          menuLinks.forEach((link) => {
             link.classList.toggle(
               "active",
-              isActive
+              link.dataset.section ===
+                sectionId
             );
           });
-        },
-        {
-          rootMargin: "-35% 0px -50% 0px",
-          threshold: [0.01, 0.25, 0.5]
-        }
-      );
+        });
+      },
+      {
+        rootMargin:
+          "-35% 0px -55% 0px",
+        threshold: 0
+      }
+    );
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+  sections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+}
+
+if (
+  heroGlow &&
+  !reduceMotion &&
+  window.matchMedia(
+    "(pointer: fine)"
+  ).matches
+) {
+  window.addEventListener(
+    "pointermove",
+    (event) => {
+      const x =
+        (event.clientX /
+          window.innerWidth) *
+        100;
+
+      const y =
+        (event.clientY /
+          window.innerHeight) *
+        100;
+
+      heroGlow.style.left =
+        `${Math.max(
+          20,
+          Math.min(80, x)
+        )}%`;
+
+      heroGlow.style.top =
+        `${Math.max(
+          5,
+          Math.min(55, y)
+        )}%`;
+    },
+    { passive: true }
+  );
+}
+
+document
+  .querySelectorAll(
+    'a[href^="#"]'
+  )
+  .forEach((anchor) => {
+    anchor.addEventListener(
+      "click",
+      (event) => {
+        const targetId =
+          anchor.getAttribute("href");
+
+        if (
+          !targetId ||
+          targetId === "#"
+        ) {
+          return;
+        }
+
+        const target =
+          document.querySelector(
+            targetId
+          );
+
+        if (!target) {
+          return;
+        }
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+          behavior: reduceMotion
+            ? "auto"
+            : "smooth",
+          block: "start"
+        });
+      }
+    );
+  });
+
+window.addEventListener(
+  "load",
+  () => {
+    document.body.classList.add(
+      "page-ready"
+    );
   }
-
-  document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((anchor) => {
-      anchor.addEventListener(
-        "click",
-        (event) => {
-          const targetId =
-            anchor.getAttribute("href");
-
-          if (
-            !targetId ||
-            targetId === "#"
-          ) {
-            return;
-          }
-
-          const target =
-            document.querySelector(targetId);
-
-          if (!target) {
-            return;
-          }
-
-          event.preventDefault();
-
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        }
-      );
-    });
-});
+);
