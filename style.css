@@ -1910,3 +1910,9 @@ a {
     animation: none;
   }
 }
+.reveal,
+.reveal.visible {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
