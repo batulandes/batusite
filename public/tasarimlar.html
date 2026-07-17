@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Tasarımlar — BATU</title>
+
+  <meta
+    name="description"
+    content="Batu tarafından hazırlanan grafik tasarım çalışmalarının arşivi."
+  >
+
+  <meta name="theme-color" content="#000000">
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
+  >
+
+  <style>
+    :root {
+      --background: #000000;
+      --surface: #080808;
+      --surface-hover: #0d0d0d;
+      --text: #ffffff;
+      --muted: #929292;
+      --border: #202020;
+      --border-light: #343434;
+      --container: 1460px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--background);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.lightbox-open {
+      overflow: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button,
+    input,
+    select {
+      color: inherit;
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(
+        var(--container),
+        calc(100% - 48px)
+      );
+      margin-inline: auto;
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 1000;
+      height: 82px;
+      background: rgba(0, 0, 0, 0.55);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #a5a5a5;
+      font-size: 13px;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    .topbar-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 55px;
+      height: 55px;
+      transform: translate(-50%, -50%);
+    }
+
+    .topbar-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .archive-count {
+      color: #777777;
+      font-size: 12px;
+    }
+
+    .hero {
+      padding: 158px 0 68px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin-bottom: 18px;
+      color: #707070;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(62px, 10vw, 145px);
+      line-height: 0.88;
+      letter-spacing: -0.075em;
+    }
+
+    .hero-text {
+      max-width: 650px;
+      margin: 28px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .filters {
+      position: sticky;
+      top: 82px;
+      z-index: 50;
+      padding: 15px 0;
+      background: rgba(0, 0, 0, 0.88);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .filters-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filters-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-button {
+      flex: 0 0 auto;
+      min-height: 39px;
+      padding: 0 16px;
+      color: #999999;
+      background: #070707;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .filter-button:hover,
+    .filter-button.active {
+      color: #000000;
+      background: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .archive {
+      padding: 48px 0 105px;
+    }
+
+    .design-grid {
+      columns: 4;
+      column-gap: 15px;
+    }
+
+    .design-card {
+      position: relative;
+      width: 100%;
+      margin: 0 0 15px;
+      overflow: hidden;
+      display: inline-block;
+      break-inside: avoid;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      cursor: zoom-in;
+    }
+
+    .design-card[hidden] {
+      display: none;
+    }
+
+    .design-image {
+      width: 100%;
+      height: auto;
+      background: #0a0a0a;
+      transition:
+        opacity 0.25s ease,
+        transform 0.35s ease;
+    }
+
+    .design-card:hover .design-image {
+      opacity: 0.82;
+      transform: scale(1.012);
+    }
+
+    .design-information {
+      padding: 15px 16px 17px;
+      text-align: left;
+    }
+
+    .design-title {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .design-meta {
+      margin-top: 7px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      color: #777777;
+      font-size: 11px;
+    }
+
+    .design-description {
+      margin-top: 10px;
+      color: #8e8e8e;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .loading,
+    .empty,
+    .error-message {
+      min-height: 280px;
+      display: grid;
+      place-items: center;
+      color: #777777;
+      text-align: center;
+    }
+
+    .loading-dot {
+      width: 7px;
+      height: 7px;
+      margin: 0 auto 17px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: pulse 1.1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        opacity: 0.25;
+        transform: scale(0.7);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.96);
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: min(1500px, 100%);
+      max-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: calc(100vh - 135px);
+      object-fit: contain;
+      border-radius: 5px;
+    }
+
+    .lightbox-caption {
+      max-width: 760px;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .lightbox-caption strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .lightbox-caption span {
+      display: block;
+      margin-top: 5px;
+      color: #888888;
+      font-size: 12px;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      background: #090909;
+      border: 1px solid #343434;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 25px;
+    }
+
+    .footer {
+      padding: 35px 20px;
+      border-top: 1px solid var(--border);
+      color: #626262;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 1180px) {
+      .design-grid {
+        columns: 3;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .container {
+        width: min(
+          100% - 22px,
+          var(--container)
+        );
+      }
+
+      .topbar {
+        height: 72px;
+      }
+
+      .topbar-logo {
+        width: 49px;
+        height: 49px;
+      }
+
+      .archive-count {
+        display: none;
+      }
+
+      .hero {
+        padding: 132px 0 53px;
+      }
+
+      h1 {
+        font-size: clamp(58px, 20vw, 92px);
+      }
+
+      .hero-text {
+        margin-top: 23px;
+        font-size: 15px;
+      }
+
+      .filters {
+        top: 72px;
+      }
+
+      .filters-inner {
+        justify-content: flex-start;
+      }
+
+      .archive {
+        padding-top: 25px;
+      }
+
+      .design-grid {
+        columns: 2;
+        column-gap: 9px;
+      }
+
+      .design-card {
+        margin-bottom: 9px;
+        border-radius: 11px;
+      }
+
+      .design-information {
+        padding: 11px 11px 13px;
+      }
+
+      .design-title {
+        font-size: 12px;
+      }
+
+      .design-description {
+        display: none;
+      }
+
+      .lightbox {
+        padding: 13px;
+      }
+
+      .lightbox-image {
+        max-height: calc(100vh - 115px);
+      }
+    }
+
+    @media (max-width: 430px) {
+      .back-link span {
+        display: none;
+      }
+
+      .design-grid {
+        columns: 2;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+
+      <a
+        href="/"
+        class="back-link"
+        aria-label="Ana sayfaya dön"
+      >
+        <strong>←</strong>
+        <span>Ana sayfa</span>
+      </a>
+
+      <a
+        href="/"
+        class="topbar-logo"
+        aria-label="BATU ana sayfası"
+      >
+        <img
+          src="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
+          alt="BATU"
+        >
+      </a>
+
+      <span
+        class="archive-count"
+        id="archive-count"
+      >
+        Yükleniyor
+      </span>
+
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+
+        <p class="eyebrow">
+          BATU · TASARIM ARŞİVİ
+        </p>
+
+        <h1>
+          Tasarımlar.
+        </h1>
+
+        <p class="hero-text">
+          Yıllar boyunca hazırladığım seçili grafik tasarım
+          çalışmalarının sürekli büyüyen arşivi.
+        </p>
+
+      </div>
+    </section>
+
+    <section
+      class="filters"
+      id="filters"
+      hidden
+    >
+      <div
+        class="container filters-inner"
+        id="filter-list"
+      ></div>
+    </section>
+
+    <section class="archive">
+      <div class="container">
+
+        <div
+          class="loading"
+          id="loading"
+        >
+          <div>
+            <div class="loading-dot"></div>
+            Tasarımlar yükleniyor
+          </div>
+        </div>
+
+        <div
+          class="design-grid"
+          id="design-grid"
+          hidden
+        ></div>
+
+        <div
+          class="empty"
+          id="empty"
+          hidden
+        >
+          Henüz yayınlanmış bir tasarım bulunmuyor.
+        </div>
+
+        <div
+          class="error-message"
+          id="error-message"
+          hidden
+        >
+          Tasarımlar yüklenirken bir sorun oluştu.
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Tasarım önizlemesi"
+  >
+    <button
+      class="lightbox-close"
+      id="lightbox-close"
+      type="button"
+      aria-label="Önizlemeyi kapat"
+    >
+      ×
+    </button>
+
+    <div class="lightbox-content">
+
+      <img
+        class="lightbox-image"
+        id="lightbox-image"
+        src=""
+        alt=""
+      >
+
+      <div
+        class="lightbox-caption"
+        id="lightbox-caption"
+      ></div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2026 BATU · Tüm hakları saklıdır.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    "use strict";
+
+    const SUPABASE_URL =
+      "https://phreqbjgynchbynmtefz.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae";
+
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const loading =
+      document.getElementById("loading");
+
+    const grid =
+      document.getElementById("design-grid");
+
+    const empty =
+      document.getElementById("empty");
+
+    const errorMessage =
+      document.getElementById("error-message");
+
+    const archiveCount =
+      document.getElementById("archive-count");
+
+    const filters =
+      document.getElementById("filters");
+
+    const filterList =
+      document.getElementById("filter-list");
+
+    const lightbox =
+      document.getElementById("lightbox");
+
+    const lightboxImage =
+      document.getElementById("lightbox-image");
+
+    const lightboxCaption =
+      document.getElementById("lightbox-caption");
+
+    const lightboxClose =
+      document.getElementById("lightbox-close");
+
+    let allDesigns = [];
+
+    const escapeHtml = (value = "") => {
+      const element =
+        document.createElement("div");
+
+      element.textContent = value;
+
+      return element.innerHTML;
+    };
+
+    const openLightbox = (design) => {
+      lightboxImage.src = design.gorsel_url;
+      lightboxImage.alt =
+        design.baslik || "BATU tasarımı";
+
+      const meta = [
+        design.kategori,
+        design.yil
+      ]
+        .filter(Boolean)
+        .join(" · ");
+
+      lightboxCaption.innerHTML = `
+        ${
+          design.baslik
+            ? `<strong>${escapeHtml(design.baslik)}</strong>`
+            : ""
+        }
+
+        ${
+          meta
+            ? `<span>${escapeHtml(meta)}</span>`
+            : ""
+        }
+      `;
+
+      lightbox.classList.add("open");
+      document.body.classList.add(
+        "lightbox-open"
+      );
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove("open");
+      document.body.classList.remove(
+        "lightbox-open"
+      );
+
+      setTimeout(() => {
+        lightboxImage.src = "";
+      }, 150);
+    };
+
+    const createCard = (design) => {
+      const card =
+        document.createElement("article");
+
+      card.className = "design-card";
+
+      card.dataset.category =
+        design.kategori || "";
+
+      const information = [
+        design.kategori,
+        design.yil
+      ]
+        .filter(Boolean)
+        .join(" · ");
+
+      const hasInformation =
+        design.baslik ||
+        information ||
+        design.aciklama;
+
+      card.innerHTML = `
+        <img
+          class="design-image"
+          src="${escapeHtml(design.gorsel_url)}"
+          alt="${escapeHtml(
+            design.baslik || "BATU tasarımı"
+          )}"
+          loading="lazy"
+          decoding="async"
+        >
+
+        ${
+          hasInformation
+            ? `
+              <div class="design-information">
+
+                ${
+                  design.baslik
+                    ? `
+                      <h2 class="design-title">
+                        ${escapeHtml(design.baslik)}
+                      </h2>
+                    `
+                    : ""
+                }
+
+                ${
+                  information
+                    ? `
+                      <div class="design-meta">
+                        ${escapeHtml(information)}
+                      </div>
+                    `
+                    : ""
+                }
+
+                ${
+                  design.aciklama
+                    ? `
+                      <p class="design-description">
+                        ${escapeHtml(design.aciklama)}
+                      </p>
+                    `
+                    : ""
+                }
+
+              </div>
+            `
+            : ""
+        }
+      `;
+
+      card.addEventListener(
+        "click",
+        () => openLightbox(design)
+      );
+
+      return card;
+    };
+
+    const renderDesigns = (designs) => {
+      grid.innerHTML = "";
+
+      designs.forEach((design) => {
+        grid.appendChild(
+          createCard(design)
+        );
+      });
+
+      archiveCount.textContent =
+        `${designs.length} çalışma`;
+    };
+
+    const renderFilters = () => {
+      const categories = [
+        ...new Set(
+          allDesigns
+            .map((design) =>
+              design.kategori?.trim()
+            )
+            .filter(Boolean)
+        )
+      ].sort((a, b) =>
+        a.localeCompare(b, "tr")
+      );
+
+      if (!categories.length) {
+        filters.hidden = true;
+        return;
+      }
+
+      filterList.innerHTML = "";
+
+      const allButton =
+        document.createElement("button");
+
+      allButton.type = "button";
+      allButton.className =
+        "filter-button active";
+      allButton.textContent = "Tümü";
+      allButton.dataset.category = "";
+
+      filterList.appendChild(allButton);
+
+      categories.forEach((category) => {
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className = "filter-button";
+        button.textContent = category;
+        button.dataset.category = category;
+
+        filterList.appendChild(button);
+      });
+
+      filterList.addEventListener(
+        "click",
+        (event) => {
+          const button =
+            event.target.closest(
+              ".filter-button"
+            );
+
+          if (!button) {
+            return;
+          }
+
+          document
+            .querySelectorAll(
+              ".filter-button"
+            )
+            .forEach((item) => {
+              item.classList.remove("active");
+            });
+
+          button.classList.add("active");
+
+          const category =
+            button.dataset.category;
+
+          const filtered = category
+            ? allDesigns.filter(
+                (design) =>
+                  design.kategori === category
+              )
+            : allDesigns;
+
+          renderDesigns(filtered);
+        }
+      );
+
+      filters.hidden = false;
+    };
+
+    const loadDesigns = async () => {
+      const {
+        data,
+        error
+      } = await client
+        .from("tasarimlar")
+        .select(
+          "id, baslik, gorsel_url, kategori, yil, aciklama, sira, created_at"
+        )
+        .eq("yayinlandi", true)
+        .order("sira", {
+          ascending: true
+        })
+        .order("created_at", {
+          ascending: false
+        });
+
+      loading.hidden = true;
+
+      if (error) {
+        console.error(error);
+        errorMessage.hidden = false;
+        archiveCount.textContent = "Hata";
+        return;
+      }
+
+      allDesigns = data || [];
+
+      if (!allDesigns.length) {
+        empty.hidden = false;
+        archiveCount.textContent =
+          "0 çalışma";
+        return;
+      }
+
+      renderDesigns(allDesigns);
+      renderFilters();
+
+      grid.hidden = false;
+    };
+
+    lightboxClose.addEventListener(
+      "click",
+      closeLightbox
+    );
+
+    lightbox.addEventListener(
+      "click",
+      (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      }
+    );
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "Escape" &&
+          lightbox.classList.contains("open")
+        ) {
+          closeLightbox();
+        }
+      }
+    );
+
+    loadDesigns();
+  </script>
+
+</body>
+</html>
