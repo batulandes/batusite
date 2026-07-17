@@ -3,43 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buton Testi</title>
+  <meta name="robots" content="noindex,nofollow">
+  <title>BATU Admin</title>
 
   <style>
-    body {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      margin: 0;
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
+    *{box-sizing:border-box}
+    body{
+      min-height:100vh;
+      margin:0;
+      display:grid;
+      place-items:center;
+      background:#000;
+      color:#fff;
+      font-family:Arial,sans-serif
     }
-
-    button {
-      padding: 18px 28px;
-      border: 0;
-      border-radius: 999px;
-      background: #fff;
-      color: #000;
-      font-size: 18px;
-      font-weight: 700;
+    .card{
+      width:min(420px,calc(100% - 28px));
+      padding:24px;
+      background:#080808;
+      border:1px solid #292929;
+      border-radius:20px
+    }
+    h1{margin:0 0 10px;font-size:38px}
+    p{color:#888;line-height:1.5}
+    input,button{
+      width:100%;
+      min-height:52px;
+      margin-top:14px;
+      padding:0 15px;
+      border-radius:999px;
+      font-size:16px
+    }
+    input{
+      background:#000;
+      color:#fff;
+      border:1px solid #333;
+      outline:none
+    }
+    button{
+      background:#fff;
+      color:#000;
+      border:0;
+      font-weight:700
+    }
+    button:disabled{opacity:.5}
+    #message{
+      margin-top:15px;
+      color:#aaa;
+      line-height:1.5;
+      overflow-wrap:anywhere
     }
   </style>
 </head>
 
 <body>
 
-  <button id="test-button" type="button">
-    Butonu test et
-  </button>
+  <div class="card">
+    <h1>Admin girişi</h1>
+
+    <p>
+      E-postana tek kullanımlık giriş bağlantısı gönderilecek.
+    </p>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="E-posta adresin"
+    >
+
+    <button id="send" type="button">
+      Giriş bağlantısı gönder
+    </button>
+
+    <div id="message"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    document
-      .getElementById("test-button")
-      .addEventListener("click", function () {
-        alert("BUTON ÇALIŞIYOR");
+    const message = document.getElementById("message");
+    const button = document.getElementById("send");
+
+    if (!window.supabase) {
+      message.textContent = "Supabase kütüphanesi yüklenemedi.";
+    } else {
+      const client = window.supabase.createClient(
+        "https://phreqbjgynchbynmtefz.supabase.co",
+        "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae"
+      );
+
+      button.addEventListener("click", async function () {
+        const email = document
+          .getElementById("email")
+          .value
+          .trim();
+
+        if (!email) {
+          message.textContent = "Önce e-posta adresini yaz.";
+          return;
+        }
+
+        button.disabled = true;
+        button.textContent = "Gönderiliyor...";
+        message.textContent = "";
+
+        try {
+          const { error } = await client.auth.signInWithOtp({
+            email: email,
+            options: {
+              emailRedirectTo:
+                "https://batuhota.com/admin.html"
+            }
+          });
+
+          if (error) {
+            throw error;
+          }
+
+          message.textContent =
+            "Bağlantı gönderildi. E-postanı kontrol et.";
+        } catch (error) {
+          message.textContent =
+            "Hata: " + error.message;
+        }
+
+        button.disabled = false;
+        button.textContent =
+          "Giriş bağlantısı gönder";
       });
+    }
   </script>
 
 </body>
