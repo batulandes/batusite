@@ -130,10 +130,12 @@ a {
   left: 0;
   z-index: 1000;
   width: 100%;
-  background: rgba(0, 0, 0, 0.985);
-  border-bottom: 1px solid #1b1b1b;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+
+  background: rgba(0, 0, 0, 0.52);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .nav-inner {
