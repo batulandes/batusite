@@ -2,137 +2,539 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>BATU Admin</title>
 
   <style>
     *{box-sizing:border-box}
     body{
-      min-height:100vh;
       margin:0;
-      display:grid;
-      place-items:center;
+      min-height:100vh;
       background:#000;
       color:#fff;
       font-family:Arial,sans-serif
     }
+    [hidden]{display:none!important}
+    button,input,textarea{font:inherit}
+    .wrap{width:min(850px,calc(100% - 28px));margin:auto}
+    header{height:70px;border-bottom:1px solid #222}
+    header .wrap{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between
+    }
+    main{padding:35px 0 80px}
     .card{
-      width:min(420px,calc(100% - 28px));
-      padding:24px;
+      padding:22px;
       background:#080808;
-      border:1px solid #292929;
-      border-radius:20px
+      border:1px solid #282828;
+      border-radius:18px
     }
-    h1{margin:0 0 10px;font-size:38px}
+    .card+.card{margin-top:18px}
+    .login{
+      min-height:calc(100vh - 140px);
+      display:grid;
+      place-items:center
+    }
+    .login .card{width:min(420px,100%)}
+    h1,h2{margin:0}
+    h1{font-size:40px}
+    h2{font-size:22px}
     p{color:#888;line-height:1.5}
-    input,button{
+    label{display:block;margin-top:15px;color:#aaa;font-size:12px}
+    input,textarea{
       width:100%;
-      min-height:52px;
-      margin-top:14px;
-      padding:0 15px;
-      border-radius:999px;
-      font-size:16px
-    }
-    input{
-      background:#000;
+      margin-top:8px;
+      padding:13px;
       color:#fff;
+      background:#020202;
       border:1px solid #333;
+      border-radius:11px;
       outline:none
     }
+    textarea{min-height:90px;resize:vertical}
     button{
+      min-height:48px;
+      padding:0 16px;
+      border:0;
+      border-radius:999px;
       background:#fff;
       color:#000;
-      border:0;
-      font-weight:700
+      font-weight:700;
+      cursor:pointer
     }
     button:disabled{opacity:.5}
-    #message{
-      margin-top:15px;
+    .wide{width:100%;margin-top:17px}
+    .small{
+      min-height:36px;
+      background:#0a0a0a;
+      color:#bbb;
+      border:1px solid #333;
+      font-size:12px
+    }
+    .message{
+      margin-top:14px;
       color:#aaa;
+      font-size:13px;
       line-height:1.5;
       overflow-wrap:anywhere
+    }
+    .error{color:#ff7373}
+    .success{color:#7ee49a}
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:13px
+    }
+    .full{grid-column:1/-1}
+    .check{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      margin-top:15px
+    }
+    .check input{width:18px;margin:0}
+    .toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:15px
+    }
+    .list{display:grid;gap:10px}
+    .item{
+      display:grid;
+      grid-template-columns:75px minmax(0,1fr) auto;
+      gap:12px;
+      align-items:center;
+      padding:10px;
+      background:#020202;
+      border:1px solid #292929;
+      border-radius:13px
+    }
+    .item img{
+      width:75px;
+      height:75px;
+      object-fit:cover;
+      border-radius:8px
+    }
+    .item h3{margin:0;font-size:14px}
+    .meta{margin-top:6px;color:#777;font-size:11px}
+    .actions{display:flex;flex-direction:column;gap:6px}
+    .actions button{min-height:34px;font-size:11px}
+    .delete{color:#ff7373}
+    @media(max-width:620px){
+      .grid{grid-template-columns:1fr}
+      .full{grid-column:auto}
+      .item{grid-template-columns:70px minmax(0,1fr)}
+      .actions{grid-column:1/-1;flex-direction:row}
+      .actions button{flex:1}
     }
   </style>
 </head>
 
 <body>
 
-  <div class="card">
-    <h1>Admin girişi</h1>
-
-    <p>
-      E-postana tek kullanımlık giriş bağlantısı gönderilecek.
-    </p>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="E-posta adresin"
-    >
-
-    <button id="send" type="button">
-      Giriş bağlantısı gönder
-    </button>
-
-    <div id="message"></div>
+<header>
+  <div class="wrap">
+    <strong>BATU</strong>
+    <button id="logout" class="small" hidden>Çıkış</button>
   </div>
+</header>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<main class="wrap">
 
-  <script>
-    const message = document.getElementById("message");
-    const button = document.getElementById("send");
+  <section id="loginView" class="login">
+    <div class="card">
+      <h1>Admin</h1>
+      <p>Secret bölümüne yazdığın yönetim şifresini gir.</p>
 
-    if (!window.supabase) {
-      message.textContent = "Supabase kütüphanesi yüklenemedi.";
-    } else {
-      const client = window.supabase.createClient(
-        "https://phreqbjgynchbynmtefz.supabase.co",
-        "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae"
+      <input
+        id="password"
+        type="password"
+        placeholder="Yönetim şifresi"
+      >
+
+      <button id="login" class="wide">
+        Giriş yap
+      </button>
+
+      <div id="loginMessage" class="message"></div>
+    </div>
+  </section>
+
+  <section id="panel" hidden>
+
+    <section class="card">
+      <h2>Yeni tasarım</h2>
+
+      <form id="uploadForm">
+
+        <label>
+          Görsel
+          <input
+            id="file"
+            type="file"
+            accept="image/*"
+            required
+          >
+        </label>
+
+        <div class="grid">
+
+          <label>
+            Başlık
+            <input id="baslik" type="text">
+          </label>
+
+          <label>
+            Kategori
+            <input id="kategori" type="text">
+          </label>
+
+          <label>
+            Yıl
+            <input id="yil" type="number" placeholder="2026">
+          </label>
+
+          <label>
+            Sıra
+            <input id="sira" type="number" value="0">
+          </label>
+
+          <label class="full">
+            Açıklama
+            <textarea id="aciklama"></textarea>
+          </label>
+
+        </div>
+
+        <label class="check">
+          <input id="yayinlandi" type="checkbox" checked>
+          Hemen yayınla
+        </label>
+
+        <button id="uploadButton" class="wide" type="submit">
+          Tasarımı yükle
+        </button>
+
+        <div id="uploadMessage" class="message"></div>
+      </form>
+    </section>
+
+    <section class="card">
+
+      <div class="toolbar">
+        <h2>Yüklenenler</h2>
+        <button id="refresh" class="small">Yenile</button>
+      </div>
+
+      <div id="list" class="list"></div>
+    </section>
+
+  </section>
+
+</main>
+
+<script>
+const ENDPOINT =
+  "https://phreqbjgynchbynmtefz.supabase.co/functions/v1/tasarim-admin";
+
+let adminPassword = "";
+
+const loginView = document.getElementById("loginView");
+const panel = document.getElementById("panel");
+const loginMessage = document.getElementById("loginMessage");
+const uploadMessage = document.getElementById("uploadMessage");
+const list = document.getElementById("list");
+const logout = document.getElementById("logout");
+
+function showMessage(element, text, type = "") {
+  element.textContent = text;
+  element.className = "message " + type;
+}
+
+async function request(body, formData = false) {
+  const options = {
+    method: "POST",
+    headers: {
+      "x-admin-password": adminPassword
+    }
+  };
+
+  if (formData) {
+    options.body = body;
+  } else {
+    options.headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify(body);
+  }
+
+  const response = await fetch(ENDPOINT, options);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "İşlem başarısız.");
+  }
+
+  return data;
+}
+
+document
+  .getElementById("login")
+  .addEventListener("click", async () => {
+    const button = document.getElementById("login");
+
+    adminPassword =
+      document.getElementById("password").value;
+
+    if (!adminPassword) {
+      showMessage(
+        loginMessage,
+        "Şifreyi yaz.",
+        "error"
+      );
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Kontrol ediliyor...";
+
+    try {
+      await request({ action: "check" });
+
+      sessionStorage.setItem(
+        "batu_admin_password",
+        adminPassword
       );
 
-      button.addEventListener("click", async function () {
-        const email = document
-          .getElementById("email")
-          .value
-          .trim();
+      loginView.hidden = true;
+      panel.hidden = false;
+      logout.hidden = false;
 
-        if (!email) {
-          message.textContent = "Önce e-posta adresini yaz.";
-          return;
-        }
+      await loadDesigns();
+    } catch (error) {
+      showMessage(
+        loginMessage,
+        error.message,
+        "error"
+      );
+    }
 
-        button.disabled = true;
-        button.textContent = "Gönderiliyor...";
-        message.textContent = "";
+    button.disabled = false;
+    button.textContent = "Giriş yap";
+  });
 
-        try {
-          const { error } = await client.auth.signInWithOtp({
-            email: email,
-            options: {
-              emailRedirectTo:
-                "https://batuhota.com/admin.html"
-            }
-          });
+logout.addEventListener("click", () => {
+  sessionStorage.removeItem(
+    "batu_admin_password"
+  );
 
-          if (error) {
-            throw error;
+  adminPassword = "";
+  panel.hidden = true;
+  loginView.hidden = false;
+  logout.hidden = true;
+});
+
+document
+  .getElementById("uploadForm")
+  .addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const file =
+      document.getElementById("file").files[0];
+
+    if (!file) {
+      showMessage(
+        uploadMessage,
+        "Görsel seç.",
+        "error"
+      );
+      return;
+    }
+
+    const button =
+      document.getElementById("uploadButton");
+
+    button.disabled = true;
+    button.textContent = "Yükleniyor...";
+
+    const form = new FormData();
+
+    form.append("action", "upload");
+    form.append("file", file);
+    form.append(
+      "baslik",
+      document.getElementById("baslik").value
+    );
+    form.append(
+      "kategori",
+      document.getElementById("kategori").value
+    );
+    form.append(
+      "yil",
+      document.getElementById("yil").value
+    );
+    form.append(
+      "sira",
+      document.getElementById("sira").value
+    );
+    form.append(
+      "aciklama",
+      document.getElementById("aciklama").value
+    );
+    form.append(
+      "yayinlandi",
+      document.getElementById("yayinlandi").checked
+    );
+
+    try {
+      await request(form, true);
+
+      document
+        .getElementById("uploadForm")
+        .reset();
+
+      document.getElementById("sira").value = "0";
+      document.getElementById("yayinlandi").checked = true;
+
+      showMessage(
+        uploadMessage,
+        "Tasarım yüklendi.",
+        "success"
+      );
+
+      await loadDesigns();
+    } catch (error) {
+      showMessage(
+        uploadMessage,
+        error.message,
+        "error"
+      );
+    }
+
+    button.disabled = false;
+    button.textContent = "Tasarımı yükle";
+  });
+
+async function loadDesigns() {
+  list.innerHTML = "<p>Yükleniyor...</p>";
+
+  try {
+    const data =
+      await request({ action: "list" });
+
+    if (!data.designs.length) {
+      list.innerHTML = "<p>Henüz tasarım yok.</p>";
+      return;
+    }
+
+    list.innerHTML = "";
+
+    data.designs.forEach(design => {
+      const item =
+        document.createElement("article");
+
+      item.className = "item";
+
+      item.innerHTML = `
+        <img src="${design.gorsel_url}" alt="">
+
+        <div>
+          <h3>${design.baslik || "Başlıksız"}</h3>
+
+          <div class="meta">
+            ${design.kategori || ""}
+            ${design.yil || ""}
+          </div>
+        </div>
+
+        <div class="actions">
+
+          <button
+            class="small toggle"
+            type="button"
+          >
+            ${design.yayinlandi ? "Gizle" : "Yayınla"}
+          </button>
+
+          <button
+            class="small delete"
+            type="button"
+          >
+            Sil
+          </button>
+
+        </div>
+      `;
+
+      item
+        .querySelector(".toggle")
+        .addEventListener("click", async () => {
+          try {
+            await request({
+              action: "toggle",
+              id: design.id,
+              yayinlandi: !design.yayinlandi
+            });
+
+            await loadDesigns();
+          } catch (error) {
+            alert(error.message);
+          }
+        });
+
+      item
+        .querySelector(".delete")
+        .addEventListener("click", async () => {
+          if (!confirm("Bu tasarım silinsin mi?")) {
+            return;
           }
 
-          message.textContent =
-            "Bağlantı gönderildi. E-postanı kontrol et.";
-        } catch (error) {
-          message.textContent =
-            "Hata: " + error.message;
-        }
+          try {
+            await request({
+              action: "delete",
+              id: design.id
+            });
 
-        button.disabled = false;
-        button.textContent =
-          "Giriş bağlantısı gönder";
-      });
-    }
-  </script>
+            await loadDesigns();
+          } catch (error) {
+            alert(error.message);
+          }
+        });
+
+      list.appendChild(item);
+    });
+  } catch (error) {
+    list.innerHTML =
+      `<p class="error">${error.message}</p>`;
+  }
+}
+
+document
+  .getElementById("refresh")
+  .addEventListener("click", loadDesigns);
+
+const savedPassword =
+  sessionStorage.getItem("batu_admin_password");
+
+if (savedPassword) {
+  adminPassword = savedPassword;
+
+  request({ action: "check" })
+    .then(() => {
+      loginView.hidden = true;
+      panel.hidden = false;
+      logout.hidden = false;
+      loadDesigns();
+    })
+    .catch(() => {
+      sessionStorage.removeItem(
+        "batu_admin_password"
+      );
+    });
+}
+</script>
 
 </body>
 </html>
