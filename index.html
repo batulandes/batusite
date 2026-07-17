@@ -89,7 +89,6 @@
         aria-label="BATU ana sayfa"
       >
         <picture>
-
           <source
             srcset="https://i.ibb.co/PZFY1NmJ/batulogo2026png.png"
             media="(prefers-color-scheme: light)"
@@ -99,7 +98,6 @@
             src="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
             alt="BATU logosu"
           >
-
         </picture>
       </a>
 
@@ -108,45 +106,27 @@
         id="nav-links"
         aria-label="Ana menü"
       >
-        <a
-          href="#about"
-          data-section="about"
-        >
+        <a href="#about" data-section="about">
           Hakkımda
         </a>
 
-        <a
-          href="#channels"
-          data-section="channels"
-        >
+        <a href="#channels" data-section="channels">
           Kanallarım
         </a>
 
-        <a
-          href="#work"
-          data-section="work"
-        >
+        <a href="#work" data-section="work">
           Projeler
         </a>
 
-        <a
-          href="#highlights"
-          data-section="highlights"
-        >
+        <a href="#highlights" data-section="highlights">
           Başarılar
         </a>
 
-        <a
-          href="#tools"
-          data-section="tools"
-        >
+        <a href="#tools" data-section="tools">
           Araçlar
         </a>
 
-        <a
-          href="#contact"
-          data-section="contact"
-        >
+        <a href="#contact" data-section="contact">
           İletişim
         </a>
       </nav>
@@ -173,7 +153,6 @@
       class="hero"
       aria-labelledby="hero-title"
     >
-
       <div
         class="hero-glow"
         id="hero-glow"
@@ -225,10 +204,8 @@
           class="hero-panel reveal"
           aria-label="Öne çıkan bilgiler"
         >
-
           <div class="hero-panel-head">
-            <span>Üretim özeti</span>
-            <span class="status-dot">Aktif</span>
+            <span>Rakamlarla Batu</span>
           </div>
 
           <div class="hero-stat hero-stat-large">
@@ -266,15 +243,6 @@
         </div>
 
       </div>
-
-      <a
-        class="hero-scroll"
-        href="#about"
-        aria-label="Aşağı kaydır"
-      >
-        <span></span>
-      </a>
-
     </section>
 
     <section
@@ -322,392 +290,343 @@
 
       </div>
     </section>
-<section class="section channels" id="channels">
 
-  <style>
-    #channels .channels-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-    }
-
-    #channels .channel-card {
-      position: relative;
-      min-height: 520px;
-      overflow: hidden;
-      background: #050505;
-      border: 1px solid #242424;
-      border-radius: 24px;
-      isolation: isolate;
-    }
-
-    #channels .channel-background {
-      position: absolute;
-      inset: -12px;
-      z-index: -3;
-      width: calc(100% + 24px);
-      height: calc(100% + 24px);
-      object-fit: cover;
-      opacity: 0.42;
-      filter: blur(4px) grayscale(0.25);
-      transform: scale(1.02);
-    }
-
-    #channels .channel-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      background: rgba(0, 0, 0, 0.68);
-    }
-
-    #channels .channel-content {
-      position: relative;
-      z-index: 2;
-      min-height: 520px;
-      padding: 34px 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    #channels .channel-logo {
-      width: 112px;
-      height: 112px;
-      margin: 0 auto 21px;
-      object-fit: cover;
-      background: #080808;
-      border: 2px solid #343434;
-      border-radius: 50%;
-    }
-
-    #channels .channel-name {
-      margin: 0;
-      color: #ffffff;
-      font-size: clamp(48px, 6vw, 76px);
-      font-weight: 750;
-      line-height: 0.95;
-      letter-spacing: -0.055em;
-      text-align: center;
-    }
-
-    #channels .channel-stats {
-      width: 100%;
-      max-width: 520px;
-      margin: 28px auto 0;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 9px;
-    }
-
-    #channels .channel-stat {
-      min-height: 85px;
-      padding: 15px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.42);
-      border: 1px solid #292929;
-      border-radius: 15px;
-    }
-
-    #channels .channel-stat strong {
-      color: #ffffff;
-      font-size: 21px;
-      line-height: 1;
-      letter-spacing: -0.025em;
-    }
-
-    #channels .channel-stat span {
-      margin-top: 8px;
-      color: #a0a0a0;
-      font-size: 11px;
-    }
-
-    #channels .channel-button {
-      width: 100%;
-      max-width: 320px;
-      min-height: 52px;
-      margin-top: 27px;
-      padding: 0 22px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 11px;
-      color: #000000;
-      background: #ffffff;
-      border: 1px solid #ffffff;
-      border-radius: 999px;
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    #channels .channel-button svg {
-      width: 22px;
-      height: 22px;
-      display: block;
-      fill: #000000;
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 900px) {
-      #channels .channels-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 720px) {
-      #channels .channel-card,
-      #channels .channel-content {
-        min-height: 470px;
-      }
-
-      #channels .channel-content {
-        padding: 30px 18px;
-      }
-
-      #channels .channel-background {
-        filter: blur(3px) grayscale(0.2);
-        opacity: 0.4;
-      }
-
-      #channels .channel-logo {
-        width: 102px;
-        height: 102px;
-      }
-
-      #channels .channel-name {
-        font-size: 52px;
-      }
-
-      #channels .channel-stats {
-        margin-top: 24px;
-        gap: 7px;
-      }
-
-      #channels .channel-stat {
-        min-height: 78px;
-        padding: 12px 5px;
-      }
-
-      #channels .channel-stat strong {
-        font-size: 18px;
-      }
-
-      #channels .channel-stat span {
-        font-size: 10px;
-      }
-    }
-  </style>
-
-  <div class="container">
-
-    <div class="section-head">
-
-      <p class="section-eyebrow">
-        02 · Kanallarım
-      </p>
-
-      <h2 class="section-title">
-        İçerik kanallarım
-      </h2>
-
-      <p class="section-description">
-        Yıllar boyunca yönettiğim ve büyüttüğüm iki ana
-        YouTube kanalı.
-      </p>
-
-    </div>
-
-    <div class="channels-grid">
-
-      <article class="channel-card">
-
-        <img
-          class="channel-background"
-          src="https://i.ibb.co/vC08Ty4X/20260715-215703.jpg"
-          alt=""
-          aria-hidden="true"
-        >
-
-        <div
-          class="channel-overlay"
-          aria-hidden="true"
-        ></div>
-
-        <div class="channel-content">
-
-          <img
-            class="channel-logo"
-            src="https://i.ibb.co/3ypbvs47/batumetal26renk.png"
-            alt="BATU YouTube kanalı logosu"
-          >
-
-          <h3 class="channel-name">
-            BATU
-          </h3>
-
-          <div class="channel-stats">
-
-            <div class="channel-stat">
-              <strong>60,5 B</strong>
-              <span>abone</span>
-            </div>
-
-            <div class="channel-stat">
-              <strong>165 M</strong>
-              <span>görüntüleme</span>
-            </div>
-
-            <div class="channel-stat">
-              <strong>255</strong>
-              <span>video</span>
-            </div>
-
-          </div>
-
-<div class="channels-grid">
-
-  <article class="channel-card">
-
-    <img
-      class="channel-background"
-      src="https://i.ibb.co/vC08Ty4X/20260715-215703.jpg"
-      alt=""
-      aria-hidden="true"
+    <section
+      class="section channels"
+      id="channels"
     >
 
-    <div
-      class="channel-overlay"
-      aria-hidden="true"
-    ></div>
+      <style>
+        #channels .channels-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 22px;
+        }
 
-    <div class="channel-content">
+        #channels .channel-card {
+          position: relative;
+          min-height: 520px;
+          overflow: hidden;
+          background: #050505;
+          border: 1px solid #242424;
+          border-radius: 24px;
+          isolation: isolate;
+        }
 
-      <img
-        class="channel-logo"
-        src="https://i.ibb.co/3ypbvs47/batumetal26renk.png"
-        alt="BATU YouTube kanalı logosu"
-      >
+        #channels .channel-background {
+          position: absolute;
+          inset: -8px;
+          z-index: -3;
+          width: calc(100% + 16px);
+          height: calc(100% + 16px);
+          object-fit: cover;
+          opacity: 0.35;
+          filter: blur(3px);
+          transform: scale(1.02);
+        }
 
-      <h3 class="channel-name">
-        BATU
-      </h3>
+        #channels .channel-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: -2;
+          background: rgba(0, 0, 0, 0.67);
+        }
 
-      <div class="channel-stats">
+        #channels .channel-content {
+          position: relative;
+          z-index: 2;
+          min-height: 520px;
+          padding: 36px 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
 
-        <div class="channel-stat">
-          <strong>60,5 B</strong>
-          <span>abone</span>
+        #channels .channel-logo {
+          width: 116px;
+          height: 116px;
+          margin: 0 auto 22px;
+          object-fit: cover;
+          background: #080808;
+          border: 2px solid #343434;
+          border-radius: 50%;
+        }
+
+        #channels .channel-name {
+          margin: 0;
+          color: #ffffff;
+          font-size: clamp(48px, 6vw, 72px);
+          font-weight: 750;
+          line-height: 0.95;
+          letter-spacing: -0.055em;
+          text-align: center;
+        }
+
+        #channels .channel-stats {
+          width: 100%;
+          max-width: 520px;
+          margin: 28px auto 0;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 9px;
+        }
+
+        #channels .channel-stat {
+          min-height: 84px;
+          padding: 14px 8px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.45);
+          border: 1px solid #292929;
+          border-radius: 15px;
+        }
+
+        #channels .channel-stat strong {
+          color: #ffffff;
+          font-size: 21px;
+          line-height: 1;
+          letter-spacing: -0.025em;
+        }
+
+        #channels .channel-stat span {
+          margin-top: 8px;
+          color: #a0a0a0;
+          font-size: 11px;
+        }
+
+        #channels .channel-button {
+          width: 100%;
+          max-width: 320px;
+          min-height: 52px;
+          margin-top: 27px;
+          padding: 0 22px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 11px;
+          color: #000000;
+          background: #ffffff;
+          border: 1px solid #ffffff;
+          border-radius: 999px;
+          font-size: 15px;
+          font-weight: 600;
+        }
+
+        #channels .channel-button img {
+          width: 21px;
+          height: 21px;
+          object-fit: contain;
+          flex-shrink: 0;
+        }
+
+        @media (max-width: 900px) {
+          #channels .channels-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 720px) {
+          #channels .channel-card,
+          #channels .channel-content {
+            min-height: 470px;
+          }
+
+          #channels .channel-content {
+            padding: 30px 18px;
+          }
+
+          #channels .channel-background {
+            opacity: 0.32;
+            filter: blur(2px);
+          }
+
+          #channels .channel-logo {
+            width: 104px;
+            height: 104px;
+          }
+
+          #channels .channel-name {
+            font-size: 50px;
+          }
+
+          #channels .channel-stats {
+            margin-top: 24px;
+            gap: 7px;
+          }
+
+          #channels .channel-stat {
+            min-height: 78px;
+            padding: 12px 5px;
+          }
+
+          #channels .channel-stat strong {
+            font-size: 18px;
+          }
+
+          #channels .channel-stat span {
+            font-size: 10px;
+          }
+        }
+      </style>
+
+      <div class="container">
+
+        <div class="section-head">
+
+          <p class="section-eyebrow">
+            02 · Kanallarım
+          </p>
+
+          <h2 class="section-title">
+            İçerik kanallarım
+          </h2>
+
+          <p class="section-description">
+            Yıllar boyunca yönettiğim ve büyüttüğüm iki ana
+            YouTube kanalı.
+          </p>
+
         </div>
 
-        <div class="channel-stat">
-          <strong>165 M</strong>
-          <span>görüntüleme</span>
-        </div>
+        <div class="channels-grid">
 
-        <div class="channel-stat">
-          <strong>255</strong>
-          <span>video</span>
+          <article class="channel-card">
+
+            <img
+              class="channel-background"
+              src="https://i.ibb.co/vC08Ty4X/20260715-215703.jpg"
+              alt=""
+              aria-hidden="true"
+            >
+
+            <div
+              class="channel-overlay"
+              aria-hidden="true"
+            ></div>
+
+            <div class="channel-content">
+
+              <img
+                class="channel-logo"
+                src="https://i.ibb.co/3ypbvs47/batumetal26renk.png"
+                alt="BATU YouTube kanalı logosu"
+              >
+
+              <h3 class="channel-name">
+                BATU
+              </h3>
+
+              <div class="channel-stats">
+
+                <div class="channel-stat">
+                  <strong>60,5 B</strong>
+                  <span>abone</span>
+                </div>
+
+                <div class="channel-stat">
+                  <strong>165 M</strong>
+                  <span>görüntüleme</span>
+                </div>
+
+                <div class="channel-stat">
+                  <strong>255</strong>
+                  <span>video</span>
+                </div>
+
+              </div>
+
+              <a
+                href="https://youtube.com/@batuclips?si=XvTEtROSBASyxXv4"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="channel-button"
+              >
+                <img
+                  src="https://cdn.simpleicons.org/youtube/000000"
+                  alt=""
+                  aria-hidden="true"
+                >
+
+                <span>Kanala Git</span>
+              </a>
+
+            </div>
+
+          </article>
+
+          <article class="channel-card">
+
+            <img
+              class="channel-background"
+              src="https://i.ibb.co/s9jZj0Bf/20260715-221218.jpg"
+              alt=""
+              aria-hidden="true"
+            >
+
+            <div
+              class="channel-overlay"
+              aria-hidden="true"
+            ></div>
+
+            <div class="channel-content">
+
+              <img
+                class="channel-logo"
+                src="https://yt3.googleusercontent.com/crso4xn6gfLnyIBaX8n2-I9NralQ3TY-DphR90vlPuC2RZNErRnh45a1OI8o2cQ7FB1J44LLQg=s900-c-k-c0x00ffffff-no-rj"
+                alt="Lemonhota YouTube kanalı logosu"
+              >
+
+              <h3 class="channel-name">
+                Lemonhota
+              </h3>
+
+              <div class="channel-stats">
+
+                <div class="channel-stat">
+                  <strong>48,1 B</strong>
+                  <span>abone</span>
+                </div>
+
+                <div class="channel-stat">
+                  <strong>14 M</strong>
+                  <span>görüntüleme</span>
+                </div>
+
+                <div class="channel-stat">
+                  <strong>240</strong>
+                  <span>video</span>
+                </div>
+
+              </div>
+
+              <a
+                href="https://youtube.com/@lemonhota"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="channel-button"
+              >
+                <img
+                  src="https://cdn.simpleicons.org/youtube/000000"
+                  alt=""
+                  aria-hidden="true"
+                >
+
+                <span>Kanala Git</span>
+              </a>
+
+            </div>
+
+          </article>
+
         </div>
 
       </div>
+    </section>
 
-      <a
-        href="https://youtube.com/@batuclips?si=XvTEtROSBASyxXv4"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="channel-button"
-      >
-        <img
-          src="https://cdn.simpleicons.org/youtube/000000"
-          alt=""
-          aria-hidden="true"
-        >
-
-        <span>Kanala Git</span>
-      </a>
-
-    </div>
-
-  </article>
-
-  <article class="channel-card">
-
-    <img
-      class="channel-background"
-      src="https://i.ibb.co/s9jZj0Bf/20260715-221218.jpg"
-      alt=""
-      aria-hidden="true"
-    >
-
-    <div
-      class="channel-overlay"
-      aria-hidden="true"
-    ></div>
-
-    <div class="channel-content">
-
-      <img
-        class="channel-logo"
-        src="https://yt3.googleusercontent.com/crso4xn6gfLnyIBaX8n2-I9NralQ3TY-DphR90vlPuC2RZNErRnh45a1OI8o2cQ7FB1J44LLQg=s900-c-k-c0x00ffffff-no-rj"
-        alt="Lemonhota YouTube kanalı logosu"
-      >
-
-      <h3 class="channel-name">
-        Lemonhota
-      </h3>
-
-      <div class="channel-stats">
-
-        <div class="channel-stat">
-          <strong>48,1 B</strong>
-          <span>abone</span>
-        </div>
-
-        <div class="channel-stat">
-          <strong>14 M</strong>
-          <span>görüntüleme</span>
-        </div>
-
-        <div class="channel-stat">
-          <strong>240</strong>
-          <span>video</span>
-        </div>
-
-      </div>
-
-      <a
-        href="https://youtube.com/@lemonhota"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="channel-button"
-      >
-        <img
-          src="https://cdn.simpleicons.org/youtube/000000"
-          alt=""
-          aria-hidden="true"
-        >
-
-        <span>Kanala Git</span>
-      </a>
-
-    </div>
-
-  </article>
-
-</div>
-
-</div>
-
-</section>
-
-<section
-  class="section work"
-  id="work"
->
     <section
       class="section work"
       id="work"
@@ -854,7 +773,8 @@
 
       </div>
     </section>
-      <section
+
+    <section
       class="section highlights"
       id="highlights"
     >
@@ -930,7 +850,7 @@
 
           <article class="highlight-card reveal">
 
-            <div class="highlight-logos single-logo">
+                        <div class="highlight-logos single-logo">
 
               <img
                 src="https://yt3.googleusercontent.com/crso4xn6gfLnyIBaX8n2-I9NralQ3TY-DphR90vlPuC2RZNErRnh45a1OI8o2cQ7FB1J44LLQg=s900-c-k-c0x00ffffff-no-rj"
@@ -1084,7 +1004,6 @@
       class="section tools"
       id="tools"
     >
-
       <div class="container">
 
         <div class="section-head reveal">
@@ -1110,7 +1029,6 @@
         class="tools-marquee"
         aria-label="Kullandığım programlar"
       >
-
         <div class="tools-track">
 
           <div class="tool-group">
@@ -1221,9 +1139,7 @@
           </div>
 
         </div>
-
       </div>
-
     </section>
 
     <section
@@ -1290,18 +1206,6 @@
             >
           </a>
 
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            <img
-              src="https://cdn.simpleicons.org/linkedin/white"
-              alt=""
-            >
-          </a>
-
         </div>
 
       </div>
@@ -1332,4 +1236,3 @@
 
 </body>
 </html>
-    
