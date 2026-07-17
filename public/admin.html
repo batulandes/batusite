@@ -2,35 +2,14 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Tasarım Yönetimi — BATU</title>
-
+  <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#000000">
 
-  <meta
-    name="robots"
-    content="noindex, nofollow"
-  >
+  <title>BATU — Tasarım Yönetimi</title>
 
   <style>
-    :root {
-      --background: #000000;
-      --surface: #080808;
-      --surface-light: #0d0d0d;
-      --text: #ffffff;
-      --muted: #939393;
-      --border: #252525;
-      --border-light: #383838;
-      --danger: #ff6262;
-      --success: #70db8b;
-      --container: 940px;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -43,31 +22,25 @@
 
     body {
       min-height: 100vh;
-      color: var(--text);
-      background: var(--background);
+      background: #000;
+      color: #fff;
       font-family:
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         Arial,
         sans-serif;
-      -webkit-font-smoothing: antialiased;
+    }
+
+    [hidden] {
+      display: none !important;
     }
 
     button,
     input,
-    textarea,
-    select {
-      color: inherit;
+    textarea {
       font: inherit;
-    }
-
-    button,
-    label,
-    input,
-    textarea,
-    select {
-      -webkit-tap-highlight-color: transparent;
+      color: inherit;
     }
 
     button {
@@ -79,178 +52,208 @@
       max-width: 100%;
     }
 
-    [hidden] {
-      display: none !important;
-    }
-
     .container {
-      width: min(
-        var(--container),
-        calc(100% - 30px)
-      );
-      margin-inline: auto;
+      width: min(900px, calc(100% - 28px));
+      margin: auto;
     }
 
-    .topbar {
-      height: 76px;
-      background: rgba(0, 0, 0, 0.72);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(17px);
-      -webkit-backdrop-filter: blur(17px);
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 72px;
+      background: rgba(0, 0, 0, 0.9);
+      border-bottom: 1px solid #222;
+      backdrop-filter: blur(15px);
     }
 
-    .topbar-inner {
+    .header-inner {
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .topbar img {
-      width: 52px;
-      height: 52px;
-      object-fit: contain;
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.05em;
     }
 
-    .topbar-title {
-      color: #858585;
+    .header-title {
+      color: #777;
       font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
     }
 
-    .logout-button {
-      padding: 9px 13px;
-      color: #b4b4b4;
-      background: transparent;
-      border: 1px solid var(--border);
+    .small-button {
+      min-height: 38px;
+      padding: 0 14px;
+      background: #080808;
+      border: 1px solid #282828;
       border-radius: 999px;
+      color: #bbb;
       font-size: 12px;
+    }
+
+    main {
+      padding: 35px 0 90px;
     }
 
     .login-view {
-      min-height: calc(100vh - 76px);
+      min-height: calc(100vh - 145px);
       display: grid;
       place-items: center;
-      padding: 40px 0;
+    }
+
+    .card {
+      padding: 22px;
+      background: #080808;
+      border: 1px solid #252525;
+      border-radius: 20px;
     }
 
     .login-card {
       width: min(430px, 100%);
-      padding: 28px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 22px;
     }
 
-    .login-card h1 {
-      font-size: 37px;
-      letter-spacing: -0.045em;
+    h1 {
+      font-size: 42px;
+      line-height: 0.95;
+      letter-spacing: -0.055em;
     }
 
-    .login-card p {
-      margin-top: 10px;
-      color: var(--muted);
+    h2 {
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .description {
+      margin-top: 12px;
+      color: #8b8b8b;
       font-size: 14px;
       line-height: 1.6;
-    }
-
-    .dashboard {
-      padding: 48px 0 90px;
-    }
-
-    .dashboard-heading {
-      margin-bottom: 31px;
-      text-align: center;
-    }
-
-    .dashboard-heading h1 {
-      font-size: clamp(40px, 7vw, 70px);
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-    }
-
-    .dashboard-heading p {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .panel {
-      padding: 25px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-    }
-
-    .panel + .panel {
-      margin-top: 20px;
-    }
-
-    .panel-title {
-      margin-bottom: 21px;
-      font-size: 22px;
-      letter-spacing: -0.025em;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-      gap: 15px;
     }
 
     .field {
       display: flex;
       flex-direction: column;
       gap: 8px;
-    }
-
-    .field-full {
-      grid-column: 1 / -1;
+      margin-top: 15px;
     }
 
     .field label {
-      color: #aaaaaa;
+      color: #aaa;
       font-size: 12px;
     }
 
     .field input,
-    .field textarea,
-    .field select {
+    .field textarea {
       width: 100%;
-      min-height: 48px;
+      min-height: 49px;
       padding: 12px 14px;
-      color: #ffffff;
-      background: #030303;
-      border: 1px solid var(--border);
+      background: #020202;
+      border: 1px solid #282828;
       border-radius: 12px;
       outline: none;
-      font-size: 14px;
-      transition: border-color 0.2s ease;
-    }
-
-    .field textarea {
-      min-height: 105px;
-      resize: vertical;
-      line-height: 1.55;
     }
 
     .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      border-color: #666666;
+    .field textarea:focus {
+      border-color: #666;
+    }
+
+    .field textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .button-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .primary-button,
+    .secondary-button {
+      min-height: 50px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .primary-button {
+      color: #000;
+      background: #fff;
+      border: 1px solid #fff;
+    }
+
+    .secondary-button {
+      color: #ddd;
+      background: #080808;
+      border: 1px solid #282828;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: wait;
+    }
+
+    .message {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 13px;
+      color: #aaa;
+      background: #020202;
+      border: 1px solid #282828;
+      border-radius: 11px;
+      font-size: 13px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .message.visible {
+      display: block;
+    }
+
+    .message.error {
+      color: #ff6b6b;
+      border-color: rgba(255, 107, 107, 0.4);
+    }
+
+    .message.success {
+      color: #7de39a;
+      border-color: rgba(125, 227, 154, 0.4);
+    }
+
+    .dashboard-title {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .dashboard-title h1 {
+      font-size: clamp(46px, 9vw, 76px);
+    }
+
+    .dashboard-title p {
+      margin-top: 12px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    .card + .card {
+      margin-top: 18px;
     }
 
     .upload-box {
       position: relative;
-      min-height: 170px;
-      padding: 25px;
+      min-height: 155px;
+      margin-top: 18px;
+      padding: 20px;
       display: grid;
       place-items: center;
-      background: #030303;
-      border: 1px dashed #3a3a3a;
-      border-radius: 15px;
+      background: #020202;
+      border: 1px dashed #444;
+      border-radius: 14px;
       text-align: center;
       cursor: pointer;
     }
@@ -264,218 +267,163 @@
       cursor: pointer;
     }
 
-    .upload-icon {
-      font-size: 30px;
-    }
-
-    .upload-title {
-      margin-top: 9px;
+    .upload-box strong {
+      display: block;
       font-size: 15px;
-      font-weight: 600;
     }
 
-    .upload-description {
-      margin-top: 6px;
-      color: #747474;
+    .upload-box span {
+      display: block;
+      margin-top: 7px;
+      color: #777;
       font-size: 12px;
-    }
-
-    .selected-files {
-      margin-top: 12px;
-      color: #aaaaaa;
-      font-size: 12px;
-      line-height: 1.55;
       overflow-wrap: anywhere;
     }
 
-    .checkbox-row {
-      min-height: 48px;
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .checkbox {
+      min-height: 49px;
+      margin-top: 15px;
       padding: 0 14px;
       display: flex;
       align-items: center;
       gap: 10px;
-      background: #030303;
-      border: 1px solid var(--border);
+      color: #bbb;
+      background: #020202;
+      border: 1px solid #282828;
       border-radius: 12px;
+      font-size: 13px;
     }
 
-    .checkbox-row input {
+    .checkbox input {
       width: 18px;
       height: 18px;
-      accent-color: #ffffff;
+      accent-color: #fff;
     }
 
-    .primary-button {
+    .wide {
       width: 100%;
-      min-height: 52px;
-      margin-top: 20px;
-      color: #000000;
-      background: #ffffff;
-      border: 1px solid #ffffff;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 650;
+      margin-top: 18px;
     }
 
-    .primary-button:disabled {
-      opacity: 0.45;
-      cursor: wait;
-    }
-
-    .status-message {
-      margin-top: 15px;
-      padding: 13px;
-      display: none;
-      background: #030303;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      color: #aaaaaa;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .status-message.visible {
-      display: block;
-    }
-
-    .status-message.error {
-      color: var(--danger);
-      border-color: rgba(255, 98, 98, 0.35);
-    }
-
-    .status-message.success {
-      color: var(--success);
-      border-color: rgba(112, 219, 139, 0.35);
-    }
-
-    .archive-toolbar {
-      margin-bottom: 17px;
+    .toolbar {
+      margin-bottom: 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 12px;
     }
 
-    .archive-toolbar span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .refresh-button {
-      padding: 9px 13px;
-      color: #b7b7b7;
-      background: #050505;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 12px;
-    }
-
-    .admin-list {
+    .design-list {
       display: grid;
       gap: 11px;
     }
 
-    .admin-item {
-      padding: 11px;
+    .design-item {
+      padding: 10px;
       display: grid;
-      grid-template-columns:
-        90px minmax(0, 1fr) auto;
+      grid-template-columns: 82px minmax(0, 1fr) auto;
       align-items: center;
-      gap: 14px;
-      background: #030303;
-      border: 1px solid var(--border);
+      gap: 13px;
+      background: #020202;
+      border: 1px solid #282828;
       border-radius: 14px;
     }
 
-    .admin-thumbnail {
-      width: 90px;
-      height: 90px;
+    .thumbnail {
+      width: 82px;
+      height: 82px;
       object-fit: cover;
-      background: #111111;
+      background: #111;
       border-radius: 9px;
     }
 
-    .admin-item-title {
+    .design-item h3 {
       font-size: 14px;
-      font-weight: 600;
       overflow-wrap: anywhere;
     }
 
-    .admin-item-meta {
+    .meta {
       margin-top: 6px;
-      color: #777777;
+      color: #777;
       font-size: 11px;
       line-height: 1.5;
     }
 
-    .admin-item-status {
+    .status {
       margin-top: 7px;
+      color: #7de39a;
       font-size: 11px;
     }
 
-    .admin-item-status.published {
-      color: var(--success);
+    .status.hidden-design {
+      color: #888;
     }
 
-    .admin-item-status.hidden {
-      display: block !important;
-      color: #8e8e8e;
-    }
-
-    .item-actions {
+    .actions {
       display: flex;
       flex-direction: column;
       gap: 7px;
     }
 
     .item-button {
-      min-width: 92px;
-      min-height: 37px;
-      padding: 0 11px;
-      background: #0a0a0a;
-      border: 1px solid var(--border);
+      min-width: 83px;
+      min-height: 36px;
+      padding: 0 10px;
+      color: #bbb;
+      background: #0b0b0b;
+      border: 1px solid #282828;
       border-radius: 999px;
-      color: #b5b5b5;
       font-size: 11px;
     }
 
     .item-button.delete {
-      color: var(--danger);
+      color: #ff6b6b;
     }
 
-    .list-loading,
-    .list-empty {
-      padding: 35px 15px;
-      color: #777777;
+    .empty {
+      padding: 30px 10px;
+      color: #777;
       text-align: center;
       font-size: 13px;
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 650px) {
+      .header-title {
+        display: none;
+      }
+
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+
       .form-grid {
         grid-template-columns: 1fr;
       }
 
-      .field-full {
+      .full {
         grid-column: auto;
       }
 
-      .panel {
-        padding: 18px;
-        border-radius: 18px;
+      .design-item {
+        grid-template-columns: 72px minmax(0, 1fr);
       }
 
-      .admin-item {
-        grid-template-columns:
-          76px minmax(0, 1fr);
+      .thumbnail {
+        width: 72px;
+        height: 72px;
       }
 
-      .admin-thumbnail {
-        width: 76px;
-        height: 76px;
-      }
-
-      .item-actions {
+      .actions {
         grid-column: 1 / -1;
         flex-direction: row;
       }
@@ -483,524 +431,1190 @@
       .item-button {
         flex: 1;
       }
-
-      .topbar-title {
-        display: none;
-      }
     }
   </style>
 </head>
 
 <body>
 
-  <header class="topbar">
-    <div class="container topbar-inner">
+<header>
+  <div class="container header-inner">
+    <div class="logo">BATU</div>
+    <div class="header-title">Tasarım Yönetimi</div>
 
-      <img
-        src="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png"
-        alt="BATU"
-      >
-
-      <span class="topbar-title">
-        Tasarım Yönetimi
-      </span>
-
-      <button
-        class="logout-button"
-        id="logout-button"
-        type="button"
-        hidden
-      >
-        Çıkış
-      </button>
-
-    </div>
-  </header>
-
-  <main>
-
-    <section
-      class="login-view"
-      id="login-view"
-    >
-      <div class="container">
-        <div class="login-card">
-
-          <h1>Giriş</h1>
-
-          <p>
-            Tasarım arşivini yönetmek için Supabase
-            hesabınla giriş yap.
-          </p>
-
-          <form id="login-form">
-
-            <div
-              class="field"
-              style="margin-top: 22px;"
-            >
-              <label for="login-email">
-                E-posta
-              </label>
-
-              <input
-                id="login-email"
-                type="email"
-                autocomplete="email"
-                required
-              >
-            </div>
-
-            <div
-              class="field"
-              style="margin-top: 14px;"
-            >
-              <label for="login-password">
-                Şifre
-              </label>
-
-              <input
-                id="login-password"
-                type="password"
-                autocomplete="current-password"
-                required
-              >
-            </div>
-
-            <button
-              class="primary-button"
-              id="login-button"
-              type="submit"
-            >
-              Giriş Yap
-            </button>
-
-            <div
-              class="status-message"
-              id="login-status"
-            ></div>
-
-          </form>
-
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="dashboard"
-      id="dashboard"
+    <button
+      id="logout-button"
+      class="small-button"
+      type="button"
       hidden
     >
-      <div class="container">
+      Çıkış
+    </button>
+  </div>
+</header>
 
-        <div class="dashboard-heading">
-          <h1>Tasarım Arşivi</h1>
+<main class="container">
 
-          <p>
-            Telefonda galeriden seç, bilgileri yaz ve yayınla.
-          </p>
-        </div>
+  <section
+    id="login-view"
+    class="login-view"
+  >
+    <div class="card login-card">
 
-        <section class="panel">
+      <h1>Admin girişi</h1>
 
-          <h2 class="panel-title">
-            Yeni tasarım yükle
-          </h2>
+      <p class="description">
+        Supabase Authentication kullanıcınla giriş yap.
+        Hesap oluşturmadıysan aynı ekrandan oluşturabilirsin.
+      </p>
 
-          <form id="upload-form">
+      <div class="field">
+        <label for="email">E-posta</label>
 
-            <label class="upload-box">
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+        >
+      </div>
 
-              <input
-                id="design-files"
-                type="file"
-                accept="image/*"
-                multiple
-                required
-              >
+      <div class="field">
+        <label for="password">Şifre</label>
 
-              <span>
-                <span class="upload-icon">＋</span>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          minlength="6"
+        >
+      </div>
 
-                <span class="upload-title">
-                  Galeriden görsel seç
-                </span>
+      <div class="button-grid">
 
-                <span class="upload-description">
-                  Bir veya birden fazla tasarım seçebilirsin
-                </span>
+        <button
+          id="login-button"
+          class="primary-button"
+          type="button"
+        >
+          Giriş yap
+        </button>
 
-                <span
-                  class="selected-files"
-                  id="selected-files"
-                ></span>
-              </span>
-
-            </label>
-
-            <div
-              class="form-grid"
-              style="margin-top: 17px;"
-            >
-
-              <div class="field">
-                <label for="design-title">
-                  Başlık
-                </label>
-
-                <input
-                  id="design-title"
-                  type="text"
-                  placeholder="Boş kalırsa dosya adı kullanılır"
-                >
-              </div>
-
-              <div class="field">
-                <label for="design-category">
-                  Kategori
-                </label>
-
-                <input
-                  id="design-category"
-                  type="text"
-                  placeholder="Sosyal medya, afiş, logo..."
-                >
-              </div>
-
-              <div class="field">
-                <label for="design-year">
-                  Yıl
-                </label>
-
-                <input
-                  id="design-year"
-                  type="number"
-                  min="2000"
-                  max="2100"
-                  inputmode="numeric"
-                  placeholder="2026"
-                >
-              </div>
-
-              <div class="field">
-                <label for="design-order">
-                  Sıra
-                </label>
-
-                <input
-                  id="design-order"
-                  type="number"
-                  inputmode="numeric"
-                  value="0"
-                >
-              </div>
-
-              <div class="field field-full">
-                <label for="design-description">
-                  Açıklama
-                </label>
-
-                <textarea
-                  id="design-description"
-                  placeholder="İsteğe bağlı kısa açıklama"
-                ></textarea>
-              </div>
-
-              <div class="field field-full">
-                <label class="checkbox-row">
-
-                  <input
-                    id="design-published"
-                    type="checkbox"
-                    checked
-                  >
-
-                  <span>
-                    Arşivde hemen yayınla
-                  </span>
-
-                </label>
-              </div>
-
-            </div>
-
-            <button
-              class="primary-button"
-              id="upload-button"
-              type="submit"
-            >
-              Tasarımları Yayınla
-            </button>
-
-            <div
-              class="status-message"
-              id="upload-status"
-            ></div>
-
-          </form>
-
-        </section>
-
-        <section class="panel">
-
-          <div class="archive-toolbar">
-
-            <h2 class="panel-title">
-              Yüklenen tasarımlar
-            </h2>
-
-            <button
-              class="refresh-button"
-              id="refresh-button"
-              type="button"
-            >
-              Yenile
-            </button>
-
-          </div>
-
-          <div
-            class="admin-list"
-            id="admin-list"
-          ></div>
-
-        </section>
+        <button
+          id="signup-button"
+          class="secondary-button"
+          type="button"
+        >
+          Hesap oluştur
+        </button>
 
       </div>
+
+      <div
+        id="auth-message"
+        class="message"
+      ></div>
+
+    </div>
+  </section>
+
+  <section
+    id="dashboard"
+    hidden
+  >
+
+    <div class="dashboard-title">
+      <h1>Tasarım Arşivi</h1>
+      <p>Galeriden seç, yükle, yayınla veya sil.</p>
+    </div>
+
+    <section class="card">
+
+      <h2>Yeni tasarım</h2>
+
+      <form id="upload-form">
+
+        <label class="upload-box">
+
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            required
+          >
+
+          <div>
+            <strong>Galeriden görsel seç</strong>
+            <span id="file-name">PNG, JPG veya WEBP</span>
+          </div>
+
+        </label>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="title">Başlık</label>
+
+            <input
+              id="title"
+              type="text"
+              placeholder="Tasarım adı"
+            >
+          </div>
+
+          <div class="field">
+            <label for="category">Kategori</label>
+
+            <input
+              id="category"
+              type="text"
+              placeholder="Afiş, sosyal medya..."
+            >
+          </div>
+
+          <div class="field">
+            <label for="year">Yıl</label>
+
+            <input
+              id="year"
+              type="number"
+              min="2000"
+              max="2100"
+              inputmode="numeric"
+              placeholder="2026"
+            >
+          </div>
+
+          <div class="field">
+            <label for="order">Sıra</label>
+
+            <input
+              id="order"
+              type="number"
+              inputmode="numeric"
+              value="0"
+            >
+          </div>
+
+          <div class="field full">
+            <label for="description">Açıklama</label>
+
+            <textarea
+              id="description"
+              placeholder="İsteğe bağlı"
+            ></textarea>
+          </div>
+
+        </div>
+
+        <label class="checkbox">
+
+          <input
+            id="published"
+            type="checkbox"
+            checked
+          >
+
+          <span>Hemen yayınla</span>
+
+        </label>
+
+        <button
+          id="upload-button"
+          class="primary-button wide"
+          type="submit"
+        >
+          Tasarımı yükle
+        </button>
+
+        <div
+          id="upload-message"
+          class="message"
+        ></div>
+
+      </form>
+
     </section>
 
-  </main>
+    <section class="card">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <div class="toolbar">
 
-  <script>
-    "use strict";
+        <h2>Yüklenenler</h2>
 
-    const SUPABASE_URL =
-      "https://phreqbjgynchbynmtefz.supabase.co";
+        <button
+          id="refresh-button"
+          class="small-button"
+          type="button"
+        >
+          Yenile
+        </button>
 
-    const SUPABASE_KEY =
-      "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae";
+      </div>
 
-    const client = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+      <div
+        id="design-list"
+        class="design-list"
+      ></div>
 
-    const loginView =
-      document.getElementById("login-view");
+    </section>
 
-    const dashboard =
-      document.getElementById("dashboard");
+  </section>
 
-    const loginForm =
-      document.getElementById("login-form");
+</main>
 
-    const loginButton =
-      document.getElementById("login-button");
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
-    const loginStatus =
-      document.getElementById("login-status");
+<script>
+  "use strict";
 
-    const logoutButton =
-      document.getElementById("logout-button");
+  const SUPABASE_URL =
+    "https://phreqbjgynchbynmtefz.supabase.co";
 
-    const uploadForm =
-      document.getElementById("upload-form");
+  const SUPABASE_KEY =
+    "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae";
 
-    const uploadButton =
-      document.getElementById("upload-button");
+  const BUCKET_NAME = "tasarimlar";
 
-    const uploadStatus =
-      document.getElementById("upload-status");
+  const loginView =
+    document.getElementById("login-view");
 
-    const filesInput =
-      document.getElementById("design-files");
+  const dashboard =
+    document.getElementById("dashboard");
 
-    const selectedFiles =
-      document.getElementById("selected-files");
+  const emailInput =
+    document.getElementById("email");
 
-    const adminList =
-      document.getElementById("admin-list");
+  const passwordInput =
+    document.getElementById("password");
 
-    const refreshButton =
-      document.getElementById("refresh-button");
+  const loginButton =
+    document.getElementById("login-button");
 
-    const showStatus = (
-      element,
-      message,
-      type = ""
-    ) => {
-      element.textContent = message;
-      element.className =
-        `status-message visible ${type}`;
-    };
+  const signupButton =
+    document.getElementById("signup-button");
 
-    const hideStatus = (element) => {
-      element.textContent = "";
-      element.className =
-        "status-message";
-    };
+  const logoutButton =
+    document.getElementById("logout-button");
 
-    const sanitizeFilename = (name) => {
-      return name
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-+|-+$/g, "")
-        .slice(0, 70) || "tasarim";
-    };
+  const authMessage =
+    document.getElementById("auth-message");
 
-    const filenameWithoutExtension = (
-      name
-    ) => {
-      return name.replace(
-        /\.[^/.]+$/,
-        ""
+  const uploadForm =
+    document.getElementById("upload-form");
+
+  const uploadButton =
+    document.getElementById("upload-button");
+
+  const uploadMessage =
+    document.getElementById("upload-message");
+
+  const fileInput =
+    document.getElementById("file-input");
+
+  const fileName =
+    document.getElementById("file-name");
+
+  const designList =
+    document.getElementById("design-list");
+
+  const refreshButton =
+    document.getElementById("refresh-button");
+
+  let supabaseClient = null;
+
+  function showMessage(
+    element,
+    text,
+    type = ""
+  ) {
+    element.textContent = text;
+    element.className =
+      `message visible ${type}`;
+  }
+
+  function clearMessage(element) {
+    element.textContent = "";
+    element.className = "message";
+  }
+
+  function setButtonLoading(
+    button,
+    loading,
+    normalText,
+    loadingText
+  ) {
+    button.disabled = loading;
+
+    button.textContent =
+      loading
+        ? loadingText
+        : normalText;
+  }
+
+  function setLoggedInView(loggedIn) {
+    loginView.hidden = loggedIn;
+    dashboard.hidden = !loggedIn;
+    logoutButton.hidden = !loggedIn;
+  }
+
+  function readableAuthError(error) {
+    const rawMessage =
+      error?.message ||
+      String(error || "Bilinmeyen hata");
+
+    const lower =
+      rawMessage.toLowerCase();
+
+    if (
+      lower.includes(
+        "invalid login credentials"
+      )
+    ) {
+      return (
+        "E-posta veya şifre yanlış. " +
+        "Hesap yoksa önce Hesap oluştur düğmesine bas."
       );
-    };
+    }
 
-    const compressImage = (
-      file,
-      maxDimension = 2400,
-      quality = 0.88
-    ) => {
-      return new Promise(
-        (resolve, reject) => {
-          const image = new Image();
-          const objectUrl =
-            URL.createObjectURL(file);
+    if (
+      lower.includes(
+        "email not confirmed"
+      )
+    ) {
+      return (
+        "E-posta doğrulanmamış. " +
+        "E-postana gelen doğrulama bağlantısına bas."
+      );
+    }
 
-          image.onload = () => {
-            URL.revokeObjectURL(objectUrl);
+    if (
+      lower.includes(
+        "user already registered"
+      )
+    ) {
+      return (
+        "Bu e-posta zaten kayıtlı. " +
+        "Giriş yap düğmesini kullan."
+      );
+    }
 
-            const longestSide = Math.max(
-              image.naturalWidth,
-              image.naturalHeight
-            );
+    if (
+      lower.includes(
+        "password should be"
+      )
+    ) {
+      return "Şifre en az 6 karakter olmalı.";
+    }
 
-            const scale = Math.min(
-              1,
-              maxDimension / longestSide
-            );
+    return rawMessage;
+  }
 
-            const width = Math.max(
-              1,
-              Math.round(
-                image.naturalWidth * scale
-              )
-            );
+  async function initialize() {
+    if (
+      !window.supabase ||
+      !window.supabase.createClient
+    ) {
+      showMessage(
+        authMessage,
+        "Supabase kütüphanesi yüklenemedi. Sayfayı yenile.",
+        "error"
+      );
 
-            const height = Math.max(
-              1,
-              Math.round(
-                image.naturalHeight * scale
-              )
-            );
+      return;
+    }
 
-            const canvas =
-              document.createElement("canvas");
-
-            canvas.width = width;
-            canvas.height = height;
-
-            const context =
-              canvas.getContext("2d");
-
-            if (!context) {
-              reject(
-                new Error(
-                  "Görsel işlenemedi."
-                )
-              );
-              return;
+    try {
+      supabaseClient =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY,
+          {
+            auth: {
+              persistSession: true,
+              autoRefreshToken: true,
+              detectSessionInUrl: true
             }
+          }
+        );
 
-            context.drawImage(
-              image,
-              0,
-              0,
-              width,
-              height
-            );
-
-            canvas.toBlob(
-              (blob) => {
-                if (!blob) {
-                  reject(
-                    new Error(
-                      "Görsel sıkıştırılamadı."
-                    )
-                  );
-                  return;
-                }
-
-                resolve(blob);
-              },
-              "image/webp",
-              quality
-            );
-          };
-
-          image.onerror = () => {
-            URL.revokeObjectURL(objectUrl);
-
-            reject(
-              new Error(
-                `${file.name} okunamadı.`
-              )
-            );
-          };
-
-          image.src = objectUrl;
-        }
-      );
-    };
-
-    const setAuthenticatedView = (
-      authenticated
-    ) => {
-      loginView.hidden = authenticated;
-      dashboard.hidden = !authenticated;
-      logoutButton.hidden = !authenticated;
-
-      if (authenticated) {
-        loadDesigns();
-      }
-    };
-
-    const checkSession = async () => {
       const {
         data,
         error
-      } = await client.auth.getSession();
+      } = await supabaseClient.auth.getSession();
 
       if (error) {
-        console.error(error);
+        throw error;
       }
 
-      setAuthenticatedView(
-        Boolean(data?.session)
+      const loggedIn =
+        Boolean(data?.session);
+
+      setLoggedInView(loggedIn);
+
+      if (loggedIn) {
+        await loadDesigns();
+      }
+
+      supabaseClient.auth.onAuthStateChange(
+        async (_event, session) => {
+          const active =
+            Boolean(session);
+
+          setLoggedInView(active);
+
+          if (active) {
+            await loadDesigns();
+          }
+        }
       );
-    };
+    } catch (error) {
+      showMessage(
+        authMessage,
+        "Bağlantı hatası: " +
+          readableAuthError(error),
+        "error"
+      );
+    }
+  }
 
-    loginForm.addEventListener(
-      "submit",
-      async (event) => {
-        event.preventDefault();
-        hideStatus(loginStatus);
+  loginButton.addEventListener(
+    "click",
+    async () => {
+      clearMessage(authMessage);
 
-        loginButton.disabled = true;
-        loginButton.textContent =
-          "Giriş yapılıyor";
+      const email =
+        emailInput.value.trim();
 
-        const email =
+      const password =
+        passwordInput.value;
+
+      if (!email || !password) {
+        showMessage(
+          authMessage,
+          "E-posta ve şifreyi doldur.",
+          "error"
+        );
+
+        return;
+      }
+
+      setButtonLoading(
+        loginButton,
+        true,
+        "Giriş yap",
+        "Bağlanıyor..."
+      );
+
+      try {
+        const {
+          error
+        } =
+          await supabaseClient.auth
+            .signInWithPassword({
+              email,
+              password
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        showMessage(
+          authMessage,
+          "Giriş başarılı.",
+          "success"
+        );
+      } catch (error) {
+        showMessage(
+          authMessage,
+          readableAuthError(error),
+          "error"
+        );
+      } finally {
+        setButtonLoading(
+          loginButton,
+          false,
+          "Giriş yap",
+          "Bağlanıyor..."
+        );
+      }
+    }
+  );
+
+  signupButton.addEventListener(
+    "click",
+    async () => {
+      clearMessage(authMessage);
+
+      const email =
+        emailInput.value.trim();
+
+      const password =
+        passwordInput.value;
+
+      if (!email || !password) {
+        showMessage(
+          authMessage,
+          "E-posta ve şifreyi doldur.",
+          "error"
+        );
+
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage(
+          authMessage,
+          "Şifre en az 6 karakter olmalı.",
+          "error"
+        );
+
+        return;
+      }
+
+      setButtonLoading(
+        signupButton,
+        true,
+        "Hesap oluştur",
+        "Oluşturuluyor..."
+      );
+
+      try {
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth
+            .signUp({
+              email,
+              password
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        if (data?.session) {
+          showMessage(
+            authMessage,
+            "Hesap oluşturuldu ve giriş yapıldı.",
+            "success"
+          );
+        } else {
+          showMessage(
+            authMessage,
+            "Hesap oluşturuldu. E-postana gelen doğrulama bağlantısına bas, sonra giriş yap.",
+            "success"
+          );
+        }
+      } catch (error) {
+        showMessage(
+          authMessage,
+          readableAuthError(error),
+          "error"
+        );
+      } finally {
+        setButtonLoading(
+          signupButton,
+          false,
+          "Hesap oluştur",
+          "Oluşturuluyor..."
+        );
+      }
+    }
+  );
+
+  logoutButton.addEventListener(
+    "click",
+    async () => {
+      await supabaseClient.auth.signOut();
+
+      setLoggedInView(false);
+    }
+  );
+
+  fileInput.addEventListener(
+    "change",
+    () => {
+      fileName.textContent =
+        fileInput.files?.[0]?.name ||
+        "PNG, JPG veya WEBP";
+    }
+  );
+
+  function cleanFilename(name) {
+    return name
+      .normalize("NFD")
+      .replace(
+        /[\u0300-\u036f]/g,
+        ""
+      )
+      .toLowerCase()
+      .replace(/\.[^.]+$/, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60) || "tasarim";
+  }
+
+  function createImageElement(file) {
+    return new Promise(
+      (resolve, reject) => {
+        const image = new Image();
+
+        const objectUrl =
+          URL.createObjectURL(file);
+
+        image.onload = () => {
+          URL.revokeObjectURL(objectUrl);
+          resolve(image);
+        };
+
+        image.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+
+          reject(
+            new Error(
+              "Görsel okunamadı."
+            )
+          );
+        };
+
+        image.src = objectUrl;
+      }
+    );
+  }
+
+  async function compressImage(file) {
+    if (
+      !file.type.startsWith("image/")
+    ) {
+      throw new Error(
+        "Seçilen dosya görsel değil."
+      );
+    }
+
+    const image =
+      await createImageElement(file);
+
+    const maxSide = 2400;
+
+    const scale = Math.min
+          1,
+      maxSide /
+        Math.max(
+          image.naturalWidth,
+          image.naturalHeight
+        )
+    );
+
+    const canvas =
+      document.createElement("canvas");
+
+    canvas.width = Math.max(
+      1,
+      Math.round(
+        image.naturalWidth * scale
+      )
+    );
+
+    canvas.height = Math.max(
+      1,
+      Math.round(
+        image.naturalHeight * scale
+      )
+    );
+
+    const context =
+      canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error(
+        "Görsel işlenemedi."
+      );
+    }
+
+    context.drawImage(
+      image,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    return new Promise(
+      (resolve, reject) => {
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(
+                new Error(
+                  "Görsel sıkıştırılamadı."
+                )
+              );
+
+              return;
+            }
+
+            resolve(blob);
+          },
+          "image/webp",
+          0.88
+        );
+      }
+    );
+  }
+
+  uploadForm.addEventListener(
+    "submit",
+    async (event) => {
+      event.preventDefault();
+
+      clearMessage(uploadMessage);
+
+      const file =
+        fileInput.files?.[0];
+
+      if (!file) {
+        showMessage(
+          uploadMessage,
+          "Önce bir görsel seç.",
+          "error"
+        );
+
+        return;
+      }
+
+      setButtonLoading(
+        uploadButton,
+        true,
+        "Tasarımı yükle",
+        "Hazırlanıyor..."
+      );
+
+      let uploadedPath = null;
+
+      try {
+        const compressed =
+          await compressImage(file);
+
+        const now =
+          new Date();
+
+        const folder =
+          `${now.getFullYear()}/` +
+          `${String(
+            now.getMonth() + 1
+          ).padStart(2, "0")}`;
+
+        const random =
+          crypto.randomUUID
+            ? crypto
+                .randomUUID()
+                .slice(0, 8)
+            : Math.random()
+                .toString(36)
+                .slice(2, 10);
+
+        const filePath =
+          `${folder}/` +
+          `${Date.now()}-` +
+          `${random}-` +
+          `${cleanFilename(file.name)}.webp`;
+
+        setButtonLoading(
+          uploadButton,
+          true,
+          "Tasarımı yükle",
+          "Yükleniyor..."
+        );
+
+        const {
+          error: storageError
+        } =
+          await supabaseClient.storage
+            .from(BUCKET_NAME)
+            .upload(
+              filePath,
+              compressed,
+              {
+                contentType: "image/webp",
+                cacheControl: "31536000",
+                upsert: false
+              }
+            );
+
+        if (storageError) {
+          throw storageError;
+        }
+
+        uploadedPath = filePath;
+
+        const {
+          data: publicUrlData
+        } =
+          supabaseClient.storage
+            .from(BUCKET_NAME)
+            .getPublicUrl(filePath);
+
+        const titleValue =
           document
-            .getElementById("login-email")
+            .getElementById("title")
             .value
             .trim();
 
-        const password =
+        const categoryValue =
           document
-     
+            .getElementById("category")
+            .value
+            .trim();
+
+        const yearValue =
+          document
+            .getElementById("year")
+            .value;
+
+        const orderValue =
+          document
+            .getElementById("order")
+            .value;
+
+        const descriptionValue =
+          document
+            .getElementById(
+              "description"
+            )
+            .value
+            .trim();
+
+        const publishedValue =
+          document
+            .getElementById(
+              "published"
+            )
+            .checked;
+
+        const {
+          error: databaseError
+        } =
+          await supabaseClient
+            .from("tasarimlar")
+            .insert({
+              baslik:
+                titleValue ||
+                file.name.replace(
+                  /\.[^.]+$/,
+                  ""
+                ),
+
+              gorsel_url:
+                publicUrlData.publicUrl,
+
+              dosya_yolu:
+                filePath,
+
+              kategori:
+                categoryValue || null,
+
+              yil:
+                yearValue
+                  ? Number(yearValue)
+                  : null,
+
+              aciklama:
+                descriptionValue || null,
+
+              sira:
+                orderValue
+                  ? Number(orderValue)
+                  : 0,
+
+              yayinlandi:
+                publishedValue
+            });
+
+        if (databaseError) {
+          throw databaseError;
+        }
+
+        uploadForm.reset();
+
+        document
+          .getElementById("order")
+          .value = "0";
+
+        document
+          .getElementById(
+            "published"
+          )
+          .checked = true;
+
+        fileName.textContent =
+          "PNG, JPG veya WEBP";
+
+        showMessage(
+          uploadMessage,
+          "Tasarım başarıyla yüklendi.",
+          "success"
+        );
+
+        await loadDesigns();
+      } catch (error) {
+        if (uploadedPath) {
+          await supabaseClient.storage
+            .from(BUCKET_NAME)
+            .remove([uploadedPath]);
+        }
+
+        showMessage(
+          uploadMessage,
+          "Yükleme hatası: " +
+            (
+              error?.message ||
+              String(error)
+            ),
+          "error"
+        );
+      } finally {
+        setButtonLoading(
+          uploadButton,
+          false,
+          "Tasarımı yükle",
+          "Yükleniyor..."
+        );
+      }
+    }
+  );
+
+  function escapeHtml(value = "") {
+    const element =
+      document.createElement("div");
+
+    element.textContent = value;
+
+    return element.innerHTML;
+  }
+
+  async function loadDesigns() {
+    designList.innerHTML = `
+      <div class="empty">
+        Yükleniyor...
+      </div>
+    `;
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("tasarimlar")
+        .select(
+          "id, baslik, gorsel_url, dosya_yolu, kategori, yil, sira, yayinlandi, created_at"
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+    if (error) {
+      designList.innerHTML = `
+        <div class="empty">
+          Liste hatası:
+          ${escapeHtml(error.message)}
+        </div>
+      `;
+
+      return;
+    }
+
+    if (!data?.length) {
+      designList.innerHTML = `
+        <div class="empty">
+          Henüz tasarım yüklenmedi.
+        </div>
+      `;
+
+      return;
+    }
+
+    designList.innerHTML = "";
+
+    data.forEach((design) => {
+      const item =
+        document.createElement(
+          "article"
+        );
+
+      item.className =
+        "design-item";
+
+      const meta = [
+        design.kategori,
+        design.yil,
+        `Sıra ${design.sira ?? 0}`
+      ]
+        .filter(Boolean)
+        .join(" · ");
+
+      item.innerHTML = `
+        <img
+          class="thumbnail"
+          src="${escapeHtml(
+            design.gorsel_url || ""
+          )}"
+          alt=""
+        >
+
+        <div>
+          <h3>
+            ${escapeHtml(
+              design.baslik ||
+              "Başlıksız"
+            )}
+          </h3>
+
+          <div class="meta">
+            ${escapeHtml(meta)}
+          </div>
+
+          <div
+            class="status ${
+              design.yayinlandi
+                ? ""
+                : "hidden-design"
+            }"
+          >
+            ${
+              design.yayinlandi
+                ? "Yayında"
+                : "Gizli"
+            }
+          </div>
+        </div>
+
+        <div class="actions">
+
+          <button
+            class="item-button toggle-button"
+            type="button"
+          >
+            ${
+              design.yayinlandi
+                ? "Gizle"
+                : "Yayınla"
+            }
+          </button>
+
+          <button
+            class="item-button delete delete-button"
+            type="button"
+          >
+            Sil
+          </button>
+
+        </div>
+      `;
+
+      item
+        .querySelector(
+          ".toggle-button"
+        )
+        .addEventListener(
+          "click",
+          async () => {
+            const {
+              error
+            } =
+              await supabaseClient
+                .from("tasarimlar")
+                .update({
+                  yayinlandi:
+                    !design.yayinlandi
+                })
+                .eq(
+                  "id",
+                  design.id
+                );
+
+            if (error) {
+              alert(error.message);
+              return;
+            }
+
+            await loadDesigns();
+          }
+        );
+
+      item
+        .querySelector(
+          ".delete-button"
+        )
+        .addEventListener(
+          "click",
+          async () => {
+            const approved =
+              confirm(
+                `"${design.baslik || "Bu tasarım"}" silinsin mi?`
+              );
+
+            if (!approved) {
+              return;
+            }
+
+            const {
+              error: storageError
+            } =
+              await supabaseClient.storage
+                .from(BUCKET_NAME)
+                .remove([
+                  design.dosya_yolu
+                ]);
+
+            if (storageError) {
+              alert(
+                "Dosya silinemedi: " +
+                  storageError.message
+              );
+
+              return;
+            }
+
+            const {
+              error: databaseError
+            } =
+              await supabaseClient
+                .from("tasarimlar")
+                .delete()
+                .eq(
+                  "id",
+                  design.id
+                );
+
+            if (databaseError) {
+              alert(
+                "Kayıt silinemedi: " +
+                  databaseError.message
+              );
+
+              return;
+            }
+
+            await loadDesigns();
+          }
+        );
+
+      designList.appendChild(item);
+    });
+  }
+
+  refreshButton.addEventListener(
+    "click",
+    loadDesigns
+  );
+
+  initialize();
+</script>
+
+</body>
+</html>
