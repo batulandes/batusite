@@ -199,6 +199,7 @@ Deno.serve(async (request) => {
         sira: Number(form.get("sira") || 0),
         yayinlandi: String(form.get("yayinlandi")) === "true",
         gorsel_url: publicUrlData.publicUrl,
+        dosya_yolu: path,
       };
 
       const { data, error: insertError } = await supabase
@@ -229,13 +230,15 @@ Deno.serve(async (request) => {
     if (action === "delete") {
       const { data: design, error: findError } = await supabase
         .from("tasarimlar")
-        .select("gorsel_url")
+        .select("gorsel_url, dosya_yolu")
         .eq("id", body.id)
         .single();
 
       if (findError) throw findError;
 
-      const path = storagePathFromUrl(design.gorsel_url || "");
+      const path =
+        design.dosya_yolu ||
+        storagePathFromUrl(design.gorsel_url || "");
 
       if (path) {
         const { error: removeError } = await supabase.storage
