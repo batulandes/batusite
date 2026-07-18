@@ -68,9 +68,11 @@ const loadHeroDesigns = async () => {
       const lane = lanes[index % lanes.length];
       const duration = 24;
       const card = document.createElement("div");
+      const visual = document.createElement("div");
       const image = document.createElement("img");
 
       card.className = "hero-design-card";
+      visual.className = "hero-design-card-visual";
       card.style.setProperty(
         "--lane-x",
         `${lane}vw`
@@ -101,7 +103,8 @@ const loadHeroDesigns = async () => {
         }
       });
 
-      card.appendChild(image);
+      visual.appendChild(image);
+      card.appendChild(visual);
       heroDesignsTilt.appendChild(card);
     }
 
