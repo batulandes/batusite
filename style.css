@@ -1024,7 +1024,7 @@ a {
 
 .tools {
   overflow: hidden;
-  background: #030303;
+  background: #000000;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -1046,32 +1046,38 @@ a {
 
 .tool-group {
   display: flex;
-  gap: 12px;
-  padding-right: 12px;
+  align-items: center;
+  gap: clamp(54px, 7vw, 110px);
+  padding-right: clamp(54px, 7vw, 110px);
 }
 
 .tool-card {
-  min-width: 175px;
-  min-height: 108px;
-  padding: 20px;
+  width: 64px;
+  height: 84px;
+  flex: 0 0 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 13px;
-  background: #080808;
-  border: 1px solid var(--border);
-  border-radius: 18px;
+  opacity: 0.72;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tool-card:hover {
+  opacity: 1;
+  transform: scale(1.08);
 }
 
 .tool-card img {
-  width: 34px;
-  height: 34px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
 }
 
-.tool-card span {
-  font-size: 14px;
-  font-weight: 500;
+.tool-card:nth-child(1) img {
+  width: 43px;
+  height: 43px;
 }
 
 @keyframes tools-scroll {
@@ -1536,18 +1542,14 @@ a {
   }
 
   .tool-card {
-    min-width: 150px;
-    min-height: 96px;
-    padding: 16px;
+    width: 54px;
+    height: 72px;
+    flex-basis: 54px;
   }
 
   .tool-card img {
-    width: 29px;
-    height: 29px;
-  }
-
-  .tool-card span {
-    font-size: 13px;
+    width: 43px;
+    height: 43px;
   }
 
   .contact {
