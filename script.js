@@ -52,41 +52,28 @@ const loadHeroDesigns = async () => {
     }
 
     const isMobile = window.innerWidth <= 720;
-    const cardCount = isMobile ? 6 : 8;
+    const cardCount = isMobile ? 6 : 12;
     const visibleDesigns = designs.slice(
       0,
       isMobile ? 7 : 12
     );
 
-    const placements = [
-      [-38, -27],
-      [-13, -27],
-      [13, -27],
-      [38, -27],
-      [-38, 27],
-      [-13, 27],
-      [13, 27],
-      [38, 27]
-    ];
+    const lanes = [-39, -13, 13, 39];
 
     for (let index = 0;
       index < cardCount;
       index += 1) {
       const design =
         visibleDesigns[index % visibleDesigns.length];
-      const [x, y] = placements[index];
-      const duration = 18;
+      const lane = lanes[index % lanes.length];
+      const duration = 24;
       const card = document.createElement("div");
       const image = document.createElement("img");
 
       card.className = "hero-design-card";
       card.style.setProperty(
-        "--from-x",
-        `${x}vw`
-      );
-      card.style.setProperty(
-        "--from-y",
-        `${y}vh`
+        "--lane-x",
+        `${lane}vw`
       );
       card.style.setProperty(
         "--duration",
