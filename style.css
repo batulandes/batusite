@@ -207,6 +207,7 @@ a {
   top: 50%;
   left: 50%;
   width: 136px;
+  max-width: none;
   height: 38px;
   object-fit: contain;
   opacity: 0;
