@@ -260,21 +260,31 @@ function formatError(value) {
     return value;
   }
 
-  if (value.message) {
-    const details =
-      value.details || value.hint || value.code;
-
-    return details
-      ? `${value.message} (${details})`
-      : value.message;
+  if (typeof value !== "object") {
+    return String(value);
   }
 
-  if (value.error) {
+  if (value.message !== undefined) {
+    const message = formatError(value.message);
+    const detailValue =
+      value.details ?? value.hint ?? value.code;
+    const details = detailValue !== undefined
+      ? formatError(detailValue)
+      : "";
+
+    return details
+      ? `${message} (${details})`
+      : message;
+  }
+
+  if (value.error !== undefined) {
     return formatError(value.error);
   }
 
   try {
-    return JSON.stringify(value);
+    const serialized = JSON.stringify(value);
+
+    return serialized || "Bilinmeyen bir hata oluştu.";
   } catch {
     return "Bilinmeyen bir hata oluştu.";
   }
