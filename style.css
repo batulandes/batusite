@@ -1223,6 +1223,55 @@ a {
   }
 }
 
+/* DAR TABLET MENÜSÜ */
+
+@media (min-width: 721px) and (max-width: 900px) {
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    background: #080808;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-links a {
+    padding: 14px 15px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: #111111;
+  }
+
+  .nav-toggle {
+    position: absolute;
+    right: 0;
+    display: block;
+  }
+}
+
 /* MOBİL */
 
 @media (max-width: 720px) {

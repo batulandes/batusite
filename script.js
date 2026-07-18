@@ -110,7 +110,7 @@ if (navToggle && navLinks) {
   window.addEventListener(
     "resize",
     () => {
-      if (window.innerWidth > 720) {
+      if (window.innerWidth > 900) {
         closeMenu();
       }
     }
