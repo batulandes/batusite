@@ -1,4 +1,4 @@
-name: Deploy Supabase design admin
+name: Deploy Supabase content admin
 
 on:
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
         with:
           version: latest
 
-      - name: Deploy tasarim-admin
+      - name: Deploy content admin function
         if: env.SUPABASE_ACCESS_TOKEN != ''
         run: >-
           supabase functions deploy tasarim-admin

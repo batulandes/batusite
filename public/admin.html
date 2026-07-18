@@ -5,137 +5,70 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>BATU Admin</title>
+  <link rel="stylesheet" href="/fonts.css?v=1">
 
   <style>
+    :root{--bg:#000;--surface:#080808;--border:#292929;--muted:#888;--gold:#e8bd57}
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      background:#000;
-      color:#fff;
-      font-family:Arial,sans-serif
-    }
+    body{margin:0;min-height:100vh;background:var(--bg);color:#fff;font-family:var(--font-primary,Arial,sans-serif)}
     [hidden]{display:none!important}
-    button,input,textarea{font:inherit}
-    .wrap{width:min(850px,calc(100% - 28px));margin:auto}
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    .wrap{width:min(920px,calc(100% - 28px));margin:auto}
     header{height:70px;border-bottom:1px solid #222}
-    header .wrap{
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:space-between
-    }
+    header .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}
     main{padding:35px 0 80px}
-    .card{
-      padding:22px;
-      background:#080808;
-      border:1px solid #282828;
-      border-radius:18px
-    }
+    .card{padding:22px;background:var(--surface);border:1px solid var(--border);border-radius:18px}
     .card+.card{margin-top:18px}
-    .login{
-      min-height:calc(100vh - 140px);
-      display:grid;
-      place-items:center
-    }
+    .login{min-height:calc(100vh - 140px);display:grid;place-items:center}
     .login .card{width:min(420px,100%)}
-    h1,h2{margin:0}
-    h1{font-size:40px}
-    h2{font-size:22px}
-    p{color:#888;line-height:1.5}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:40px} h2{font-size:22px} p{color:var(--muted);line-height:1.55}
     label{display:block;margin-top:15px;color:#aaa;font-size:12px}
-    input,textarea{
-      width:100%;
-      margin-top:8px;
-      padding:13px;
-      color:#fff;
-      background:#020202;
-      border:1px solid #333;
-      border-radius:11px;
-      outline:none
-    }
-    textarea{min-height:90px;resize:vertical}
-    button{
-      min-height:48px;
-      padding:0 16px;
-      border:0;
-      border-radius:999px;
-      background:#fff;
-      color:#000;
-      font-weight:700;
-      cursor:pointer
-    }
+    input,textarea,select{width:100%;margin-top:8px;padding:13px;color:#fff;background:#020202;border:1px solid #333;border-radius:11px;outline:none}
+    input:focus,textarea:focus,select:focus{border-color:#777}
+    textarea{min-height:100px;resize:vertical}
+    button{min-height:48px;padding:0 16px;border:0;border-radius:999px;background:#fff;color:#000;font-weight:700}
     button:disabled{opacity:.5}
     .wide{width:100%;margin-top:17px}
-    .small{
-      min-height:36px;
-      background:#0a0a0a;
-      color:#bbb;
-      border:1px solid #333;
-      font-size:12px
-    }
-    .message{
-      margin-top:14px;
-      color:#aaa;
-      font-size:13px;
-      line-height:1.5;
-      overflow-wrap:anywhere
-    }
-    .error{color:#ff7373}
-    .success{color:#7ee49a}
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:13px
-    }
+    .small{min-height:36px;background:#0a0a0a;color:#bbb;border:1px solid #333;font-size:12px}
+    .danger{color:#ff7373}
+    .message{margin-top:14px;color:#aaa;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+    .error{color:#ff7373}.success{color:#7ee49a}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+    .date-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:13px}
     .full{grid-column:1/-1}
-    .check{
-      display:flex;
-      align-items:center;
-      gap:9px;
-      margin-top:15px
-    }
+    .check{display:flex;align-items:center;gap:9px;margin-top:15px}
     .check input{width:18px;margin:0}
-    .toolbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:15px
-    }
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+    .toolbar h2{margin:0}
     .list{display:grid;gap:10px}
-    .item{
-      display:grid;
-      grid-template-columns:75px minmax(0,1fr) auto;
-      gap:12px;
-      align-items:center;
-      padding:10px;
-      background:#020202;
-      border:1px solid #292929;
-      border-radius:13px
-    }
-    .item img{
-      width:75px;
-      height:75px;
-      object-fit:cover;
-      border-radius:8px
-    }
-    .item h3{margin:0;font-size:14px}
+    .item{display:grid;grid-template-columns:82px minmax(0,1fr) auto;gap:14px;align-items:center;padding:11px;background:#020202;border:1px solid #292929;border-radius:13px}
+    .item.gold{border-color:rgba(232,189,87,.45);background:linear-gradient(135deg,rgba(232,189,87,.08),#020202 55%)}
+    .thumb{width:82px;height:72px;object-fit:cover;border-radius:9px;background:#111}
+    .thumb-placeholder{display:grid;place-items:center;color:#555;font-size:22px;border:1px solid #242424}
+    .item h3{margin:0;font-size:15px}
     .meta{margin-top:6px;color:#777;font-size:11px}
+    .gold .meta{color:var(--gold)}
     .actions{display:flex;flex-direction:column;gap:6px}
     .actions button{min-height:34px;font-size:11px}
-    .delete{color:#ff7373}
-    @media(max-width:620px){
-      .grid{grid-template-columns:1fr}
-      .full{grid-column:auto}
+    .tabs{display:flex;gap:8px;margin-bottom:18px;padding:5px;background:#080808;border:1px solid #222;border-radius:999px}
+    .tab{flex:1;min-height:43px;background:transparent;color:#777}
+    .tab.active{background:#fff;color:#000}
+    .form-actions{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+    .form-actions .wide{margin-top:17px}
+    .editing{margin:0 0 16px;padding:11px 13px;color:#e8bd57;background:rgba(232,189,87,.08);border:1px solid rgba(232,189,87,.25);border-radius:10px;font-size:12px}
+    .hint{font-size:11px;color:#666;margin:7px 0 0}
+    @media(max-width:650px){
+      .grid,.date-grid{grid-template-columns:1fr}.full{grid-column:auto}
       .item{grid-template-columns:70px minmax(0,1fr)}
-      .actions{grid-column:1/-1;flex-direction:row}
-      .actions button{flex:1}
+      .thumb{width:70px;height:65px}.actions{grid-column:1/-1;flex-direction:row}.actions button{flex:1}
+      .form-actions{grid-template-columns:1fr}.form-actions button{width:100%;margin-top:0}
     }
   </style>
 </head>
 
 <body>
-
 <header>
   <div class="wrap">
     <strong>BATU</strong>
@@ -144,150 +77,145 @@
 </header>
 
 <main class="wrap">
-
   <section id="loginView" class="login">
     <div class="card">
       <h1>Admin</h1>
-      <p>Secret bölümüne yazdığın yönetim şifresini gir.</p>
-
-      <input
-        id="password"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Yönetim şifresi"
-      >
-
-      <button id="login" class="wide" type="button">
-        Giriş yap
-      </button>
-
+      <p>Yönetim şifrenle giriş yap.</p>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Yönetim şifresi">
+      <button id="login" class="wide" type="button">Giriş yap</button>
       <div id="loginMessage" class="message"></div>
     </div>
   </section>
 
   <section id="panel" hidden>
+    <nav class="tabs" aria-label="Admin bölümleri">
+      <button class="tab active" type="button" data-tab="timeline">Timelapse</button>
+      <button class="tab" type="button" data-tab="designs">Tasarımlar</button>
+    </nav>
 
-    <section class="card">
-      <h2>Yeni tasarım</h2>
+    <div id="timelinePanel">
+      <section class="card">
+        <h2 id="timelineFormTitle">Yeni kariyer kaydı</h2>
+        <p>Tarih yalnızca yıl, yıl + ay veya tam gün olarak girilebilir.</p>
+        <div id="editingNotice" class="editing" hidden>Düzenleme modundasın.</div>
 
-      <form id="uploadForm">
+        <form id="timelineForm">
+          <input id="timelineId" type="hidden">
 
-        <label>
-          Görsel
-          <input
-            id="file"
-            type="file"
-            accept="image/*"
-            required
-          >
-        </label>
+          <div class="date-grid">
+            <label>Yıl *<input id="timelineYear" type="number" min="1900" max="2100" placeholder="2018" required></label>
+            <label>Ay<input id="timelineMonth" type="number" min="1" max="12" placeholder="1"></label>
+            <label>Gün<input id="timelineDay" type="number" min="1" max="31" placeholder="15"></label>
+          </div>
 
-        <div class="grid">
+          <div class="grid">
+            <label>Başlık *<input id="timelineTitle" type="text" placeholder="100 aboneye ulaştım" required></label>
+            <label>Tür
+              <select id="timelineType">
+                <option value="basari">Başarı — altın</option>
+                <option value="ilk">İlk an</option>
+                <option value="kilometre">Kilometre taşı</option>
+                <option value="diger">Diğer</option>
+              </select>
+            </label>
+            <label class="full">Açıklama<textarea id="timelineDescription" placeholder="İstersen bu anla ilgili kısa bir not ekle."></textarea></label>
+            <label>Görsel veya video
+              <input id="timelineFile" type="file" accept="image/*,video/*">
+              <span class="hint">Dosya sınırı 18 MB. Büyük videolarda bağlantı kullan.</span>
+            </label>
+            <label>Medya bağlantısı
+              <input id="timelineMediaUrl" type="url" placeholder="https://youtube.com/...">
+            </label>
+            <label>Bağlantının türü
+              <select id="timelineMediaType">
+                <option value="gorsel">Görsel</option>
+                <option value="video">Video / YouTube</option>
+              </select>
+            </label>
+            <label class="check"><input id="timelineRemoveMedia" type="checkbox">Mevcut medyayı kaldır</label>
+          </div>
 
-          <label>
-            Başlık
-            <input id="baslik" type="text">
-          </label>
+          <label class="check"><input id="timelinePublished" type="checkbox" checked>Hemen yayınla</label>
 
-          <label>
-            Kategori
-            <input id="kategori" type="text">
-          </label>
+          <div class="form-actions">
+            <button id="timelineSave" class="wide" type="submit">Kaydı yayınla</button>
+            <button id="timelineCancel" class="small" type="button" hidden>Vazgeç</button>
+          </div>
+          <div id="timelineMessage" class="message"></div>
+        </form>
+      </section>
 
-          <label>
-            Yıl
-            <input id="yil" type="number" placeholder="2026">
-          </label>
-
-          <label>
-            Sıra
-            <input id="sira" type="number" value="0">
-          </label>
-
-          <label class="full">
-            Açıklama
-            <textarea id="aciklama"></textarea>
-          </label>
-
+      <section class="card">
+        <div class="toolbar">
+          <h2>Kariyer kayıtları</h2>
+          <button id="timelineRefresh" class="small" type="button">Yenile</button>
         </div>
+        <div id="timelineList" class="list"></div>
+      </section>
+    </div>
 
-        <label class="check">
-          <input id="yayinlandi" type="checkbox" checked>
-          Hemen yayınla
-        </label>
+    <div id="designsPanel" hidden>
+      <section class="card">
+        <h2>Yeni tasarım</h2>
+        <form id="uploadForm">
+          <label>Görsel<input id="file" type="file" accept="image/*" required></label>
+          <div class="grid">
+            <label>Başlık<input id="baslik" type="text"></label>
+            <label>Kategori<input id="kategori" type="text"></label>
+            <label>Yıl<input id="yil" type="number" placeholder="2026"></label>
+            <label>Sıra<input id="sira" type="number" value="0"></label>
+            <label class="full">Açıklama<textarea id="aciklama"></textarea></label>
+          </div>
+          <label class="check"><input id="yayinlandi" type="checkbox" checked>Hemen yayınla</label>
+          <button id="uploadButton" class="wide" type="submit">Tasarımı yükle</button>
+          <div id="uploadMessage" class="message"></div>
+        </form>
+      </section>
 
-        <button id="uploadButton" class="wide" type="submit">
-          Tasarımı yükle
-        </button>
-
-        <div id="uploadMessage" class="message"></div>
-      </form>
-    </section>
-
-    <section class="card">
-
-      <div class="toolbar">
-        <h2>Yüklenenler</h2>
-        <button id="refresh" class="small" type="button">Yenile</button>
-      </div>
-
-      <div id="list" class="list"></div>
-    </section>
-
+      <section class="card">
+        <div class="toolbar">
+          <h2>Yüklenen tasarımlar</h2>
+          <button id="refresh" class="small" type="button">Yenile</button>
+        </div>
+        <div id="list" class="list"></div>
+      </section>
+    </div>
   </section>
-
 </main>
 
 <script>
-const ENDPOINT =
-  "https://phreqbjgynchbynmtefz.supabase.co/functions/v1/tasarim-admin";
-
+const ENDPOINT = "https://phreqbjgynchbynmtefz.supabase.co/functions/v1/tasarim-admin";
 let adminPassword = "";
+let timelineEvents = [];
 
-const loginView = document.getElementById("loginView");
-const panel = document.getElementById("panel");
-const loginMessage = document.getElementById("loginMessage");
-const uploadMessage = document.getElementById("uploadMessage");
-const list = document.getElementById("list");
-const logout = document.getElementById("logout");
+const $ = id => document.getElementById(id);
+const loginView = $("loginView");
+const panel = $("panel");
+const loginMessage = $("loginMessage");
+const uploadMessage = $("uploadMessage");
+const timelineMessage = $("timelineMessage");
+const list = $("list");
+const timelineList = $("timelineList");
+const logout = $("logout");
 
 function formatError(value) {
-  if (!value) {
-    return "İşlem başarısız.";
-  }
-
-  if (typeof value === "string") {
-    return value;
-  }
-
-  if (typeof value !== "object") {
-    return String(value);
-  }
-
+  if (!value) return "İşlem başarısız.";
+  if (typeof value === "string") return value;
+  if (typeof value !== "object") return String(value);
   if (value.message !== undefined) {
     const message = formatError(value.message);
-    const detailValue =
-      value.details ?? value.hint ?? value.code;
-    const details = detailValue !== undefined
-      ? formatError(detailValue)
-      : "";
-
-    return details
-      ? `${message} (${details})`
-      : message;
+    const detail = value.details ?? value.hint ?? value.code;
+    return detail ? `${message} (${formatError(detail)})` : message;
   }
+  if (value.error !== undefined) return formatError(value.error);
+  try { return JSON.stringify(value) || "Bilinmeyen bir hata oluştu."; }
+  catch { return "Bilinmeyen bir hata oluştu."; }
+}
 
-  if (value.error !== undefined) {
-    return formatError(value.error);
-  }
-
-  try {
-    const serialized = JSON.stringify(value);
-
-    return serialized || "Bilinmeyen bir hata oluştu.";
-  } catch {
-    return "Bilinmeyen bir hata oluştu.";
-  }
+function escapeHtml(value = "") {
+  return String(value).replace(/[&<>'"]/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
+  })[character]);
 }
 
 function showMessage(element, text, type = "") {
@@ -296,299 +224,228 @@ function showMessage(element, text, type = "") {
 }
 
 async function request(body, formData = false) {
-  const options = {
-    method: "POST",
-    headers: {
-      "x-admin-password": adminPassword
-    }
-  };
-
-  if (formData) {
-    options.body = body;
-  } else {
+  const options = { method: "POST", headers: { "x-admin-password": adminPassword } };
+  if (formData) options.body = body;
+  else {
     options.headers["Content-Type"] = "application/json";
     options.body = JSON.stringify(body);
   }
 
   const response = await fetch(ENDPOINT, options);
   const responseText = await response.text();
-
   let data = {};
-
   if (responseText) {
-    try {
-      data = JSON.parse(responseText);
-    } catch {
-      data = { error: responseText };
-    }
+    try { data = JSON.parse(responseText); }
+    catch { data = { error: responseText }; }
   }
-
-  if (!response.ok) {
-    const reason = formatError(data.error || data);
-
-    throw new Error(
-      `${reason} [HTTP ${response.status}]`
-    );
-  }
-
+  if (!response.ok) throw new Error(`${formatError(data.error || data)} [HTTP ${response.status}]`);
   return data;
 }
 
-document
-  .getElementById("login")
-  .addEventListener("click", async () => {
-    const button = document.getElementById("login");
+function openPanel() {
+  loginView.hidden = true;
+  panel.hidden = false;
+  logout.hidden = false;
+  loadTimeline();
+}
 
-    adminPassword =
-      document.getElementById("password").value;
-
-    if (!adminPassword) {
-      showMessage(
-        loginMessage,
-        "Şifreyi yaz.",
-        "error"
-      );
-      return;
-    }
-
-    button.disabled = true;
-    button.textContent = "Kontrol ediliyor...";
-
-    try {
-      await request({ action: "check" });
-
-      sessionStorage.setItem(
-        "batu_admin_password",
-        adminPassword
-      );
-
-      loginView.hidden = true;
-      panel.hidden = false;
-      logout.hidden = false;
-
-      await loadDesigns();
-    } catch (error) {
-      showMessage(
-        loginMessage,
-        error.message,
-        "error"
-      );
-    }
-
-    button.disabled = false;
-    button.textContent = "Giriş yap";
-  });
+$("login").addEventListener("click", async () => {
+  const button = $("login");
+  adminPassword = $("password").value;
+  if (!adminPassword) return showMessage(loginMessage, "Şifreyi yaz.", "error");
+  button.disabled = true;
+  button.textContent = "Kontrol ediliyor...";
+  try {
+    await request({ action: "check" });
+    sessionStorage.setItem("batu_admin_password", adminPassword);
+    openPanel();
+  } catch (error) { showMessage(loginMessage, error.message, "error"); }
+  button.disabled = false;
+  button.textContent = "Giriş yap";
+});
 
 logout.addEventListener("click", () => {
-  sessionStorage.removeItem(
-    "batu_admin_password"
-  );
-
+  sessionStorage.removeItem("batu_admin_password");
   adminPassword = "";
   panel.hidden = true;
   loginView.hidden = false;
   logout.hidden = true;
 });
 
-document
-  .getElementById("uploadForm")
-  .addEventListener("submit", async event => {
-    event.preventDefault();
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(item => item.classList.toggle("active", item === tab));
+    const timelineActive = tab.dataset.tab === "timeline";
+    $("timelinePanel").hidden = !timelineActive;
+    $("designsPanel").hidden = timelineActive;
+    if (timelineActive) loadTimeline(); else loadDesigns();
+  });
+});
 
-    const file =
-      document.getElementById("file").files[0];
+function formatTimelineDate(event) {
+  const months = ["", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+  if (event.gun && event.ay) return `${event.gun} ${months[event.ay]} ${event.yil}`;
+  if (event.ay) return `${months[event.ay]} ${event.yil}`;
+  return String(event.yil);
+}
 
-    if (!file) {
-      showMessage(
-        uploadMessage,
-        "Görsel seç.",
-        "error"
-      );
+function timelineTypeLabel(type) {
+  return { basari: "Başarı", ilk: "İlk an", kilometre: "Kilometre taşı", diger: "Diğer" }[type] || "Diğer";
+}
+
+function resetTimelineForm() {
+  $("timelineForm").reset();
+  $("timelineId").value = "";
+  $("timelinePublished").checked = true;
+  $("timelineFormTitle").textContent = "Yeni kariyer kaydı";
+  $("timelineSave").textContent = "Kaydı yayınla";
+  $("timelineCancel").hidden = true;
+  $("editingNotice").hidden = true;
+  showMessage(timelineMessage, "");
+}
+
+function editTimeline(event) {
+  $("timelineId").value = event.id;
+  $("timelineYear").value = event.yil;
+  $("timelineMonth").value = event.ay || "";
+  $("timelineDay").value = event.gun || "";
+  $("timelineTitle").value = event.baslik || "";
+  $("timelineType").value = event.tur || "diger";
+  $("timelineDescription").value = event.aciklama || "";
+  $("timelineMediaUrl").value = event.dosya_yolu ? "" : (event.medya_url || "");
+  $("timelineMediaType").value = event.medya_turu || "gorsel";
+  $("timelineRemoveMedia").checked = false;
+  $("timelinePublished").checked = event.yayinlandi;
+  $("timelineFormTitle").textContent = "Kariyer kaydını düzenle";
+  $("timelineSave").textContent = "Değişiklikleri kaydet";
+  $("timelineCancel").hidden = false;
+  $("editingNotice").hidden = false;
+  window.scrollTo({ top: 70, behavior: "smooth" });
+}
+
+$("timelineCancel").addEventListener("click", resetTimelineForm);
+
+$("timelineForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const file = $("timelineFile").files[0];
+  if (file && file.size > 18 * 1024 * 1024) {
+    return showMessage(timelineMessage, "Dosya 18 MB sınırını geçiyor. Video bağlantısı kullanabilirsin.", "error");
+  }
+  const button = $("timelineSave");
+  button.disabled = true;
+  button.textContent = "Kaydediliyor...";
+  const form = new FormData();
+  form.append("action", "timeline-save");
+  form.append("id", $("timelineId").value);
+  form.append("yil", $("timelineYear").value);
+  form.append("ay", $("timelineMonth").value);
+  form.append("gun", $("timelineDay").value);
+  form.append("baslik", $("timelineTitle").value);
+  form.append("tur", $("timelineType").value);
+  form.append("aciklama", $("timelineDescription").value);
+  form.append("medya_url", $("timelineMediaUrl").value);
+  form.append("medya_turu", $("timelineMediaType").value);
+  form.append("medyayi_sil", $("timelineRemoveMedia").checked);
+  form.append("yayinlandi", $("timelinePublished").checked);
+  if (file) form.append("file", file);
+
+  try {
+    await request(form, true);
+    resetTimelineForm();
+    showMessage(timelineMessage, "Kariyer kaydı kaydedildi.", "success");
+    await loadTimeline();
+  } catch (error) { showMessage(timelineMessage, error.message, "error"); }
+  button.disabled = false;
+  button.textContent = $("timelineId").value ? "Değişiklikleri kaydet" : "Kaydı yayınla";
+});
+
+async function loadTimeline() {
+  timelineList.innerHTML = "<p>Yükleniyor...</p>";
+  try {
+    const data = await request({ action: "timeline-list" });
+    timelineEvents = data.events || [];
+    if (!timelineEvents.length) {
+      timelineList.innerHTML = "<p>Henüz kariyer kaydı yok. İlk kaydı yukarıdan ekleyebilirsin.</p>";
       return;
     }
+    timelineList.innerHTML = "";
+    [...timelineEvents].reverse().forEach(event => {
+      const item = document.createElement("article");
+      item.className = "item" + (event.tur === "basari" ? " gold" : "");
+      let media = '<div class="thumb thumb-placeholder">—</div>';
+      if (event.medya_url && event.medya_turu === "gorsel") {
+        media = `<img class="thumb" src="${escapeHtml(event.medya_url)}" alt="">`;
+      } else if (event.medya_url) {
+        media = '<div class="thumb thumb-placeholder">▶</div>';
+      }
+      item.innerHTML = `${media}<div><h3>${escapeHtml(event.baslik)}</h3><div class="meta">${escapeHtml(formatTimelineDate(event))} · ${escapeHtml(timelineTypeLabel(event.tur))} · ${event.yayinlandi ? "Yayında" : "Gizli"}</div></div><div class="actions"><button class="small edit" type="button">Düzenle</button><button class="small toggle" type="button">${event.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete" type="button">Sil</button></div>`;
+      item.querySelector(".edit").addEventListener("click", () => editTimeline(event));
+      item.querySelector(".toggle").addEventListener("click", async () => {
+        try { await request({ action: "timeline-toggle", id: event.id, yayinlandi: !event.yayinlandi }); await loadTimeline(); }
+        catch (error) { alert(error.message); }
+      });
+      item.querySelector(".delete").addEventListener("click", async () => {
+        if (!confirm("Bu kariyer kaydı ve yüklenen medyası silinsin mi?")) return;
+        try { await request({ action: "timeline-delete", id: event.id }); await loadTimeline(); }
+        catch (error) { alert(error.message); }
+      });
+      timelineList.appendChild(item);
+    });
+  } catch (error) { timelineList.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`; }
+}
 
-    const button =
-      document.getElementById("uploadButton");
+$("timelineRefresh").addEventListener("click", loadTimeline);
 
-    button.disabled = true;
-    button.textContent = "Yükleniyor...";
-
-    const form = new FormData();
-
-    form.append("action", "upload");
-    form.append("file", file);
-    form.append(
-      "baslik",
-      document.getElementById("baslik").value
-    );
-    form.append(
-      "kategori",
-      document.getElementById("kategori").value
-    );
-    form.append(
-      "yil",
-      document.getElementById("yil").value
-    );
-    form.append(
-      "sira",
-      document.getElementById("sira").value
-    );
-    form.append(
-      "aciklama",
-      document.getElementById("aciklama").value
-    );
-    form.append(
-      "yayinlandi",
-      document.getElementById("yayinlandi").checked
-    );
-
-    try {
-      await request(form, true);
-
-      document
-        .getElementById("uploadForm")
-        .reset();
-
-      document.getElementById("sira").value = "0";
-      document.getElementById("yayinlandi").checked = true;
-
-      showMessage(
-        uploadMessage,
-        "Tasarım yüklendi.",
-        "success"
-      );
-
-      await loadDesigns();
-    } catch (error) {
-      showMessage(
-        uploadMessage,
-        error.message,
-        "error"
-      );
-    }
-
-    button.disabled = false;
-    button.textContent = "Tasarımı yükle";
-  });
+$("uploadForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const file = $("file").files[0];
+  if (!file) return showMessage(uploadMessage, "Görsel seç.", "error");
+  const button = $("uploadButton");
+  button.disabled = true;
+  button.textContent = "Yükleniyor...";
+  const form = new FormData();
+  form.append("action", "upload"); form.append("file", file);
+  ["baslik", "kategori", "yil", "sira", "aciklama"].forEach(id => form.append(id, $(id).value));
+  form.append("yayinlandi", $("yayinlandi").checked);
+  try {
+    await request(form, true);
+    $("uploadForm").reset(); $("sira").value = "0"; $("yayinlandi").checked = true;
+    showMessage(uploadMessage, "Tasarım yüklendi.", "success"); await loadDesigns();
+  } catch (error) { showMessage(uploadMessage, error.message, "error"); }
+  button.disabled = false; button.textContent = "Tasarımı yükle";
+});
 
 async function loadDesigns() {
   list.innerHTML = "<p>Yükleniyor...</p>";
-
   try {
-    const data =
-      await request({ action: "list" });
-
-    if (!data.designs.length) {
-      list.innerHTML = "<p>Henüz tasarım yok.</p>";
-      return;
-    }
-
+    const data = await request({ action: "list" });
+    if (!data.designs.length) { list.innerHTML = "<p>Henüz tasarım yok.</p>"; return; }
     list.innerHTML = "";
-
     data.designs.forEach(design => {
-      const item =
-        document.createElement("article");
-
+      const item = document.createElement("article");
       item.className = "item";
-
-      item.innerHTML = `
-        <img src="${design.gorsel_url}" alt="">
-
-        <div>
-          <h3>${design.baslik || "Başlıksız"}</h3>
-
-          <div class="meta">
-            ${design.kategori || ""}
-            ${design.yil || ""}
-          </div>
-        </div>
-
-        <div class="actions">
-
-          <button
-            class="small toggle"
-            type="button"
-          >
-            ${design.yayinlandi ? "Gizle" : "Yayınla"}
-          </button>
-
-          <button
-            class="small delete"
-            type="button"
-          >
-            Sil
-          </button>
-
-        </div>
-      `;
-
-      item
-        .querySelector(".toggle")
-        .addEventListener("click", async () => {
-          try {
-            await request({
-              action: "toggle",
-              id: design.id,
-              yayinlandi: !design.yayinlandi
-            });
-
-            await loadDesigns();
-          } catch (error) {
-            alert(error.message);
-          }
-        });
-
-      item
-        .querySelector(".delete")
-        .addEventListener("click", async () => {
-          if (!confirm("Bu tasarım silinsin mi?")) {
-            return;
-          }
-
-          try {
-            await request({
-              action: "delete",
-              id: design.id
-            });
-
-            await loadDesigns();
-          } catch (error) {
-            alert(error.message);
-          }
-        });
-
+      item.innerHTML = `<img class="thumb" src="${escapeHtml(design.gorsel_url)}" alt=""><div><h3>${escapeHtml(design.baslik || "Başlıksız")}</h3><div class="meta">${escapeHtml(design.kategori || "")} ${escapeHtml(design.yil || "")}</div></div><div class="actions"><button class="small toggle" type="button">${design.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete" type="button">Sil</button></div>`;
+      item.querySelector(".toggle").addEventListener("click", async () => {
+        try { await request({ action: "toggle", id: design.id, yayinlandi: !design.yayinlandi }); await loadDesigns(); }
+        catch (error) { alert(error.message); }
+      });
+      item.querySelector(".delete").addEventListener("click", async () => {
+        if (!confirm("Bu tasarım silinsin mi?")) return;
+        try { await request({ action: "delete", id: design.id }); await loadDesigns(); }
+        catch (error) { alert(error.message); }
+      });
       list.appendChild(item);
     });
-  } catch (error) {
-    list.innerHTML =
-      `<p class="error">${error.message}</p>`;
-  }
+  } catch (error) { list.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`; }
 }
 
-document
-  .getElementById("refresh")
-  .addEventListener("click", loadDesigns);
+$("refresh").addEventListener("click", loadDesigns);
 
-const savedPassword =
-  sessionStorage.getItem("batu_admin_password");
-
+const savedPassword = sessionStorage.getItem("batu_admin_password");
 if (savedPassword) {
   adminPassword = savedPassword;
-
-  request({ action: "check" })
-    .then(() => {
-      loginView.hidden = true;
-      panel.hidden = false;
-      logout.hidden = false;
-      loadDesigns();
-    })
-    .catch(() => {
-      sessionStorage.removeItem(
-        "batu_admin_password"
-      );
-    });
+  request({ action: "check" }).then(openPanel).catch(() => sessionStorage.removeItem("batu_admin_password"));
 }
 </script>
-
 </body>
 </html>

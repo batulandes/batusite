@@ -232,9 +232,23 @@ a {
 .nav-links {
   position: absolute;
   left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.nav-group {
+  width: calc(50% - 54px);
   display: flex;
   align-items: center;
   gap: 23px;
+  pointer-events: auto;
+}
+
+.nav-group-right {
+  justify-content: flex-end;
 }
 
 .nav-links a {
@@ -1204,6 +1218,10 @@ a {
   }
 
   .nav-links {
+    gap: 0;
+  }
+
+  .nav-group {
     gap: 16px;
   }
 
@@ -1246,6 +1264,11 @@ a {
       opacity 0.2s ease,
       visibility 0.2s ease,
       transform 0.2s ease;
+    pointer-events: auto;
+  }
+
+  .nav-group {
+    display: contents;
   }
 
   .nav-links.open {
@@ -1325,6 +1348,11 @@ a {
       opacity 0.2s ease,
       visibility 0.2s ease,
       transform 0.2s ease;
+    pointer-events: auto;
+  }
+
+  .nav-group {
+    display: contents;
   }
 
   .nav-links.open {

@@ -1,4 +1,4 @@
-# tasarim-admin
+# BATU içerik admini
 
 Bu fonksiyon `main` dalındaki değişikliklerde GitHub Actions ile deploy edilir.
 
@@ -22,3 +22,20 @@ Veritabanında `tasarimlar` tablosunun şu alanları bulunmalıdır:
 - `sira`
 - `yayinlandi`
 - `created_at`
+
+## Timelapse
+
+Timelapse için ek bir veritabanı tablosu veya SQL çalıştırmak gerekmez. Fonksiyon,
+ilk kariyer kaydı eklendiğinde public `timelapse` bucket'ını oluşturur. Kayıtları
+`events.json`, yüklenen görsel ve videoları `media/` altında saklar.
+
+Admin işlemleri:
+
+- `timeline-list`
+- `timeline-save`
+- `timeline-toggle`
+- `timeline-delete`
+
+Edge Function istek sınırına takılmamak için yüklenen timelapse medyası en fazla
+18 MB olabilir. Daha büyük videolar YouTube veya harici video bağlantısıyla
+eklenebilir.
