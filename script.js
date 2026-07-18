@@ -11,6 +11,8 @@ const heroDesigns =
   document.getElementById("hero-designs");
 const heroDesignsTilt =
   document.getElementById("hero-designs-tilt");
+const heroTitle =
+  document.getElementById("hero-title");
 
 const reduceMotion =
   window.matchMedia(
@@ -50,55 +52,76 @@ const loadHeroDesigns = async () => {
     }
 
     const isMobile = window.innerWidth <= 720;
-    const laneCount = isMobile ? 2 : 4;
+    const cardCount = isMobile ? 7 : 14;
     const visibleDesigns = designs.slice(
       0,
-      isMobile ? 5 : 8
+      isMobile ? 7 : 12
     );
 
-    for (let laneIndex = 0;
-      laneIndex < laneCount;
-      laneIndex += 1) {
-      const lane = document.createElement("div");
-      const track = document.createElement("div");
+    const placements = [
+      [-48, -34, -9],
+      [-23, -43, 5],
+      [18, -40, -4],
+      [46, -31, 8],
+      [-51, -4, 6],
+      [-27, 9, -7],
+      [26, 4, 5],
+      [52, 13, -8],
+      [-43, 39, -5],
+      [-13, 45, 7],
+      [17, 41, -6],
+      [45, 36, 9],
+      [-4, -12, 4],
+      [5, 18, -4]
+    ];
 
-      lane.className = "hero-design-lane";
-      track.className = "hero-design-track";
+    for (let index = 0;
+      index < cardCount;
+      index += 1) {
+      const design =
+        visibleDesigns[index % visibleDesigns.length];
+      const [x, y, rotation] = placements[index];
+      const duration = 17 + (index % 5) * 1.9;
+      const card = document.createElement("div");
+      const image = document.createElement("img");
 
-      const orderedDesigns = visibleDesigns.map(
-        (_, designIndex) =>
-          visibleDesigns[
-            (designIndex + laneIndex * 2) %
-              visibleDesigns.length
-          ]
+      card.className = "hero-design-card";
+      card.style.setProperty(
+        "--from-x",
+        `${x * 0.16}vw`
+      );
+      card.style.setProperty(
+        "--from-y",
+        `${y * 0.16}vh`
+      );
+      card.style.setProperty(
+        "--to-x",
+        `${x * 1.18}vw`
+      );
+      card.style.setProperty(
+        "--to-y",
+        `${y * 1.18}vh`
+      );
+      card.style.setProperty(
+        "--rotation",
+        `${rotation}deg`
+      );
+      card.style.setProperty(
+        "--duration",
+        `${duration}s`
+      );
+      card.style.setProperty(
+        "--delay",
+        `${-(index / cardCount) * duration}s`
       );
 
-      for (let setIndex = 0;
-        setIndex < 2;
-        setIndex += 1) {
-        const set = document.createElement("div");
-        set.className = "hero-design-set";
+      image.src = design.gorsel_url;
+      image.alt = "";
+      image.loading = index < 6 ? "eager" : "lazy";
+      image.decoding = "async";
 
-        orderedDesigns.forEach((design) => {
-          const card = document.createElement("div");
-          const image = document.createElement("img");
-
-          card.className = "hero-design-card";
-          image.src = design.gorsel_url;
-          image.alt = "";
-          image.loading =
-            setIndex === 0 ? "eager" : "lazy";
-          image.decoding = "async";
-
-          card.appendChild(image);
-          set.appendChild(card);
-        });
-
-        track.appendChild(set);
-      }
-
-      lane.appendChild(track);
-      heroDesignsTilt.appendChild(lane);
+      card.appendChild(image);
+      heroDesignsTilt.appendChild(card);
     }
 
     requestAnimationFrame(() => {
@@ -110,6 +133,34 @@ const loadHeroDesigns = async () => {
 };
 
 loadHeroDesigns();
+
+const scheduleTitleGlitch = () => {
+  if (
+    !heroTitle ||
+    reduceMotion ||
+    window.innerWidth <= 900
+  ) {
+    return;
+  }
+
+  const delay = 15000 + Math.random() * 5000;
+
+  window.setTimeout(() => {
+    if (document.visibilityState === "visible") {
+      heroTitle.classList.remove("font-glitch");
+      void heroTitle.offsetWidth;
+      heroTitle.classList.add("font-glitch");
+
+      window.setTimeout(() => {
+        heroTitle.classList.remove("font-glitch");
+      }, 1450);
+    }
+
+    scheduleTitleGlitch();
+  }, delay);
+};
+
+scheduleTitleGlitch();
 
 const updateScrollState = () => {
   const scrollTop =
