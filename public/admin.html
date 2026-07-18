@@ -139,7 +139,7 @@
 <header>
   <div class="wrap">
     <strong>BATU</strong>
-    <button id="logout" class="small" hidden>Çıkış</button>
+    <button id="logout" class="small" type="button" hidden>Çıkış</button>
   </div>
 </header>
 
@@ -153,10 +153,11 @@
       <input
         id="password"
         type="password"
+        autocomplete="current-password"
         placeholder="Yönetim şifresi"
       >
 
-      <button id="login" class="wide">
+      <button id="login" class="wide" type="button">
         Giriş yap
       </button>
 
@@ -227,7 +228,7 @@
 
       <div class="toolbar">
         <h2>Yüklenenler</h2>
-        <button id="refresh" class="small">Yenile</button>
+        <button id="refresh" class="small" type="button">Yenile</button>
       </div>
 
       <div id="list" class="list"></div>
@@ -250,8 +251,37 @@ const uploadMessage = document.getElementById("uploadMessage");
 const list = document.getElementById("list");
 const logout = document.getElementById("logout");
 
+function formatError(value) {
+  if (!value) {
+    return "İşlem başarısız.";
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (value.message) {
+    const details =
+      value.details || value.hint || value.code;
+
+    return details
+      ? `${value.message} (${details})`
+      : value.message;
+  }
+
+  if (value.error) {
+    return formatError(value.error);
+  }
+
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return "Bilinmeyen bir hata oluştu.";
+  }
+}
+
 function showMessage(element, text, type = "") {
-  element.textContent = text;
+  element.textContent = formatError(text);
   element.className = "message " + type;
 }
 
@@ -271,10 +301,24 @@ async function request(body, formData = false) {
   }
 
   const response = await fetch(ENDPOINT, options);
-  const data = await response.json();
+  const responseText = await response.text();
+
+  let data = {};
+
+  if (responseText) {
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      data = { error: responseText };
+    }
+  }
 
   if (!response.ok) {
-    throw new Error(data.error || "İşlem başarısız.");
+    const reason = formatError(data.error || data);
+
+    throw new Error(
+      `${reason} [HTTP ${response.status}]`
+    );
   }
 
   return data;
