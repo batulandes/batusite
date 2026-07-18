@@ -1,0 +1,40 @@
+name: Deploy Supabase design admin
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "supabase/functions/tasarim-admin/**"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+    steps:
+      - name: Check deployment secret
+        if: env.SUPABASE_ACCESS_TOKEN == ''
+        run: echo "SUPABASE_ACCESS_TOKEN repository secret is not configured."
+
+      - name: Check out repository
+        if: env.SUPABASE_ACCESS_TOKEN != ''
+        uses: actions/checkout@v4
+
+      - name: Set up Supabase CLI
+        if: env.SUPABASE_ACCESS_TOKEN != ''
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy tasarim-admin
+        if: env.SUPABASE_ACCESS_TOKEN != ''
+        run: >-
+          supabase functions deploy tasarim-admin
+          --project-ref phreqbjgynchbynmtefz
+          --no-verify-jwt
