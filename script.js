@@ -59,20 +59,20 @@ const loadHeroDesigns = async () => {
     );
 
     const placements = [
-      [-48, -34, -9],
-      [-23, -43, 5],
-      [18, -40, -4],
-      [46, -31, 8],
-      [-51, -4, 6],
-      [-27, 9, -7],
-      [26, 4, 5],
-      [52, 13, -8],
-      [-43, 39, -5],
-      [-13, 45, 7],
-      [17, 41, -6],
-      [45, 36, 9],
-      [-4, -12, 4],
-      [5, 18, -4]
+      [-42, -32, -3, -1380, 320],
+      [-14, -34, 2, -1100, 420],
+      [14, -34, -2, -1500, 350],
+      [42, -32, 3, -1220, 450],
+      [-45, 0, 2, -1120, 390],
+      [-16, -2, -2, -1460, 330],
+      [16, -2, 2, -1180, 460],
+      [45, 0, -2, -1540, 360],
+      [-42, 32, -3, -1420, 340],
+      [-14, 34, 2, -1160, 440],
+      [14, 34, -2, -1520, 370],
+      [42, 32, 3, -1240, 410],
+      [-29, 16, 1, -1320, 400],
+      [29, -16, -1, -1600, 350]
     ];
 
     for (let index = 0;
@@ -80,27 +80,28 @@ const loadHeroDesigns = async () => {
       index += 1) {
       const design =
         visibleDesigns[index % visibleDesigns.length];
-      const [x, y, rotation] = placements[index];
-      const duration = 17 + (index % 5) * 1.9;
+      const [x, y, rotation, fromZ, toZ] =
+        placements[index];
+      const duration = 21;
       const card = document.createElement("div");
       const image = document.createElement("img");
 
       card.className = "hero-design-card";
       card.style.setProperty(
         "--from-x",
-        `${x * 0.16}vw`
+        `${x * 0.12}vw`
       );
       card.style.setProperty(
         "--from-y",
-        `${y * 0.16}vh`
+        `${y * 0.12}vh`
       );
       card.style.setProperty(
         "--to-x",
-        `${x * 1.18}vw`
+        `${x * 0.9}vw`
       );
       card.style.setProperty(
         "--to-y",
-        `${y * 1.18}vh`
+        `${y * 0.9}vh`
       );
       card.style.setProperty(
         "--rotation",
@@ -109,6 +110,12 @@ const loadHeroDesigns = async () => {
       card.style.setProperty(
         "--duration",
         `${duration}s`
+      );
+      card.style.setProperty("--from-z", `${fromZ}px`);
+      card.style.setProperty("--to-z", `${toZ}px`);
+      card.style.setProperty(
+        "--card-width",
+        `${16 + (index % 3) * 1.4}vw`
       );
       card.style.setProperty(
         "--delay",
@@ -119,6 +126,14 @@ const loadHeroDesigns = async () => {
       image.alt = "";
       image.loading = index < 6 ? "eager" : "lazy";
       image.decoding = "async";
+      image.addEventListener("load", () => {
+        if (image.naturalWidth && image.naturalHeight) {
+          card.style.setProperty(
+            "--design-ratio",
+            `${image.naturalWidth} / ${image.naturalHeight}`
+          );
+        }
+      });
 
       card.appendChild(image);
       heroDesignsTilt.appendChild(card);
@@ -133,34 +148,6 @@ const loadHeroDesigns = async () => {
 };
 
 loadHeroDesigns();
-
-const scheduleTitleGlitch = () => {
-  if (
-    !heroTitle ||
-    reduceMotion ||
-    window.innerWidth <= 900
-  ) {
-    return;
-  }
-
-  const delay = 15000 + Math.random() * 5000;
-
-  window.setTimeout(() => {
-    if (document.visibilityState === "visible") {
-      heroTitle.classList.remove("font-glitch");
-      void heroTitle.offsetWidth;
-      heroTitle.classList.add("font-glitch");
-
-      window.setTimeout(() => {
-        heroTitle.classList.remove("font-glitch");
-      }, 1450);
-    }
-
-    scheduleTitleGlitch();
-  }, delay);
-};
-
-scheduleTitleGlitch();
 
 const updateScrollState = () => {
   const scrollTop =
