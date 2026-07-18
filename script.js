@@ -52,27 +52,21 @@ const loadHeroDesigns = async () => {
     }
 
     const isMobile = window.innerWidth <= 720;
-    const cardCount = isMobile ? 7 : 14;
+    const cardCount = isMobile ? 6 : 8;
     const visibleDesigns = designs.slice(
       0,
       isMobile ? 7 : 12
     );
 
     const placements = [
-      [-42, -32, -3, -1380, 320],
-      [-14, -34, 2, -1100, 420],
-      [14, -34, -2, -1500, 350],
-      [42, -32, 3, -1220, 450],
-      [-45, 0, 2, -1120, 390],
-      [-16, -2, -2, -1460, 330],
-      [16, -2, 2, -1180, 460],
-      [45, 0, -2, -1540, 360],
-      [-42, 32, -3, -1420, 340],
-      [-14, 34, 2, -1160, 440],
-      [14, 34, -2, -1520, 370],
-      [42, 32, 3, -1240, 410],
-      [-29, 16, 1, -1320, 400],
-      [29, -16, -1, -1600, 350]
+      [-38, -27],
+      [-13, -27],
+      [13, -27],
+      [38, -27],
+      [-38, 27],
+      [-13, 27],
+      [13, 27],
+      [38, 27]
     ];
 
     for (let index = 0;
@@ -80,42 +74,27 @@ const loadHeroDesigns = async () => {
       index += 1) {
       const design =
         visibleDesigns[index % visibleDesigns.length];
-      const [x, y, rotation, fromZ, toZ] =
-        placements[index];
-      const duration = 21;
+      const [x, y] = placements[index];
+      const duration = 18;
       const card = document.createElement("div");
       const image = document.createElement("img");
 
       card.className = "hero-design-card";
       card.style.setProperty(
         "--from-x",
-        `${x * 0.12}vw`
+        `${x}vw`
       );
       card.style.setProperty(
         "--from-y",
-        `${y * 0.12}vh`
-      );
-      card.style.setProperty(
-        "--to-x",
-        `${x * 0.9}vw`
-      );
-      card.style.setProperty(
-        "--to-y",
-        `${y * 0.9}vh`
-      );
-      card.style.setProperty(
-        "--rotation",
-        `${rotation}deg`
+        `${y}vh`
       );
       card.style.setProperty(
         "--duration",
         `${duration}s`
       );
-      card.style.setProperty("--from-z", `${fromZ}px`);
-      card.style.setProperty("--to-z", `${toZ}px`);
       card.style.setProperty(
         "--card-width",
-        `${16 + (index % 3) * 1.4}vw`
+        "14vw"
       );
       card.style.setProperty(
         "--delay",
