@@ -1,5 +1,7 @@
 # tasarim-admin
 
+Bu fonksiyon `main` dalındaki değişikliklerde GitHub Actions ile deploy edilir.
+
 Supabase Dashboard içinde **Edge Functions → tasarim-admin → Code** yolunu açın,
 `index.ts` içeriğini yapıştırın ve **Deploy updates** seçeneğini kullanın.
 
