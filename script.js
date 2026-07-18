@@ -7,11 +7,109 @@ const scrollProgress =
   document.getElementById("scroll-progress");
 const heroGlow =
   document.getElementById("hero-glow");
+const heroDesigns =
+  document.getElementById("hero-designs");
+const heroDesignsTilt =
+  document.getElementById("hero-designs-tilt");
 
 const reduceMotion =
   window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
+
+const loadHeroDesigns = async () => {
+  if (!heroDesigns || !heroDesignsTilt) {
+    return;
+  }
+
+  const endpoint =
+    "https://phreqbjgynchbynmtefz.supabase.co/rest/v1/tasarimlar" +
+    "?select=id,gorsel_url,baslik" +
+    "&yayinlandi=eq.true" +
+    "&order=sira.asc,created_at.desc" +
+    "&limit=12";
+
+  try {
+    const response = await fetch(endpoint, {
+      headers: {
+        apikey:
+          "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Tasarım arşivi alınamadı: ${response.status}`
+      );
+    }
+
+    const designs = await response.json();
+
+    if (!Array.isArray(designs) || !designs.length) {
+      return;
+    }
+
+    const isMobile = window.innerWidth <= 720;
+    const laneCount = isMobile ? 2 : 4;
+    const visibleDesigns = designs.slice(
+      0,
+      isMobile ? 5 : 8
+    );
+
+    for (let laneIndex = 0;
+      laneIndex < laneCount;
+      laneIndex += 1) {
+      const lane = document.createElement("div");
+      const track = document.createElement("div");
+
+      lane.className = "hero-design-lane";
+      track.className = "hero-design-track";
+
+      const orderedDesigns = visibleDesigns.map(
+        (_, designIndex) =>
+          visibleDesigns[
+            (designIndex + laneIndex * 2) %
+              visibleDesigns.length
+          ]
+      );
+
+      for (let setIndex = 0;
+        setIndex < 2;
+        setIndex += 1) {
+        const set = document.createElement("div");
+        set.className = "hero-design-set";
+
+        orderedDesigns.forEach((design) => {
+          const card = document.createElement("div");
+          const image = document.createElement("img");
+
+          card.className = "hero-design-card";
+          image.src = design.gorsel_url;
+          image.alt = "";
+          image.loading =
+            setIndex === 0 ? "eager" : "lazy";
+          image.decoding = "async";
+
+          card.appendChild(image);
+          set.appendChild(card);
+        });
+
+        track.appendChild(set);
+      }
+
+      lane.appendChild(track);
+      heroDesignsTilt.appendChild(lane);
+    }
+
+    requestAnimationFrame(() => {
+      heroDesigns.classList.add("ready");
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+loadHeroDesigns();
 
 const updateScrollState = () => {
   const scrollTop =
