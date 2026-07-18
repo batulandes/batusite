@@ -1145,6 +1145,14 @@ a {
   border-color: var(--border-light);
 }
 
+.project-card-wide {
+  grid-column: 1 / -1;
+}
+
+.project-card-wide .project-image-wrap {
+  aspect-ratio: 1905 / 785;
+}
+
 .project-image-link {
   display: block;
 }
@@ -1835,6 +1843,14 @@ a {
 
   .projects-grid {
     gap: 15px;
+  }
+
+  .project-card-wide {
+    grid-column: auto;
+  }
+
+  .project-card-wide .project-image-wrap {
+    aspect-ratio: 16 / 10;
   }
 
   .project-card {
