@@ -1,3 +1,51 @@
+@font-face {
+  font-family: "TT Firs Neue";
+  src: url("/fonts/TT Firs Neue Trial Light.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Firs Neue";
+  src: url("/fonts/TT Firs Neue Trial Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Firs Neue";
+  src: url("/fonts/TT Firs Neue Trial Medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Firs Neue";
+  src: url("/fonts/TT Firs Neue Trial Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Firs Neue";
+  src: url("/fonts/TT Firs Neue Trial ExtraBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Firs Neue";
+  src: url("/fonts/TT Firs Neue Trial Black.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
 :root {
   --background: #000000;
   --surface: #080808;
@@ -9,6 +57,7 @@
   --container: 1180px;
   --nav-height: 88px;
   --nav-height-compact: 72px;
+  --font-primary: "TT Firs Neue", "Segoe UI", Arial, sans-serif;
 }
 
 * {
@@ -27,12 +76,8 @@ body {
   overflow-x: hidden;
   color: var(--text);
   background: var(--background);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
+  font-family: var(--font-primary);
+  font-weight: 400;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -195,6 +240,7 @@ a {
 .nav-links a {
   color: #8a8a8a;
   font-size: 12px;
+  font-weight: 500;
   transition: color 0.2s ease;
 }
 
@@ -278,13 +324,14 @@ a {
   margin-bottom: 20px;
   color: #707070;
   font-size: 10px;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 .hero-title {
   font-size: clamp(70px, 11vw, 150px);
-  font-weight: 700;
+  font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.07em;
 }
@@ -323,6 +370,7 @@ a {
   border: 1px solid var(--border-light);
   border-radius: 999px;
   font-size: 14px;
+  font-weight: 500;
   transition:
     background 0.2s ease,
     color 0.2s ease,
@@ -372,6 +420,7 @@ a {
   justify-content: space-between;
   color: #777777;
   font-size: 10px;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -406,6 +455,7 @@ a {
 
 .hero-stat-large strong {
   font-size: clamp(42px, 5vw, 68px);
+  font-weight: 900;
   line-height: 1;
   letter-spacing: -0.055em;
 }
@@ -439,6 +489,7 @@ a {
 
 .hero-stat-grid strong {
   font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 800;
   line-height: 1;
   letter-spacing: -0.04em;
 }
@@ -461,6 +512,7 @@ a {
   margin-bottom: 16px;
   color: #6f6f6f;
   font-size: 10px;
+  font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-align: center;
@@ -470,6 +522,7 @@ a {
   max-width: 950px;
   margin-inline: auto;
   font-size: clamp(42px, 5.5vw, 72px);
+  font-weight: 800;
   line-height: 1;
   letter-spacing: -0.05em;
   text-align: center;
@@ -511,6 +564,7 @@ a {
   margin: 38px auto 0;
   color: #757575;
   font-size: clamp(28px, 3.8vw, 51px);
+  font-weight: 300;
   line-height: 1.25;
   letter-spacing: -0.035em;
   text-align: center;
@@ -518,7 +572,7 @@ a {
 
 .about-text strong {
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* KANALLAR */
@@ -598,6 +652,7 @@ a {
 
 .channel-copy h3 {
   font-size: clamp(34px, 4vw, 52px);
+  font-weight: 800;
   line-height: 1;
   letter-spacing: -0.04em;
   margin-bottom: 22px;
@@ -623,6 +678,7 @@ a {
 .channel-stat strong {
   display: block;
   font-size: 22px;
+  font-weight: 800;
   line-height: 1;
   letter-spacing: -0.03em;
   color: #fff;
@@ -648,6 +704,7 @@ a {
   border: 1px solid #ffffff;
   border-radius: 999px;
   font-size: 14px;
+  font-weight: 500;
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
@@ -812,6 +869,7 @@ a {
   gap: 16px;
   color: #727272;
   font-size: 10px;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -825,6 +883,7 @@ a {
   max-width: 18ch;
   margin-inline: auto;
   font-size: clamp(29px, 3vw, 41px);
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.04em;
   text-align: center;
@@ -852,6 +911,7 @@ a {
   border: 1px solid var(--border-light);
   border-radius: 999px;
   font-size: 13px;
+  font-weight: 500;
   transition:
     color 0.2s ease,
     background 0.2s ease;
@@ -925,7 +985,7 @@ a {
   margin-top: 18px;
   color: #ffffff;
   font-size: clamp(24px, 2.2vw, 33px);
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.035em;
   overflow-wrap: anywhere;
@@ -997,6 +1057,7 @@ a {
 
 .tool-card span {
   font-size: 14px;
+  font-weight: 500;
 }
 
 @keyframes tools-scroll {
@@ -1031,6 +1092,7 @@ a {
   max-width: 1000px;
   margin-inline: auto;
   font-size: clamp(54px, 8vw, 110px);
+  font-weight: 800;
   line-height: 0.95;
   letter-spacing: -0.06em;
   text-align: center;
@@ -1050,6 +1112,7 @@ a {
   margin-top: 30px;
   padding-bottom: 5px;
   font-size: clamp(22px, 3vw, 37px);
+  font-weight: 500;
   letter-spacing: -0.03em;
   border-bottom: 1px solid #444444;
   transition:
