@@ -48,6 +48,8 @@
     media="(prefers-color-scheme: dark)"
   >
 
+  <link rel="stylesheet" href="/fonts.css?v=1">
+
   <style>
     :root {
       --background: #000000;
@@ -74,12 +76,8 @@
       overflow-x: hidden;
       color: var(--text);
       background: var(--background);
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+      font-family: var(--font-primary);
+      font-weight: 400;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
@@ -404,7 +402,7 @@
 
     .project-story strong {
       color: #ffffff;
-      font-weight: 650;
+      font-weight: 700;
     }
 
     .metrics {
@@ -485,7 +483,7 @@
     .collaboration-text strong {
       color: #ffffff;
       font-size: clamp(19px, 2vw, 25px);
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: -0.02em;
     }
 
