@@ -57,11 +57,84 @@ type PortfolioProject = {
   sonra_url: string | null;
   sonra_yolu: string | null;
   adimlar: ProjectStep[];
+  ozel_sayfa_url: string | null;
   sira: number;
   yayinlandi: boolean;
   created_at: string;
   updated_at: string;
 };
+
+const DEFAULT_PROJECTS: PortfolioProject[] = [
+  {
+    id: "legacy-limon-tayfa-ozeti-2025",
+    slug: "limon-tayfa-ozeti-2025",
+    baslik: "Limon Tayfa Özeti 2025",
+    kategori: "Video Projesi",
+    yil: 2025,
+    ozet: "Hawk Gaming Chair iş birliğiyle hazırlanan; 200'den fazla klibi ve 50'den fazla sinematik sesi tek bir yıl özetinde buluşturan özel video projesi.",
+    aciklama: "Limon Tayfa'nın bir yıllık hikâyesini yüzlerce klip, sinematik ses tasarımı ve özel kurgu diliyle tek bir büyük video deneyiminde birleştiren proje.",
+    rol: "Proje yönetimi, kurgu ve yaratıcı prodüksiyon",
+    araclar: [],
+    banner_url: "https://i.ibb.co/zq12TxH/Screenshot-20260716-224309-Chrome.jpg",
+    banner_yolu: null,
+    once_url: null,
+    once_yolu: null,
+    sonra_url: null,
+    sonra_yolu: null,
+    adimlar: [],
+    ozel_sayfa_url: "/limontayfaozeti2025",
+    sira: 0,
+    yayinlandi: true,
+    created_at: "2025-12-31T00:00:00.000Z",
+    updated_at: "2026-07-19T00:00:00.000Z",
+  },
+  {
+    id: "legacy-limon-tayfa-oyun-oneri",
+    slug: "limon-tayfa-oyun-oneri",
+    baslik: "Limon Tayfa Oyun Öneri",
+    kategori: "Web Projesi",
+    yil: 2026,
+    ozet: "350'den fazla oyunu tek bir sistemde toplayan, 45 binden fazla oy kullanılan ve Google Trends Türkiye'de görünürlük kazanan topluluk platformu.",
+    aciklama: "Limon Tayfa topluluğunun oyun keşfetmesini, oylamasını ve önerilerini paylaşmasını sağlayan katılımcı web projesi.",
+    rol: "Konsept, tasarım ve ürün geliştirme",
+    araclar: [],
+    banner_url: "https://i.ibb.co/gMZFXJZJ/ltoobatu.jpg",
+    banner_yolu: null,
+    once_url: null,
+    once_yolu: null,
+    sonra_url: null,
+    sonra_yolu: null,
+    adimlar: [],
+    ozel_sayfa_url: "/limontayfaoyunoner",
+    sira: 1,
+    yayinlandi: true,
+    created_at: "2026-01-01T00:00:00.000Z",
+    updated_at: "2026-07-19T00:00:00.000Z",
+  },
+  {
+    id: "legacy-lemonhota-odulleri",
+    slug: "lemonhota-odulleri",
+    baslik: "Lemonhota Ödülleri",
+    kategori: "Yıllık Ödül Organizasyonu",
+    yil: null,
+    ozet: "Team Lemonhota editörlerini onurlandıran, yılın en iyilerini iki aşamalı halk oylamasıyla seçen ve her yıl büyüyerek devam eden topluluk etkinliği.",
+    aciklama: "Lemonhota topluluğunun üretimlerini görünür kılan, halk oylaması ve özel ödül tasarımıyla her yıl devam eden organizasyon.",
+    rol: "Kurucu, yaratıcı yönetim ve organizasyon",
+    araclar: [],
+    banner_url: "https://static.wixstatic.com/media/6fb8dd_aa7b0a675ae3472a8076476a89dc5ff4~mv2.png/v1/fill/w_1905,h_785,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/6fb8dd_aa7b0a675ae3472a8076476a89dc5ff4~mv2.png",
+    banner_yolu: null,
+    once_url: null,
+    once_yolu: null,
+    sonra_url: null,
+    sonra_yolu: null,
+    adimlar: [],
+    ozel_sayfa_url: "/lemonhota-odulleri",
+    sira: 2,
+    yayinlandi: true,
+    created_at: "2026-01-02T00:00:00.000Z",
+    updated_at: "2026-07-19T00:00:00.000Z",
+  },
+];
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -230,14 +303,25 @@ async function readProjects(supabase: SupabaseClient): Promise<PortfolioProject[
     .download(PROJECTS_INDEX);
 
   if (error) {
-    if (missingStorageObject(error)) return [];
+    if (missingStorageObject(error)) {
+      return DEFAULT_PROJECTS.map((project) => ({
+        ...project,
+        araclar: [...project.araclar],
+        adimlar: [...project.adimlar],
+      }));
+    }
     throw error;
   }
 
   const content = await data.text();
-  if (!content.trim()) return [];
+  if (!content.trim()) return DEFAULT_PROJECTS;
   const parsed = JSON.parse(content);
-  return Array.isArray(parsed) ? parsed : [];
+  const stored = Array.isArray(parsed) ? parsed : [];
+  const storedSlugs = new Set(stored.map((project) => String(project.slug || "")));
+  const missingDefaults = DEFAULT_PROJECTS.filter(
+    (project) => !storedSlugs.has(project.slug),
+  );
+  return [...stored, ...missingDefaults];
 }
 
 async function writeProjects(
@@ -772,7 +856,9 @@ Deno.serve(async (request) => {
     }
 
     if (action === "project-list") {
-      return json({ projects: sortProjects(await readProjects(supabase)) });
+      const projects = sortProjects(await readProjects(supabase));
+      await writeProjects(supabase, projects);
+      return json({ projects });
     }
 
     if (action === "project-save") {
@@ -908,6 +994,7 @@ Deno.serve(async (request) => {
           sonra_url: afterUrl,
           sonra_yolu: afterPath,
           adimlar: nextSteps,
+          ozel_sayfa_url: existing?.ozel_sayfa_url || null,
           sira: Number(form.get("sira") || 0),
           yayinlandi: String(form.get("yayinlandi")) === "true",
           created_at: existing?.created_at || now,

@@ -135,9 +135,43 @@ const loadPortfolioProjects = async () => {
     if (!Array.isArray(projects)) return;
 
     projects
-      .filter(project => project.yayinlandi && project.banner_url)
       .sort((a, b) => (a.sira || 0) - (b.sira || 0))
       .forEach(project => {
+        const existingCard = [...grid.querySelectorAll("[data-project-slug]")]
+          .find(card => card.dataset.projectSlug === project.slug);
+
+        if (!project.yayinlandi || !project.banner_url) {
+          if (existingCard) existingCard.hidden = true;
+          return;
+        }
+
+        const url = `/proje/${encodeURIComponent(project.slug)}`;
+
+        if (existingCard) {
+          existingCard.hidden = false;
+          const image = existingCard.querySelector(".project-image");
+          const title = existingCard.querySelector("h3");
+          const summary = existingCard.querySelector(".project-content > p");
+          const meta = existingCard.querySelector(".project-meta");
+          existingCard.querySelectorAll("a.project-image-link, a.project-link")
+            .forEach(link => { link.href = url; });
+          if (image) {
+            image.src = project.banner_url;
+            image.alt = `${project.baslik} proje kapağı`;
+          }
+          if (title) title.textContent = project.baslik;
+          if (summary) summary.textContent = project.ozet || project.aciklama || "";
+          if (meta) {
+            meta.innerHTML = "";
+            [project.kategori || "Proje", project.yil].filter(Boolean).forEach(value => {
+              const span = document.createElement("span");
+              span.textContent = value;
+              meta.appendChild(span);
+            });
+          }
+          return;
+        }
+
         const article = document.createElement("article");
         const imageLink = document.createElement("a");
         const imageWrap = document.createElement("div");
@@ -148,9 +182,9 @@ const loadPortfolioProjects = async () => {
         const title = document.createElement("h3");
         const summary = document.createElement("p");
         const detailLink = document.createElement("a");
-        const url = `/proje/${encodeURIComponent(project.slug)}`;
 
         article.className = "project-card project-card-featured reveal visible";
+        article.dataset.projectSlug = project.slug;
         imageLink.className = "project-image-link";
         imageLink.href = url;
         imageLink.setAttribute("aria-label", `${project.baslik} proje sayfasını görüntüle`);
