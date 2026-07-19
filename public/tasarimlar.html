@@ -46,10 +46,10 @@
       font-family: var(--font-primary, Arial, sans-serif);
       font-weight: 400;
       -webkit-font-smoothing: antialiased;
-      animation: gallery-arrive .62s cubic-bezier(.16, 1, .3, 1) both;
     }
+    main { animation: gallery-arrive .48s cubic-bezier(.16, 1, .3, 1) both; }
     @keyframes gallery-arrive {
-      from { opacity: 0; filter: blur(7px); transform: translateY(8px) scale(.996); }
+      from { opacity: 0; filter: blur(4px); transform: translateY(6px) scale(.997); }
       to { opacity: 1; filter: none; transform: none; }
     }
     body.lightbox-open { overflow: hidden; }
@@ -73,6 +73,8 @@
       border-bottom: 1px solid rgba(255, 255, 255, .08);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
+      transform: translateZ(0);
+      isolation: isolate;
     }
     .topbar-inner {
       position: relative;
@@ -131,13 +133,14 @@
       padding: 14px 0;
       background: rgba(0, 0, 0, .9);
       border-block: 1px solid var(--border);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, .35);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
     .filter-shell { display: grid; gap: 12px; }
     .filter-tools {
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) auto;
+      grid-template-columns: minmax(280px, 440px) 155px minmax(0, 1fr);
       align-items: center;
       gap: 10px;
     }
@@ -195,7 +198,7 @@
       border-color: #fff;
     }
     .result-count {
-      flex: 0 0 auto;
+      justify-self: end;
       color: #666;
       font-size: 11px;
       white-space: nowrap;
@@ -411,6 +414,7 @@
       .filter-shell { gap: 9px; }
       .filter-tools { grid-template-columns: 1fr 118px; }
       .design-sort { width: 118px; }
+      .result-count { display: none; }
       .filter-row { gap: 10px; }
       .archive { padding-top: 25px; }
       .design-grid { columns: 2; column-gap: 9px; }
@@ -437,12 +441,11 @@
 
     @media (max-width: 430px) {
       .back-link span { display: none; }
-      .result-count { display: none; }
       .design-grid { columns: 2; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body { animation: none; }
+      main { animation: none; }
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
   </style>
@@ -484,10 +487,10 @@
             <option value="oldest">En eski</option>
             <option value="title">A–Z</option>
           </select>
+          <span class="result-count" id="result-count" aria-live="polite"></span>
         </div>
         <div class="filter-row">
           <div class="filters-inner" id="filter-list"></div>
-          <span class="result-count" id="result-count" aria-live="polite"></span>
         </div>
       </div>
     </section>
