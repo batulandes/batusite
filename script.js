@@ -145,7 +145,8 @@ const loadPortfolioProjects = async () => {
           return;
         }
 
-        const url = `/proje/${encodeURIComponent(project.slug)}`;
+        const url = project.ozel_sayfa_url ||
+          `/proje/${encodeURIComponent(project.slug)}`;
 
         if (existingCard) {
           existingCard.hidden = false;

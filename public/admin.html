@@ -688,7 +688,9 @@ $("projectForm").addEventListener("submit", async event => {
     resetProjectForm();
     showMessage(projectMessage, id ? "Proje güncellendi." : "Proje oluşturuldu.", "success");
     await loadProjects();
-    if (data.project?.yayinlandi) window.open(`/proje/${data.project.slug}`, "_blank", "noopener");
+    if (data.project?.yayinlandi) {
+      window.open(data.project.ozel_sayfa_url || `/proje/${data.project.slug}`, "_blank", "noopener");
+    }
   } catch (error) { showMessage(projectMessage, error.message, "error"); }
   button.disabled = false;
   button.textContent = $("projectId").value ? "Değişiklikleri kaydet" : "Projeyi yayınla";
@@ -710,7 +712,8 @@ async function loadProjects() {
       const image = project.banner_url
         ? `<img class="thumb" src="${escapeHtml(project.banner_url)}" alt="">`
         : '<div class="thumb thumb-placeholder">—</div>';
-      item.innerHTML = `${image}<div><h3>${escapeHtml(project.baslik)}</h3><div class="meta">${escapeHtml(project.kategori || "Proje")} · ${escapeHtml(project.yil || "")} · ${project.yayinlandi ? "Yayında" : "Taslak"}</div><a class="project-link-admin" href="/proje/${encodeURIComponent(project.slug)}" target="_blank" rel="noopener">Sayfayı aç ↗</a></div><div class="actions"><button class="small edit" type="button">Düzenle</button><button class="small toggle" type="button">${project.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete" type="button">Sil</button></div>`;
+      const projectUrl = project.ozel_sayfa_url || `/proje/${encodeURIComponent(project.slug)}`;
+      item.innerHTML = `${image}<div><h3>${escapeHtml(project.baslik)}</h3><div class="meta">${escapeHtml(project.kategori || "Proje")} · ${escapeHtml(project.yil || "")} · ${project.yayinlandi ? "Yayında" : "Taslak"}</div><a class="project-link-admin" href="${escapeHtml(projectUrl)}" target="_blank" rel="noopener">Sayfayı aç ↗</a></div><div class="actions"><button class="small edit" type="button">Düzenle</button><button class="small toggle" type="button">${project.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete" type="button">Sil</button></div>`;
       item.querySelector(".edit").addEventListener("click", () => editProject(project));
       item.querySelector(".toggle").addEventListener("click", async () => {
         try { await request({ action: "project-toggle", id: project.id, yayinlandi: !project.yayinlandi }); await loadProjects(); }
