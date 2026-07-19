@@ -1321,7 +1321,7 @@ body.is-leaving > footer {
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 72% 48%, rgba(225, 183, 72, 0.1), transparent 28%),
+    radial-gradient(circle at 72% 48%, rgba(255, 255, 255, 0.045), transparent 30%),
     #000000;
   border-bottom: 1px solid var(--border);
 }
