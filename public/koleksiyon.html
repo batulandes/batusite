@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>BATU Koleksiyonu — Dijital Kariyer Kartları</title>
+  <meta name="description" content="BATU'nun projelerini, başarılarını ve devam eden hedeflerini holografik koleksiyon kartlarıyla keşfet.">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://www.batuhota.com/koleksiyon">
+  <link rel="stylesheet" href="/fonts.css?v=1">
+  <style>
+    :root{--bg:#000;--text:#f7f7f7;--muted:#888;--line:rgba(255,255,255,.12);--ease:cubic-bezier(.16,1,.3,1)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:#000}
+    body{margin:0;min-height:100vh;overflow-x:hidden;background:#000;color:var(--text);font-family:var(--font-primary,Arial,sans-serif);-webkit-font-smoothing:antialiased}
+    body.card-open{overflow:hidden}
+    [hidden]{display:none!important}
+    button,a{font:inherit}
+    button{cursor:pointer}
+    .container{width:min(1220px,calc(100% - 40px));margin:auto}
+    .topbar{position:sticky;top:0;z-index:40;height:76px;background:rgba(0,0,0,.78);border-bottom:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+    .topbar-inner{height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+    .back{color:#888;font-size:12px;text-decoration:none}.back:hover{color:#fff}
+    .top-logo{display:block;width:54px;height:54px}.top-logo img{width:100%;height:100%;object-fit:contain}
+    .page-label{justify-self:end;color:#666;font-size:9px;font-weight:700;letter-spacing:.2em}
+    .hero{position:relative;min-height:610px;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+    .hero::before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 50% 48%,rgba(237,197,92,.1),transparent 25%),radial-gradient(circle at 30% 30%,rgba(112,102,255,.08),transparent 22%);filter:blur(25px)}
+    .hero-grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(circle,black,transparent 68%)}
+    .hero-content{position:relative;z-index:1;text-align:center;padding:100px 0 80px}
+    .eyebrow{margin:0;color:#777;font-size:9px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+    h1{max-width:900px;margin:20px auto 0;font-size:clamp(62px,10vw,140px);line-height:.78;letter-spacing:-.075em}
+    .hero-copy{max-width:590px;margin:32px auto 0;color:#999;font-size:16px;line-height:1.7}
+    .collection-stats{display:flex;justify-content:center;gap:32px;margin-top:38px;color:#777;font-size:11px}
+    .collection-stats strong{display:block;margin-bottom:5px;color:#fff;font-size:21px}
+    main{position:relative;padding:88px 0 130px}
+    .toolbar{position:sticky;top:92px;z-index:25;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:48px;padding:10px;background:rgba(6,6,6,.82);border:1px solid var(--line);border-radius:999px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+    .filters{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}
+    .filter{min-height:40px;padding:0 18px;white-space:nowrap;border:0;border-radius:999px;background:transparent;color:#777;font-size:11px}
+    .filter.active{background:#fff;color:#000}
+    .random{min-height:40px;padding:0 18px;white-space:nowrap;border:1px solid #292929;border-radius:999px;background:#0b0b0b;color:#bbb;font-size:11px}
+    .random:hover{border-color:#555;color:#fff}
+    .collection-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:52px 30px;align-items:start}
+    .collection-card{--mx:50%;--my:40%;position:relative;width:100%;aspect-ratio:.67;padding:0;border:0;outline:0;background:none;color:#fff;perspective:1300px;isolation:isolate;cursor:pointer;transition:opacity .28s ease,filter .45s ease,transform .45s var(--ease)}
+    .collection-card:focus-visible{filter:drop-shadow(0 0 0.55rem rgba(255,255,255,.45))}
+    .collection-card.is-hidden{display:none}
+    .card-rotator{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .65s var(--ease);will-change:transform}
+    @media(hover:hover) and (pointer:fine){.collection-card:not(.focus-clone):hover{z-index:4;transform:translateY(-8px)}.collection-card:not(.focus-clone):hover .card-rotator{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.025)}}
+    .card-face{position:absolute;inset:0;overflow:hidden;clip-path:polygon(50% 0,96% 16%,96% 84%,50% 100%,4% 84%,4% 16%);backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#111}
+    .card-face::before{content:"";position:absolute;inset:2px;z-index:0;clip-path:inherit;background:#050505}
+    .card-face::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.34),transparent 20%),linear-gradient(115deg,transparent 18%,rgba(255,255,255,.1) 36%,transparent 53%);mix-blend-mode:screen;opacity:.28;transform:translateZ(2px)}
+    .card-back{transform:rotateY(180deg)}
+    .card-media{position:absolute;inset:7% 8%;z-index:1;overflow:hidden;clip-path:polygon(50% 0,100% 16%,100% 84%,50% 100%,0 84%,0 16%);background:#0b0b0b}
+    .card-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05);transition:transform .7s var(--ease)}
+    .collection-card:hover .card-media img{transform:scale(1.035)}
+    .card-shade{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.04) 30%,rgba(0,0,0,.92) 89%)}
+    .card-content{position:absolute;z-index:3;inset:auto 14% 12%;text-align:left}
+    .card-kicker{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#aaa;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+    .card-title{margin:9px 0 0;font-size:clamp(18px,1.8vw,27px);line-height:.94;letter-spacing:-.045em}
+    .card-year{position:absolute;z-index:3;top:11%;left:50%;transform:translateX(-50%);padding:6px 11px;border:1px solid rgba(255,255,255,.17);border-radius:999px;background:rgba(0,0,0,.55);font-size:9px;font-weight:700;letter-spacing:.14em;backdrop-filter:blur(9px)}
+    .card-number{position:absolute;z-index:4;right:11%;bottom:18%;color:rgba(255,255,255,.42);font-size:8px;letter-spacing:.16em;writing-mode:vertical-rl}
+    .rarity{position:absolute;z-index:4;left:12%;bottom:19%;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff}
+    .level-beyaz .card-face{background:linear-gradient(145deg,#fff,#777 38%,#eee 66%,#666)}
+    .level-silver .card-face{background:linear-gradient(125deg,#2f3540,#e6edf4 26%,#68717d 49%,#f8fbff 66%,#343a43)}
+    .level-silver .rarity{background:#dce9f7;box-shadow:0 0 16px #bcdcff}
+    .level-gold .card-face{background:linear-gradient(125deg,#5d3d04,#f7dc7c 21%,#8c5a05 43%,#fff0a5 61%,#8b5a08 82%,#f6d36a)}
+    .level-gold .rarity{background:#ffdc78;box-shadow:0 0 18px #ffc53d}
+    .level-gold .card-face::after{opacity:.55;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,244,179,.75),transparent 17%),linear-gradient(115deg,transparent 18%,rgba(255,226,124,.12) 28%,rgba(139,190,255,.22) 39%,rgba(255,139,211,.16) 47%,transparent 61%);background-size:100% 100%,180% 180%;animation:holoDrift 5s ease-in-out infinite alternate}
+    .level-gold.is-valuable .card-face{filter:drop-shadow(0 0 12px rgba(255,199,65,.28))}
+    .level-gold.is-valuable::after{content:"";position:absolute;inset:8%;z-index:5;pointer-events:none;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.8px);background-size:43px 51px;opacity:.22;animation:stars 3.8s ease-in-out infinite}
+    @keyframes holoDrift{to{background-position:100% 20%,100% 100%}}
+    @keyframes stars{50%{opacity:.48;transform:translateY(-3px)}}
+    .is-locked .card-face{background:linear-gradient(135deg,#080808,#353535 34%,#090909 64%,#242424)}
+    .is-locked .card-media{display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,#191919,#030303 65%)}
+    .locked-mark{position:relative;z-index:2;font-size:clamp(90px,10vw,150px);font-weight:900;line-height:1;color:#111;text-shadow:-1px -1px 0 #444,1px 1px 0 #000;filter:drop-shadow(0 0 22px rgba(255,255,255,.05))}
+    .locked-grid{position:absolute;inset:0;opacity:.3;background-image:linear-gradient(30deg,transparent 48%,rgba(255,255,255,.05) 49%,rgba(255,255,255,.05) 51%,transparent 52%);background-size:18px 18px}
+    .is-locked.near-goal .card-face{background:linear-gradient(135deg,#090909,#42340e 35%,#080808 64%,#2c2209)}
+    .is-locked.near-goal{filter:drop-shadow(0 0 13px rgba(245,196,74,.16))}
+    .back-panel{position:absolute;z-index:2;inset:9% 9%;display:flex;flex-direction:column;justify-content:center;padding:17% 12%;clip-path:polygon(50% 0,100% 16%,100% 84%,50% 100%,0 84%,0 16%);background:linear-gradient(180deg,#111,#030303);text-align:center}
+    .back-panel .back-year{margin:0 0 14px;color:#888;font-size:9px;font-weight:700;letter-spacing:.2em}
+    .back-panel h2{margin:0;font-size:clamp(21px,2.4vw,34px);line-height:.95;letter-spacing:-.05em}
+    .back-panel p{margin:16px 0 0;color:#aaa;font-size:11px;line-height:1.55}
+    .back-link{display:inline-flex;align-self:center;margin-top:19px;padding-bottom:4px;border-bottom:1px solid #666;color:#fff;font-size:10px;text-decoration:none}
+    .progress{margin-top:22px;text-align:left}
+    .progress-line{height:4px;overflow:hidden;border-radius:999px;background:#292929}.progress-line span{display:block;width:var(--progress);height:100%;border-radius:inherit;background:linear-gradient(90deg,#777,#fff);box-shadow:0 0 12px rgba(255,255,255,.35)}
+    .near-goal .progress-line span{background:linear-gradient(90deg,#9f7217,#ffe69a);box-shadow:0 0 14px rgba(255,201,65,.45)}
+    .progress-numbers{display:flex;justify-content:space-between;margin-top:9px;color:#777;font-size:8px;letter-spacing:.08em}.progress-numbers strong{color:#fff}
+    .remaining{margin-top:12px!important;color:#eee!important;font-size:13px!important;font-weight:700}
+    .loading,.empty{grid-column:1/-1;padding:80px 20px;text-align:center;color:#777}
+    .focus-backdrop{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.18);opacity:0;backdrop-filter:blur(0);-webkit-backdrop-filter:blur(0);transition:opacity .5s ease,backdrop-filter .65s var(--ease);cursor:zoom-out}
+    .focus-backdrop.is-open{opacity:1;background:rgba(0,0,0,.66);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+    .focus-clone{position:fixed;z-index:90;margin:0;transform-origin:center;transition:transform .78s var(--ease),filter .5s ease;will-change:transform}
+    .focus-clone.is-open{transform:translate(var(--dx),var(--dy)) scale(var(--scale))}
+    .focus-clone.is-open .card-rotator{transform:rotateY(180deg)}
+    .focus-clone.is-closing{pointer-events:none}
+    .footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 40px;border-top:1px solid var(--line);color:#666;font-size:10px}.footer img{width:110px;height:34px;object-fit:contain}
+    @media(max-width:980px){.collection-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{min-height:540px}}
+    @media(max-width:720px){.container{width:min(100% - 24px,1220px)}.topbar{height:68px}.top-logo{width:48px;height:48px}.page-label{font-size:0}.page-label::after{content:"KOLEKSİYON";font-size:8px}.back{font-size:0}.back::after{content:"←";font-size:17px}.hero{min-height:510px}.hero-content{padding:80px 0 65px}.hero-copy{font-size:14px}.collection-stats{gap:22px}.toolbar{top:78px;margin-bottom:34px;border-radius:18px;align-items:stretch}.filters{flex:1}.random{padding:0 14px}.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 12px}.card-title{font-size:17px}.card-content{inset:auto 15% 13%}.card-kicker{font-size:7px}.card-number{display:none}.focus-clone .back-panel{padding:17% 11%}.footer{padding:24px 18px}}
+    @media(max-width:390px){.collection-grid{grid-template-columns:1fr;max-width:270px;margin:auto}.toolbar{position:relative;top:auto}.random{display:none}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}.collection-card:hover{transform:none!important}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="back" href="/">← Ana sayfa</a>
+      <a class="top-logo" href="/" aria-label="BATU ana sayfa"><img src="/logolar/BATU%20Logo%20Beyaz.png?v=3" alt="BATU"></a>
+      <span class="page-label">DİJİTAL KOLEKSİYON</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <p class="eyebrow">BATU · KOLEKSİYON 001</p>
+      <h1>Yıllardan kalan parçalar.</h1>
+      <p class="hero-copy">Projeler, ilk anlar, başarılar ve hâlâ peşinde olduğum hedefler. Her kart on yıllık üretim yolculuğunun başka bir parçası.</p>
+      <div class="collection-stats" aria-label="Koleksiyon istatistikleri">
+        <span><strong id="totalCount">—</strong>KART</span>
+        <span><strong id="goldCount">—</strong>GOLD</span>
+        <span><strong id="lockedCount">—</strong>KİLİTLİ</span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      <div class="toolbar">
+        <div class="filters" id="filters">
+          <button class="filter active" type="button" data-filter="all">Tümü</button>
+          <button class="filter" type="button" data-filter="beyaz">Beyaz</button>
+          <button class="filter" type="button" data-filter="silver">Silver</button>
+          <button class="filter" type="button" data-filter="gold">Gold</button>
+          <button class="filter" type="button" data-filter="locked">Kilitli</button>
+        </div>
+        <button class="random" id="randomCard" type="button">Rastgele kart ↗</button>
+      </div>
+      <section class="collection-grid" id="collectionGrid" aria-live="polite"><p class="loading">Koleksiyon yükleniyor…</p></section>
+    </div>
+  </main>
+
+  <footer class="footer"><span>© 2026 BATU · KOLEKSİYON 001</span><a href="/logo"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU"></a></footer>
+
+  <script>
+    const DATA_URL = "https://phreqbjgynchbynmtefz.supabase.co/storage/v1/object/public/timelapse/collection.json";
+    const DEFAULT_CARDS = [
+      {id:"first-channel",baslik:"İlk YouTube Kanalı",yil:2016,kategori:"İlk An",seviye:"beyaz",aciklama:"İçerik üretme yolculuğunun başladığı ilk kanal ve ilk denemeler.",gorsel_url:"/logolar/BATU%20Logo%20Beyaz.png",link:"/timelapse",link_metni:"Kariyerde gör",sira:0,yayinlandi:true,kilitli:false,cok_degerli:false},
+      {id:"lemonhota",baslik:"Lemonhota'nın Kuruluşu",yil:2022,kategori:"Kilometre Taşı",seviye:"silver",aciklama:"İçerik, topluluk ve dijital projeleri aynı çatı altında buluşturan Lemonhota'nın başlangıcı.",gorsel_url:"https://i.ibb.co/vC08Ty4X/20260715-215703.jpg",link:"https://www.lemonhota.com",link_metni:"Lemonhota'yı aç",sira:1,yayinlandi:true,kilitli:false,cok_degerli:false},
+      {id:"year-summary",baslik:"Limon Tayfa Özeti 2025",yil:2025,kategori:"Video Projesi",seviye:"gold",aciklama:"200'den fazla klibi ve 50'den fazla sinematik sesi tek bir yıl özetinde birleştiren büyük prodüksiyon.",gorsel_url:"https://i.ibb.co/zq12TxH/Screenshot-20260716-224309-Chrome.jpg",link:"/limontayfaozeti2025",link_metni:"Projeyi incele",sira:2,yayinlandi:true,kilitli:false,cok_degerli:true},
+      {id:"game-project",baslik:"45 Bin Topluluk Oyu",yil:2026,kategori:"Web Projesi",seviye:"silver",aciklama:"Limon Tayfa Oyun Öneri sisteminde kullanılan 45 binden fazla topluluk oyununun hatırası.",gorsel_url:"https://i.ibb.co/gMZFXJZJ/ltoobatu.jpg",link:"/limontayfaoyunoner",link_metni:"Projeyi incele",sira:3,yayinlandi:true,kilitli:false,cok_degerli:false},
+      {id:"awards",baslik:"Lemonhota Ödülleri",yil:2026,kategori:"Özel Proje",seviye:"gold",aciklama:"Topluluğun üretimlerini ve yılın öne çıkan isimlerini halk oylamasıyla buluşturan yıllık organizasyon.",gorsel_url:"/images/lemonhota-odulleri-kupa.png",link:"/lemonhota-odulleri",link_metni:"Projeyi incele",sira:4,yayinlandi:true,kilitli:false,cok_degerli:true},
+      {id:"goal-100k",baslik:"100.000 BATU Abonesi",yil:2026,kategori:"Devam Eden Hedef",seviye:"gold",aciklama:"BATU kanalının 100 bin kişilik topluluğa ulaşacağı kilometre taşı.",gorsel_url:null,link:"/kanal/batu",link_metni:"Kanalı incele",sira:5,yayinlandi:true,kilitli:true,hedef_baslik:"100.000 Abone",mevcut_deger:60500,hedef_deger:100000,birim:"abone",cok_degerli:true},
+      {id:"goal-audience",baslik:"200.000 Toplam Kitle",yil:2026,kategori:"Devam Eden Hedef",seviye:"silver",aciklama:"Tüm kanallar ve sosyal platformlardaki toplam kitlenin 200 bine ulaşması.",gorsel_url:null,link:null,link_metni:null,sira:6,yayinlandi:true,kilitli:true,hedef_baslik:"200.000 Toplam Kitle",mevcut_deger:177000,hedef_deger:200000,birim:"kişi",cok_degerli:false}
+    ];
+
+    const grid = document.getElementById("collectionGrid");
+    let cards = [];
+    let activeFilter = "all";
+    let focused = null;
+    const number = value => new Intl.NumberFormat("tr-TR").format(Number(value) || 0);
+    const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+    const safeUrl = value => /^(https?:\/\/|\/)/i.test(String(value || "")) ? String(value) : "";
+
+    function progress(card){
+      if(!card.kilitli) return 0;
+      const target = Math.max(1,Number(card.hedef_deger)||1);
+      return Math.max(0,Math.min(100,(Number(card.mevcut_deger)||0)/target*100));
+    }
+
+    function cardMarkup(card,index){
+      const locked = Boolean(card.kilitli);
+      const level = ["beyaz","silver","gold"].includes(card.seviye) ? card.seviye : "beyaz";
+      const percentage = progress(card);
+      const remaining = Math.max(0,(Number(card.hedef_deger)||0)-(Number(card.mevcut_deger)||0));
+      const image = safeUrl(card.gorsel_url);
+      const cardNumber = `BATU ${String(index+1).padStart(3,"0")}`;
+      const media = locked
+        ? `<div class="locked-grid"></div><span class="locked-mark">?</span>`
+        : image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">` : `<span class="locked-mark">B</span>`;
+      const backBody = locked ? `
+        <p>${escapeHtml(card.aciklama || "Bu kart bir hedef tamamlandığında açılacak.")}</p>
+        <div class="progress" style="--progress:${percentage.toFixed(2)}%">
+          <div class="progress-line"><span></span></div>
+          <div class="progress-numbers"><strong>${number(card.mevcut_deger)}</strong><span>${number(card.hedef_deger)}</span></div>
+        </div>
+        <p class="remaining">${number(remaining)} ${escapeHtml(card.birim || "") } kaldı</p>`
+        : `<p>${escapeHtml(card.aciklama || "Bu koleksiyon kartına henüz bir açıklama eklenmedi.")}</p>${safeUrl(card.link) ? `<a class="back-link" href="${escapeHtml(card.link)}">${escapeHtml(card.link_metni || "İncele")} ↗</a>` : ""}`;
+      return `<article class="collection-card level-${level}${locked?" is-locked":""}${percentage>=80?" near-goal":""}${card.cok_degerli?" is-valuable":""}" role="button" tabindex="0" data-id="${escapeHtml(card.id)}" data-level="${locked?"locked":level}" aria-label="${escapeHtml(card.baslik)} kartını aç">
+        <span class="card-rotator">
+          <span class="card-face card-front">
+            <span class="card-media">${media}</span><span class="card-shade"></span>
+            <span class="card-year">${escapeHtml(card.yil || "—")}</span>
+            <span class="card-content"><span class="card-kicker"><span>${escapeHtml(card.kategori || "Koleksiyon")}</span><span>${locked?"KİLİTLİ":level.toUpperCase()}</span></span><strong class="card-title">${escapeHtml(card.baslik)}</strong></span>
+            <span class="rarity"></span><span class="card-number">${cardNumber}</span>
+          </span>
+          <span class="card-face card-back">
+            <span class="back-panel"><span class="back-year">${escapeHtml(card.yil || "BATU")} · ${locked?"HEDEF":level.toUpperCase()}</span><h2>${escapeHtml(locked?(card.hedef_baslik||card.baslik):card.baslik)}</h2>${backBody}</span>
+          </span>
+        </span>
+      </article>`;
+    }
+
+    function render(){
+      const visible = cards.filter(card => card.yayinlandi !== false);
+      grid.innerHTML = visible.length ? visible.map(cardMarkup).join("") : '<p class="empty">Henüz yayınlanmış koleksiyon kartı yok.</p>';
+      document.getElementById("totalCount").textContent = visible.length;
+      document.getElementById("goldCount").textContent = visible.filter(c=>!c.kilitli&&c.seviye==="gold").length;
+      document.getElementById("lockedCount").textContent = visible.filter(c=>c.kilitli).length;
+      bindCards(); applyFilter();
+    }
+
+    function bindCards(){
+      grid.querySelectorAll(".collection-card").forEach(card => {
+        card.addEventListener("pointermove",event=>{
+          if(event.pointerType==="touch") return;
+          const rect=card.getBoundingClientRect();
+          const x=(event.clientX-rect.left)/rect.width,y=(event.clientY-rect.top)/rect.height;
+          card.style.setProperty("--mx",`${x*100}%`);card.style.setProperty("--my",`${y*100}%`);
+          card.style.setProperty("--rx",`${(0.5-y)*9}deg`);card.style.setProperty("--ry",`${(x-0.5)*11}deg`);
+        });
+        card.addEventListener("pointerleave",()=>{card.style.removeProperty("--rx");card.style.removeProperty("--ry")});
+        card.addEventListener("click",()=>openCard(card));
+        card.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();openCard(card)}});
+      });
+    }
+
+    function openCard(original){
+      if(focused) return;
+      const rect=original.getBoundingClientRect();
+      const clone=original.cloneNode(true);
+      const backdrop=document.createElement("div");
+      backdrop.className="focus-backdrop";
+      clone.classList.add("focus-clone");
+      clone.style.left=`${rect.left}px`;clone.style.top=`${rect.top}px`;clone.style.width=`${rect.width}px`;clone.style.height=`${rect.height}px`;
+      const targetWidth=Math.min(360,window.innerWidth-34);
+      const scale=targetWidth/rect.width;
+      clone.style.setProperty("--dx",`${window.innerWidth/2-(rect.left+rect.width/2)}px`);
+      clone.style.setProperty("--dy",`${window.innerHeight/2-(rect.top+rect.height/2)}px`);
+      clone.style.setProperty("--scale",scale);
+      original.style.opacity="0";
+      document.body.append(backdrop,clone);document.body.classList.add("card-open");
+      focused={original,clone,backdrop};
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{backdrop.classList.add("is-open");clone.classList.add("is-open")}));
+      clone.focus({preventScroll:true});
+      backdrop.addEventListener("click",closeCard);
+      clone.addEventListener("click",event=>{if(event.target.closest("a"))return;closeCard()});
+      document.addEventListener("keydown",escapeClose);
+    }
+
+    function escapeClose(event){if(event.key==="Escape")closeCard()}
+    function closeCard(){
+      if(!focused)return;
+      const {original,clone,backdrop}=focused;focused=null;
+      clone.classList.add("is-closing");clone.classList.remove("is-open");backdrop.classList.remove("is-open");document.body.classList.remove("card-open");
+      document.removeEventListener("keydown",escapeClose);
+      setTimeout(()=>{original.style.opacity="";clone.remove();backdrop.remove();original.focus({preventScroll:true})},780);
+    }
+
+    function applyFilter(){grid.querySelectorAll(".collection-card").forEach(card=>card.classList.toggle("is-hidden",activeFilter!=="all"&&card.dataset.level!==activeFilter))}
+    document.getElementById("filters").addEventListener("click",event=>{
+      const button=event.target.closest(".filter");if(!button)return;activeFilter=button.dataset.filter;
+      document.querySelectorAll(".filter").forEach(item=>item.classList.toggle("active",item===button));applyFilter();
+    });
+    document.getElementById("randomCard").addEventListener("click",()=>{
+      const available=[...grid.querySelectorAll(".collection-card:not(.is-hidden)")];if(!available.length)return;
+      const card=available[Math.floor(Math.random()*available.length)];card.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>openCard(card),450);
+    });
+
+    fetch(`${DATA_URL}?v=${Date.now()}`,{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error();return response.json()}).then(data=>{cards=(Array.isArray(data)?data:DEFAULT_CARDS).sort((a,b)=>(a.sira||0)-(b.sira||0));render()}).catch(()=>{cards=DEFAULT_CARDS;render()});
+  </script>
+</body>
+</html>

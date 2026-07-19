@@ -4,6 +4,7 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/proje/:slug", "destination": "/proje" },
-    { "source": "/kanal/:slug", "destination": "/kanal" }
+    { "source": "/kanal/:slug", "destination": "/kanal" },
+    { "source": "/koleksiyon", "destination": "/koleksiyon.html" }
   ]
 }

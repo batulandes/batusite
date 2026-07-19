@@ -121,6 +121,7 @@
       <button class="tab" type="button" data-tab="projects">Projeler</button>
       <button class="tab" type="button" data-tab="channels">Kanallar</button>
       <button class="tab" type="button" data-tab="collaborations">İşbirlikleri</button>
+      <button class="tab" type="button" data-tab="collection">Koleksiyon</button>
     </nav></div><button class="panel-arrow" id="panelNext" type="button" aria-label="Sonraki yönetim bölümleri">›</button></div>
 
     <div id="timelinePanel">
@@ -292,6 +293,44 @@
       </div><label class="check"><input id="collaborationPublished" type="checkbox" checked>Yayında</label><div class="form-actions"><button id="collaborationSave" class="wide" type="submit">İşbirliğini kaydet</button><button id="collaborationCancel" class="small" type="button" hidden>Vazgeç</button></div><div id="collaborationMessage" class="message"></div></form></section>
       <section class="card"><div class="toolbar"><h2>İşbirlikleri</h2><button id="collaborationRefresh" class="small" type="button">Yenile</button></div><div id="collaborationList" class="list"></div></section>
     </div>
+
+    <div id="collectionPanel" hidden>
+      <section class="card">
+        <h2 id="collectionFormTitle">Yeni koleksiyon kartı</h2>
+        <p>Beyaz, Silver, Gold veya hedefe bağlı kilitli kart oluştur. Kalan miktar mevcut ve hedef değerlerinden otomatik hesaplanır.</p>
+        <div id="collectionEditing" class="editing" hidden>Koleksiyon kartı düzenleniyor. Yeni görsel seçmezsen mevcut görsel korunur.</div>
+        <form id="collectionForm">
+          <input id="collectionId" type="hidden">
+          <div class="grid">
+            <label>Kart başlığı *<input id="collectionTitle" required placeholder="100.000 BATU Abonesi"></label>
+            <label>Yıl<input id="collectionYear" type="number" min="1900" max="2100" placeholder="2026"></label>
+            <label>Kategori<input id="collectionCategory" placeholder="Kilometre Taşı"></label>
+            <label>Kart seviyesi<select id="collectionLevel"><option value="beyaz">Beyaz — Standart</option><option value="silver">Silver — Nadir</option><option value="gold">Gold — Değerli</option></select></label>
+            <label>Sıra<input id="collectionOrder" type="number" value="0"></label>
+            <label>Kapak görseli<input id="collectionImage" type="file" accept="image/*"></label>
+            <label class="full">Kapak görseli bağlantısı<input id="collectionImageUrl" placeholder="https://... veya /images/..." inputmode="url"></label>
+            <label class="full">Kart açıklaması<textarea id="collectionDescription" placeholder="Kartın arka yüzünde anlatılacak hikâye..."></textarea></label>
+            <label>Kart bağlantısı<input id="collectionLink" placeholder="/proje/... veya https://..." inputmode="url"></label>
+            <label>Buton yazısı<input id="collectionLinkText" placeholder="Projeyi incele"></label>
+          </div>
+          <div class="subcard">
+            <div class="subcard-head"><h3>Hedef kartı</h3><label class="check"><input id="collectionLocked" type="checkbox">Siyah ve kilitli</label></div>
+            <p class="hint">Kilitliyse kart soru işaretiyle görünür. Tıklanınca hedef, ilerleme ve kalan sayı açılır.</p>
+            <div class="grid">
+              <label>Hedef başlığı<input id="collectionGoalTitle" placeholder="100.000 Abone"></label>
+              <label>Birim<input id="collectionUnit" placeholder="abone"></label>
+              <label>Mevcut değer<input id="collectionCurrent" type="number" min="0" step="1" placeholder="60500"></label>
+              <label>Hedef değer<input id="collectionTarget" type="number" min="1" step="1" placeholder="100000"></label>
+            </div>
+          </div>
+          <label class="check"><input id="collectionValuable" type="checkbox">Çok değerli — özel zarif parıltı</label>
+          <label class="check"><input id="collectionPublished" type="checkbox" checked>Yayında</label>
+          <div class="form-actions"><button id="collectionSave" class="wide" type="submit">Kartı kaydet</button><button id="collectionCancel" class="small" type="button" hidden>Vazgeç</button></div>
+          <div id="collectionMessage" class="message"></div>
+        </form>
+      </section>
+      <section class="card"><div class="toolbar"><h2>Koleksiyon kartları</h2><button id="collectionRefresh" class="small" type="button">Yenile</button></div><div id="collectionList" class="list"></div></section>
+    </div>
   </section>
 </main>
 
@@ -303,6 +342,7 @@ let designs = [];
 let projects = [];
 let channels = [];
 let collaborations = [];
+let collectionCards = [];
 
 const $ = id => document.getElementById(id);
 const loginView = $("loginView");
@@ -318,6 +358,8 @@ const channelList = $("channelList");
 const channelMessage = $("channelMessage");
 const collaborationList = $("collaborationList");
 const collaborationMessage = $("collaborationMessage");
+const collectionList = $("collectionList");
+const collectionMessage = $("collectionMessage");
 const logout = $("logout");
 
 function formatError(value) {
@@ -403,11 +445,13 @@ document.querySelectorAll(".tab").forEach(tab => {
     $("projectsPanel").hidden = selected !== "projects";
     $("channelsPanel").hidden = selected !== "channels";
     $("collaborationsPanel").hidden = selected !== "collaborations";
+    $("collectionPanel").hidden = selected !== "collection";
     if (selected === "timeline") loadTimeline();
     if (selected === "designs") loadDesigns();
     if (selected === "projects") loadProjects();
     if (selected === "channels") loadChannels();
     if (selected === "collaborations") loadCollaborations();
+    if (selected === "collection") loadCollection();
   });
 });
 
@@ -840,6 +884,79 @@ $("collaborationCancel").addEventListener("click",resetCollaborationForm);
 $("collaborationForm").addEventListener("submit",async event=>{event.preventDefault();const button=$("collaborationSave");button.disabled=true;button.textContent="Kaydediliyor...";const form=new FormData();form.append("action","collaboration-save");form.append("id",$("collaborationId").value);[["ad","collaborationName"],["tur","collaborationType"],["logo_url","collaborationLogoUrl"],["link","collaborationLink"],["sira","collaborationOrder"],["aciklama","collaborationDescription"]].forEach(([key,id])=>form.append(key,$(id).value));if($("collaborationLogo").files[0])form.append("logo",$("collaborationLogo").files[0]);form.append("yayinlandi",$("collaborationPublished").checked);try{await request(form,true);resetCollaborationForm();showMessage(collaborationMessage,"İşbirliği kaydedildi.","success");await loadCollaborations();}catch(error){showMessage(collaborationMessage,error.message,"error");}button.disabled=false;button.textContent="İşbirliğini kaydet";});
 async function loadCollaborations(){collaborationList.innerHTML="<p>Yükleniyor...</p>";try{const data=await request({action:"collaboration-list"});collaborations=data.collaborations||[];collaborationList.innerHTML="";collaborations.forEach(value=>{const item=document.createElement("article");item.className="item";item.innerHTML=`${value.logo_url?`<img class="thumb" src="${escapeHtml(value.logo_url)}" alt="">`:'<div class="thumb thumb-placeholder">—</div>'}<div><h3>${escapeHtml(value.ad)}</h3><div class="meta">${escapeHtml(value.tur||"")} · ${value.yayinlandi?"Yayında":"Gizli"}</div></div><div class="actions"><button class="small edit">Düzenle</button><button class="small toggle">${value.yayinlandi?"Gizle":"Yayınla"}</button><button class="small danger delete">Sil</button></div>`;item.querySelector(".edit").onclick=()=>editCollaboration(value);item.querySelector(".toggle").onclick=async()=>{await request({action:"collaboration-toggle",id:value.id,yayinlandi:!value.yayinlandi});loadCollaborations();};item.querySelector(".delete").onclick=async()=>{if(confirm("İşbirliği silinsin mi?")){await request({action:"collaboration-delete",id:value.id});loadCollaborations();}};collaborationList.appendChild(item);});}catch(error){collaborationList.innerHTML=`<p class="error">${escapeHtml(error.message)}</p>`;}}
 $("collaborationRefresh").addEventListener("click",loadCollaborations);
+
+function resetCollectionForm(){
+  $("collectionForm").reset();
+  $("collectionId").value="";
+  $("collectionOrder").value="0";
+  $("collectionPublished").checked=true;
+  $("collectionFormTitle").textContent="Yeni koleksiyon kartı";
+  $("collectionSave").textContent="Kartı kaydet";
+  $("collectionEditing").hidden=true;
+  $("collectionCancel").hidden=true;
+  showMessage(collectionMessage,"");
+}
+
+function editCollectionCard(card){
+  $("collectionId").value=card.id;
+  $("collectionTitle").value=card.baslik||"";
+  $("collectionYear").value=card.yil||"";
+  $("collectionCategory").value=card.kategori||"";
+  $("collectionLevel").value=card.seviye||"beyaz";
+  $("collectionOrder").value=card.sira??0;
+  $("collectionImageUrl").value=card.gorsel_yolu?"":(card.gorsel_url||"");
+  $("collectionDescription").value=card.aciklama||"";
+  $("collectionLink").value=card.link||"";
+  $("collectionLinkText").value=card.link_metni||"";
+  $("collectionLocked").checked=Boolean(card.kilitli);
+  $("collectionGoalTitle").value=card.hedef_baslik||"";
+  $("collectionCurrent").value=card.mevcut_deger??"";
+  $("collectionTarget").value=card.hedef_deger??"";
+  $("collectionUnit").value=card.birim||"";
+  $("collectionValuable").checked=Boolean(card.cok_degerli);
+  $("collectionPublished").checked=Boolean(card.yayinlandi);
+  $("collectionFormTitle").textContent=`${card.baslik} kartını düzenle`;
+  $("collectionSave").textContent="Değişiklikleri kaydet";
+  $("collectionEditing").hidden=false;
+  $("collectionCancel").hidden=false;
+  $("collectionPanel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+$("collectionCancel").addEventListener("click",resetCollectionForm);
+$("collectionForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  const locked=$("collectionLocked").checked;
+  if(locked&&(!$('collectionCurrent').value||!$('collectionTarget').value)) return showMessage(collectionMessage,"Kilitli kart için mevcut ve hedef değerlerini yaz.","error");
+  const button=$("collectionSave");button.disabled=true;button.textContent="Kaydediliyor...";
+  const form=new FormData();
+  form.append("action","collection-save");
+  [["id","collectionId"],["baslik","collectionTitle"],["yil","collectionYear"],["kategori","collectionCategory"],["seviye","collectionLevel"],["sira","collectionOrder"],["gorsel_url","collectionImageUrl"],["aciklama","collectionDescription"],["link","collectionLink"],["link_metni","collectionLinkText"],["hedef_baslik","collectionGoalTitle"],["mevcut_deger","collectionCurrent"],["hedef_deger","collectionTarget"],["birim","collectionUnit"]].forEach(([key,id])=>form.append(key,$(id).value));
+  form.append("kilitli",locked);form.append("cok_degerli",$("collectionValuable").checked);form.append("yayinlandi",$("collectionPublished").checked);
+  if($("collectionImage").files[0]) form.append("gorsel",$("collectionImage").files[0]);
+  try{await request(form,true);resetCollectionForm();showMessage(collectionMessage,"Koleksiyon kartı kaydedildi.","success");await loadCollection();}
+  catch(error){showMessage(collectionMessage,error.message,"error")}
+  button.disabled=false;button.textContent=$("collectionId").value?"Değişiklikleri kaydet":"Kartı kaydet";
+});
+
+async function loadCollection(){
+  collectionList.innerHTML="<p>Yükleniyor...</p>";
+  try{
+    const data=await request({action:"collection-list"});collectionCards=data.cards||[];collectionList.innerHTML="";
+    if(!collectionCards.length){collectionList.innerHTML="<p>Henüz koleksiyon kartı yok.</p>";return}
+    collectionCards.forEach(card=>{
+      const target=Number(card.hedef_deger)||0,current=Number(card.mevcut_deger)||0,remaining=Math.max(0,target-current);
+      const item=document.createElement("article");item.className=`item${card.seviye==="gold"&&!card.kilitli?" gold":""}`;
+      const image=card.gorsel_url&&!card.kilitli?`<img class="thumb" src="${escapeHtml(card.gorsel_url)}" alt="">`:`<div class="thumb thumb-placeholder">${card.kilitli?"?":"—"}</div>`;
+      const targetMeta=card.kilitli?` · ${current.toLocaleString("tr-TR")}/${target.toLocaleString("tr-TR")} · ${remaining.toLocaleString("tr-TR")} ${escapeHtml(card.birim||"")} kaldı`:"";
+      item.innerHTML=`${image}<div><h3>${escapeHtml(card.baslik)}</h3><div class="meta">${card.kilitli?"KİLİTLİ":escapeHtml((card.seviye||"beyaz").toUpperCase())} · ${escapeHtml(card.yil||"")}${targetMeta} · ${card.yayinlandi?"Yayında":"Gizli"}</div><a class="project-link-admin" href="/koleksiyon" target="_blank" rel="noopener">Koleksiyonu aç ↗</a></div><div class="actions"><button class="small edit">Düzenle</button><button class="small toggle">${card.yayinlandi?"Gizle":"Yayınla"}</button><button class="small danger delete">Sil</button></div>`;
+      item.querySelector(".edit").onclick=()=>editCollectionCard(card);
+      item.querySelector(".toggle").onclick=async()=>{try{await request({action:"collection-toggle",id:card.id,yayinlandi:!card.yayinlandi});await loadCollection()}catch(error){alert(error.message)}};
+      item.querySelector(".delete").onclick=async()=>{if(!confirm("Bu koleksiyon kartı silinsin mi?"))return;try{await request({action:"collection-delete",id:card.id});await loadCollection()}catch(error){alert(error.message)}};
+      collectionList.appendChild(item);
+    });
+  }catch(error){collectionList.innerHTML=`<p class="error">${escapeHtml(error.message)}</p>`}
+}
+$("collectionRefresh").addEventListener("click",loadCollection);
 
 const savedPassword = sessionStorage.getItem("batu_admin_password");
 if (savedPassword) {

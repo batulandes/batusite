@@ -14,6 +14,7 @@ const TIMELAPSE_INDEX = "events.json";
 const PROJECTS_INDEX = "projects.json";
 const CHANNELS_INDEX = "channels.json";
 const COLLABORATIONS_INDEX = "collaborations.json";
+const COLLECTION_INDEX = "collection.json";
 const MAX_TIMELAPSE_MEDIA_SIZE = 18 * 1024 * 1024;
 
 type SupabaseClient = ReturnType<typeof createClient>;
@@ -104,6 +105,28 @@ type Collaboration = {
   logo_url: string | null;
   logo_yolu: string | null;
   link: string | null;
+  sira: number;
+  yayinlandi: boolean;
+  updated_at: string;
+};
+
+type CollectionCard = {
+  id: string;
+  baslik: string;
+  yil: number | null;
+  kategori: string | null;
+  seviye: "beyaz" | "silver" | "gold";
+  aciklama: string | null;
+  gorsel_url: string | null;
+  gorsel_yolu: string | null;
+  link: string | null;
+  link_metni: string | null;
+  kilitli: boolean;
+  hedef_baslik: string | null;
+  mevcut_deger: number | null;
+  hedef_deger: number | null;
+  birim: string | null;
+  cok_degerli: boolean;
   sira: number;
   yayinlandi: boolean;
   updated_at: string;
@@ -211,6 +234,16 @@ const DEFAULT_COLLABORATIONS: Collaboration[] = [
   { id: "collab-hawk", ad: "Hawk Gaming Chair", tur: "Proje Partneri", aciklama: "Limon Tayfa Özeti 2025 dahil özel içerik projelerinde birlikte üretim.", logo_url: "https://percdn.com/f/619128/bzR6WmFtNG0vcUp3ZUdFOVU1NG5hQT09/l/logo-21213039-sw320sh116.webp", logo_yolu: null, link: null, sira: 1, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
   { id: "collab-razer", ad: "Razer", tur: "Creator Program", aciklama: "Razer Creator Program kapsamında kurulan üretici bağlantısı.", logo_url: "https://cdn.simpleicons.org/razer/FFFFFF", logo_yolu: null, link: null, sira: 2, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
   { id: "collab-hytale", ad: "Hytale", tur: "Topluluk", aciklama: "Oyun topluluğu ve içerik üretimi odağında gerçekleştirilen çalışma.", logo_url: "https://hytale.com/images/logo.webp", logo_yolu: null, link: null, sira: 3, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+];
+
+const DEFAULT_COLLECTION: CollectionCard[] = [
+  { id: "first-channel", baslik: "İlk YouTube Kanalı", yil: 2016, kategori: "İlk An", seviye: "beyaz", aciklama: "İçerik üretme yolculuğunun başladığı ilk kanal ve ilk denemeler.", gorsel_url: "/logolar/BATU%20Logo%20Beyaz.png", gorsel_yolu: null, link: "/timelapse", link_metni: "Kariyerde gör", kilitli: false, hedef_baslik: null, mevcut_deger: null, hedef_deger: null, birim: null, cok_degerli: false, sira: 0, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "lemonhota", baslik: "Lemonhota'nın Kuruluşu", yil: 2022, kategori: "Kilometre Taşı", seviye: "silver", aciklama: "İçerik, topluluk ve dijital projeleri aynı çatı altında buluşturan Lemonhota'nın başlangıcı.", gorsel_url: "https://i.ibb.co/vC08Ty4X/20260715-215703.jpg", gorsel_yolu: null, link: "https://www.lemonhota.com", link_metni: "Lemonhota'yı aç", kilitli: false, hedef_baslik: null, mevcut_deger: null, hedef_deger: null, birim: null, cok_degerli: false, sira: 1, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "year-summary", baslik: "Limon Tayfa Özeti 2025", yil: 2025, kategori: "Video Projesi", seviye: "gold", aciklama: "200'den fazla klibi ve 50'den fazla sinematik sesi tek bir yıl özetinde birleştiren büyük prodüksiyon.", gorsel_url: "https://i.ibb.co/zq12TxH/Screenshot-20260716-224309-Chrome.jpg", gorsel_yolu: null, link: "/limontayfaozeti2025", link_metni: "Projeyi incele", kilitli: false, hedef_baslik: null, mevcut_deger: null, hedef_deger: null, birim: null, cok_degerli: true, sira: 2, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "game-project", baslik: "45 Bin Topluluk Oyu", yil: 2026, kategori: "Web Projesi", seviye: "silver", aciklama: "Limon Tayfa Oyun Öneri sisteminde kullanılan 45 binden fazla topluluk oyununun hatırası.", gorsel_url: "https://i.ibb.co/gMZFXJZJ/ltoobatu.jpg", gorsel_yolu: null, link: "/limontayfaoyunoner", link_metni: "Projeyi incele", kilitli: false, hedef_baslik: null, mevcut_deger: null, hedef_deger: null, birim: null, cok_degerli: false, sira: 3, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "awards", baslik: "Lemonhota Ödülleri", yil: 2026, kategori: "Özel Proje", seviye: "gold", aciklama: "Topluluğun üretimlerini ve yılın öne çıkan isimlerini halk oylamasıyla buluşturan yıllık organizasyon.", gorsel_url: "/images/lemonhota-odulleri-kupa.png", gorsel_yolu: null, link: "/lemonhota-odulleri", link_metni: "Projeyi incele", kilitli: false, hedef_baslik: null, mevcut_deger: null, hedef_deger: null, birim: null, cok_degerli: true, sira: 4, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "goal-100k", baslik: "100.000 BATU Abonesi", yil: 2026, kategori: "Devam Eden Hedef", seviye: "gold", aciklama: "BATU kanalının 100 bin kişilik topluluğa ulaşacağı kilometre taşı.", gorsel_url: null, gorsel_yolu: null, link: "/kanal/batu", link_metni: "Kanalı incele", kilitli: true, hedef_baslik: "100.000 Abone", mevcut_deger: 60500, hedef_deger: 100000, birim: "abone", cok_degerli: true, sira: 5, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "goal-audience", baslik: "200.000 Toplam Kitle", yil: 2026, kategori: "Devam Eden Hedef", seviye: "silver", aciklama: "Tüm kanallar ve sosyal platformlardaki toplam kitlenin 200 bine ulaşması.", gorsel_url: null, gorsel_yolu: null, link: null, link_metni: null, kilitli: true, hedef_baslik: "200.000 Toplam Kitle", mevcut_deger: 177000, hedef_deger: 200000, birim: "kişi", cok_degerli: false, sira: 6, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
 ];
 
 function json(body: unknown, status = 200) {
@@ -1310,6 +1343,95 @@ Deno.serve(async (request) => {
       if (index < 0) return json({ error: "İşbirliği bulunamadı." }, 404);
       const [item] = values.splice(index, 1); await writeManagedIndex(supabase, COLLABORATIONS_INDEX, values);
       if (item.logo_yolu) await supabase.storage.from(TIMELAPSE_BUCKET).remove([item.logo_yolu]);
+      return json({ ok: true });
+    }
+
+    if (action === "collection-list") {
+      const cards = (await readManagedIndex(supabase, COLLECTION_INDEX, DEFAULT_COLLECTION))
+        .sort((a, b) => a.sira - b.sira);
+      await writeManagedIndex(supabase, COLLECTION_INDEX, cards);
+      return json({ cards });
+    }
+
+    if (action === "collection-save") {
+      if (!form) return json({ error: "Koleksiyon formu alınamadı." }, 400);
+      const cards = await readManagedIndex(supabase, COLLECTION_INDEX, DEFAULT_COLLECTION);
+      const requestedId = String(form.get("id") || "").trim();
+      const index = requestedId ? cards.findIndex((item) => item.id === requestedId) : -1;
+      if (requestedId && index < 0) return json({ error: "Düzenlenecek kart bulunamadı." }, 404);
+      const existing = index >= 0 ? cards[index] : null;
+      const id = existing?.id || crypto.randomUUID();
+      const baslik = String(form.get("baslik") || "").trim();
+      const seviye = String(form.get("seviye") || "beyaz");
+      const locked = String(form.get("kilitli")) === "true";
+      const current = numberOrNull(form.get("mevcut_deger"));
+      const target = numberOrNull(form.get("hedef_deger"));
+      if (!baslik) return json({ error: "Kart başlığı zorunlu." }, 400);
+      if (!["beyaz", "silver", "gold"].includes(seviye)) return json({ error: "Geçersiz kart seviyesi." }, 400);
+      if (locked && (!target || target <= 0 || current === null || current < 0)) {
+        return json({ error: "Kilitli kart için mevcut ve hedef değerlerini yaz." }, 400);
+      }
+
+      let imageUrl = String(form.get("gorsel_url") || "").trim() || existing?.gorsel_url || null;
+      let imagePath = existing?.gorsel_yolu || null;
+      const imageFile = form.get("gorsel");
+      if (imageUrl && !/^(https?:\/\/|\/)/i.test(imageUrl)) {
+        return json({ error: "Görsel bağlantısı http://, https:// veya / ile başlamalı." }, 400);
+      }
+      if (imageFile instanceof File && imageFile.size) {
+        const uploaded = await uploadManagedImage(supabase, imageFile, "collection", id);
+        if (imagePath) await supabase.storage.from(TIMELAPSE_BUCKET).remove([imagePath]);
+        imageUrl = uploaded.url;
+        imagePath = uploaded.path;
+      }
+
+      const link = String(form.get("link") || "").trim() || null;
+      if (link && !/^(https?:\/\/|\/)/i.test(link)) {
+        return json({ error: "Kart bağlantısı http://, https:// veya / ile başlamalı." }, 400);
+      }
+      const card: CollectionCard = {
+        id,
+        baslik,
+        yil: numberOrNull(form.get("yil")),
+        kategori: String(form.get("kategori") || "").trim() || null,
+        seviye: seviye as CollectionCard["seviye"],
+        aciklama: String(form.get("aciklama") || "").trim() || null,
+        gorsel_url: imageUrl,
+        gorsel_yolu: imagePath,
+        link,
+        link_metni: String(form.get("link_metni") || "").trim() || null,
+        kilitli: locked,
+        hedef_baslik: String(form.get("hedef_baslik") || "").trim() || null,
+        mevcut_deger: locked ? current : null,
+        hedef_deger: locked ? target : null,
+        birim: locked ? (String(form.get("birim") || "").trim() || null) : null,
+        cok_degerli: String(form.get("cok_degerli")) === "true",
+        sira: Number(form.get("sira") || 0),
+        yayinlandi: String(form.get("yayinlandi")) === "true",
+        updated_at: new Date().toISOString(),
+      };
+      if (index >= 0) cards[index] = card; else cards.push(card);
+      await writeManagedIndex(supabase, COLLECTION_INDEX, cards.sort((a, b) => a.sira - b.sira));
+      return json({ card });
+    }
+
+    if (action === "collection-toggle") {
+      const cards = await readManagedIndex(supabase, COLLECTION_INDEX, DEFAULT_COLLECTION);
+      const card = cards.find((item) => item.id === String(body.id || ""));
+      if (!card) return json({ error: "Koleksiyon kartı bulunamadı." }, 404);
+      card.yayinlandi = Boolean(body.yayinlandi);
+      card.updated_at = new Date().toISOString();
+      await writeManagedIndex(supabase, COLLECTION_INDEX, cards);
+      return json({ ok: true });
+    }
+
+    if (action === "collection-delete") {
+      const cards = await readManagedIndex(supabase, COLLECTION_INDEX, DEFAULT_COLLECTION);
+      const index = cards.findIndex((item) => item.id === String(body.id || ""));
+      if (index < 0) return json({ error: "Koleksiyon kartı bulunamadı." }, 404);
+      const [card] = cards.splice(index, 1);
+      await writeManagedIndex(supabase, COLLECTION_INDEX, cards);
+      if (card.gorsel_yolu) await supabase.storage.from(TIMELAPSE_BUCKET).remove([card.gorsel_yolu]);
       return json({ ok: true });
     }
 

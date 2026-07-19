@@ -1315,6 +1315,160 @@ body.is-leaving > footer {
   background: #ffffff;
 }
 
+/* KOLEKSİYON */
+
+.collection-teaser {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 72% 48%, rgba(225, 183, 72, 0.1), transparent 28%),
+    #000000;
+  border-bottom: 1px solid var(--border);
+}
+
+.collection-teaser::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: linear-gradient(90deg, transparent, black 55%, transparent);
+  pointer-events: none;
+}
+
+.collection-teaser-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(430px, 1.15fr);
+  align-items: center;
+  gap: clamp(40px, 7vw, 100px);
+}
+
+.collection-teaser .section-head {
+  margin: 0;
+  text-align: left;
+}
+
+.collection-teaser .section-title,
+.collection-teaser .section-description {
+  margin-left: 0;
+  text-align: left;
+}
+
+.collection-teaser-link {
+  min-height: 48px;
+  margin-top: 28px;
+  padding: 0 21px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  color: #000000;
+  background: #ffffff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: transform 0.25s ease;
+}
+
+.collection-teaser-link:hover {
+  transform: translateY(-3px);
+}
+
+.collection-stack {
+  position: relative;
+  min-height: 510px;
+  display: block;
+  perspective: 1200px;
+}
+
+.mini-hex {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 230px;
+  aspect-ratio: 0.67;
+  padding: 80px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(50% 0, 96% 16%, 96% 84%, 50% 100%, 4% 84%, 4% 16%);
+  background: #111111;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mini-hex::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  z-index: -1;
+  clip-path: inherit;
+  background: radial-gradient(circle at 50% 30%, #202020, #020202 70%);
+}
+
+.mini-hex::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 22%, rgba(255, 255, 255, 0.2) 42%, transparent 61%);
+  background-size: 230% 100%;
+  animation: collection-shine 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.mini-hex i {
+  color: #9a9a9a;
+  font-size: 9px;
+  font-style: normal;
+  letter-spacing: 0.18em;
+}
+
+.mini-hex strong {
+  margin-top: 17px;
+  font-size: 27px;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.mini-hex-white {
+  background: linear-gradient(135deg, #4f4f4f, #ffffff, #656565);
+  transform: translate(-96%, -48%) rotate(-12deg) rotateY(16deg);
+}
+
+.mini-hex-silver {
+  background: linear-gradient(135deg, #303741, #e9f0f6 35%, #505a67 60%, #f7fbff);
+  transform: translate(-50%, -53%) rotate(0) translateZ(25px);
+  z-index: 2;
+}
+
+.mini-hex-gold {
+  background: linear-gradient(135deg, #614005, #f3d66d 28%, #855707 53%, #fff0a0 75%, #6f4907);
+  transform: translate(-4%, -48%) rotate(12deg) rotateY(-16deg);
+}
+
+.collection-stack:hover .mini-hex-white {
+  transform: translate(-103%, -51%) rotate(-15deg) rotateY(20deg);
+}
+
+.collection-stack:hover .mini-hex-silver {
+  transform: translate(-50%, -57%) rotate(0) translateZ(45px);
+}
+
+.collection-stack:hover .mini-hex-gold {
+  transform: translate(3%, -51%) rotate(15deg) rotateY(-20deg);
+}
+
+@keyframes collection-shine {
+  0%, 58% { background-position: 150% 0; opacity: 0; }
+  72% { opacity: 0.55; }
+  100% { background-position: -80% 0; opacity: 0; }
+}
+
 /* ARAÇLAR */
 
 .tools {
@@ -1546,6 +1700,21 @@ body.is-leaving > footer {
       repeat(2, minmax(0, 1fr));
   }
 
+  .collection-teaser-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-teaser .section-head,
+  .collection-teaser .section-title,
+  .collection-teaser .section-description {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .collection-stack {
+    min-height: 470px;
+  }
+
   .channel-card,
   .channel-content {
     min-height: 510px;
@@ -1623,6 +1792,20 @@ body.is-leaving > footer {
 
   .section {
     padding: 76px 0;
+  }
+
+  .collection-teaser-layout {
+    gap: 28px;
+  }
+
+  .collection-stack {
+    min-height: 360px;
+    transform: scale(0.78);
+    margin: -25px -70px;
+  }
+
+  .mini-hex {
+    width: 205px;
   }
 
   .nav-inner {
