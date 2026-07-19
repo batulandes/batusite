@@ -8,6 +8,7 @@ const corsHeaders = {
 };
 
 const DESIGN_BUCKET = "tasarimlar";
+const OFFICIAL_DESIGNS_INDEX = "_meta/resmi-tasarimlar.json";
 const TIMELAPSE_BUCKET = "timelapse";
 const TIMELAPSE_INDEX = "events.json";
 const MAX_TIMELAPSE_MEDIA_SIZE = 18 * 1024 * 1024;
@@ -177,6 +178,69 @@ async function writeTimeline(
   if (error) throw error;
 }
 
+async function readOfficialDesignIds(
+  supabase: SupabaseClient,
+): Promise<string[]> {
+  const { data, error } = await supabase.storage
+    .from(DESIGN_BUCKET)
+    .download(OFFICIAL_DESIGNS_INDEX);
+
+  if (error) {
+    const details = errorDetails(error);
+    const message = String(details.message || "").toLowerCase();
+    const status = String(details.statusCode || details.code || "");
+
+    if (
+      status === "404" ||
+      message.includes("not found") ||
+      message.includes("does not exist")
+    ) {
+      return [];
+    }
+
+    throw error;
+  }
+
+  const parsed = JSON.parse(await data.text());
+  return Array.isArray(parsed) ? parsed.map(String) : [];
+}
+
+async function writeOfficialDesignIds(
+  supabase: SupabaseClient,
+  ids: string[],
+) {
+  await ensurePublicBucket(supabase, DESIGN_BUCKET);
+
+  const uniqueIds = [...new Set(ids.map(String))];
+  const content = new Blob([JSON.stringify(uniqueIds, null, 2)], {
+    type: "application/json",
+  });
+
+  const { error } = await supabase.storage
+    .from(DESIGN_BUCKET)
+    .upload(OFFICIAL_DESIGNS_INDEX, content, {
+      contentType: "application/json; charset=utf-8",
+      cacheControl: "0",
+      upsert: true,
+    });
+
+  if (error) throw error;
+}
+
+async function setOfficialDesign(
+  supabase: SupabaseClient,
+  id: string | number,
+  official: boolean,
+) {
+  const designId = String(id);
+  const ids = await readOfficialDesignIds(supabase);
+  const nextIds = official
+    ? [...ids, designId]
+    : ids.filter((item) => String(item) !== designId);
+
+  await writeOfficialDesignIds(supabase, nextIds);
+}
+
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -234,7 +298,13 @@ Deno.serve(async (request) => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      return json({ designs: data || [] });
+      const officialIds = new Set(await readOfficialDesignIds(supabase));
+      const designs = (data || []).map((design) => ({
+        ...design,
+        resmi_tasarim: officialIds.has(String(design.id)),
+      }));
+
+      return json({ designs });
     }
 
     if (action === "upload") {
@@ -288,7 +358,100 @@ Deno.serve(async (request) => {
         throw insertError;
       }
 
-      return json({ design: data });
+      await setOfficialDesign(
+        supabase,
+        data.id,
+        String(form.get("resmi_tasarim")) === "true",
+      );
+
+      return json({
+        design: {
+          ...data,
+          resmi_tasarim:
+            String(form.get("resmi_tasarim")) === "true",
+        },
+      });
+    }
+
+    if (action === "update") {
+      if (!form) return json({ error: "Düzenleme formu alınamadı." }, 400);
+
+      const id = String(form.get("id") || "").trim();
+      if (!id) return json({ error: "Tasarım kimliği bulunamadı." }, 400);
+
+      const { data: existing, error: findError } = await supabase
+        .from("tasarimlar")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (findError) throw findError;
+
+      const file = form.get("file");
+      let nextPath = existing.dosya_yolu || null;
+      let nextUrl = existing.gorsel_url;
+      let uploadedPath: string | null = null;
+
+      if (file instanceof File && file.size > 0) {
+        if (!file.type.startsWith("image/")) {
+          return json({ error: "Yalnızca görsel dosyaları yüklenebilir." }, 400);
+        }
+
+        await ensurePublicBucket(supabase, DESIGN_BUCKET);
+        uploadedPath = safeFilename(file.name);
+        const { error: uploadError } = await supabase.storage
+          .from(DESIGN_BUCKET)
+          .upload(uploadedPath, file, {
+            contentType: file.type,
+            upsert: false,
+          });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabase.storage
+          .from(DESIGN_BUCKET)
+          .getPublicUrl(uploadedPath);
+
+        nextPath = uploadedPath;
+        nextUrl = publicUrlData.publicUrl;
+      }
+
+      const updates = {
+        baslik: String(form.get("baslik") || "").trim() || null,
+        kategori: String(form.get("kategori") || "").trim() || null,
+        yil: form.get("yil") ? Number(form.get("yil")) : null,
+        aciklama: String(form.get("aciklama") || "").trim() || null,
+        sira: Number(form.get("sira") || 0),
+        yayinlandi: String(form.get("yayinlandi")) === "true",
+        gorsel_url: nextUrl,
+        dosya_yolu: nextPath,
+      };
+
+      const { data, error: updateError } = await supabase
+        .from("tasarimlar")
+        .update(updates)
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (updateError) {
+        if (uploadedPath) {
+          await supabase.storage.from(DESIGN_BUCKET).remove([uploadedPath]);
+        }
+        throw updateError;
+      }
+
+      const oldPath =
+        existing.dosya_yolu ||
+        storagePathFromUrl(existing.gorsel_url || "", DESIGN_BUCKET);
+
+      if (uploadedPath && oldPath && oldPath !== uploadedPath) {
+        await supabase.storage.from(DESIGN_BUCKET).remove([oldPath]);
+      }
+
+      const official = String(form.get("resmi_tasarim")) === "true";
+      await setOfficialDesign(supabase, id, official);
+      return json({ design: { ...data, resmi_tasarim: official } });
     }
 
     if (action === "toggle") {
@@ -328,6 +491,7 @@ Deno.serve(async (request) => {
         .eq("id", body.id);
 
       if (error) throw error;
+      await setOfficialDesign(supabase, String(body.id), false);
       return json({ ok: true });
     }
 

@@ -162,9 +162,11 @@
 
     <div id="designsPanel" hidden>
       <section class="card">
-        <h2>Yeni tasarım</h2>
+        <h2 id="designFormTitle">Yeni tasarım</h2>
         <form id="uploadForm">
-          <label>Görsel<input id="file" type="file" accept="image/*" required></label>
+          <input id="designId" type="hidden">
+          <div id="designEditing" class="editing" hidden>Tasarım düzenleniyor. Yeni görsel seçmezsen mevcut görsel korunur.</div>
+          <label>Görsel<input id="file" type="file" accept="image/*"><p class="hint">Yeni kayıtta zorunlu; düzenlerken isteğe bağlı.</p></label>
           <div class="grid">
             <label>Başlık<input id="baslik" type="text"></label>
             <label>Kategori<input id="kategori" type="text"></label>
@@ -172,8 +174,12 @@
             <label>Sıra<input id="sira" type="number" value="0"></label>
             <label class="full">Açıklama<textarea id="aciklama"></textarea></label>
           </div>
+          <label class="check"><input id="resmiTasarim" type="checkbox">Resmî Tasarım olarak öne çıkar</label>
           <label class="check"><input id="yayinlandi" type="checkbox" checked>Hemen yayınla</label>
-          <button id="uploadButton" class="wide" type="submit">Tasarımı yükle</button>
+          <div class="form-actions">
+            <button id="uploadButton" class="wide" type="submit">Tasarımı yükle</button>
+            <button id="designCancel" class="small" type="button" hidden>Vazgeç</button>
+          </div>
           <div id="uploadMessage" class="message"></div>
         </form>
       </section>
@@ -193,6 +199,7 @@
 const ENDPOINT = "https://phreqbjgynchbynmtefz.supabase.co/functions/v1/tasarim-admin";
 let adminPassword = "";
 let timelineEvents = [];
+let designs = [];
 
 const $ = id => document.getElementById(id);
 const loginView = $("loginView");
@@ -402,35 +409,74 @@ async function loadTimeline() {
 
 $("timelineRefresh").addEventListener("click", loadTimeline);
 
+function resetDesignForm() {
+  $("uploadForm").reset();
+  $("designId").value = "";
+  $("sira").value = "0";
+  $("yayinlandi").checked = true;
+  $("resmiTasarim").checked = false;
+  $("designFormTitle").textContent = "Yeni tasarım";
+  $("designEditing").hidden = true;
+  $("designCancel").hidden = true;
+  $("uploadButton").textContent = "Tasarımı yükle";
+}
+
+function editDesign(design) {
+  $("designId").value = design.id;
+  $("baslik").value = design.baslik || "";
+  $("kategori").value = design.kategori || "";
+  $("yil").value = design.yil || "";
+  $("sira").value = design.sira ?? 0;
+  $("aciklama").value = design.aciklama || "";
+  $("yayinlandi").checked = Boolean(design.yayinlandi);
+  $("resmiTasarim").checked = Boolean(design.resmi_tasarim);
+  $("file").value = "";
+  $("designFormTitle").textContent = "Tasarımı düzenle";
+  $("designEditing").hidden = false;
+  $("designCancel").hidden = false;
+  $("uploadButton").textContent = "Değişiklikleri kaydet";
+  $("designsPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+$("designCancel").addEventListener("click", resetDesignForm);
+
 $("uploadForm").addEventListener("submit", async event => {
   event.preventDefault();
+  const id = $("designId").value;
   const file = $("file").files[0];
-  if (!file) return showMessage(uploadMessage, "Görsel seç.", "error");
+  if (!id && !file) return showMessage(uploadMessage, "Görsel seç.", "error");
   const button = $("uploadButton");
   button.disabled = true;
-  button.textContent = "Yükleniyor...";
+  button.textContent = id ? "Kaydediliyor..." : "Yükleniyor...";
   const form = new FormData();
-  form.append("action", "upload"); form.append("file", file);
+  form.append("action", id ? "update" : "upload");
+  form.append("id", id);
+  if (file) form.append("file", file);
   ["baslik", "kategori", "yil", "sira", "aciklama"].forEach(id => form.append(id, $(id).value));
   form.append("yayinlandi", $("yayinlandi").checked);
+  form.append("resmi_tasarim", $("resmiTasarim").checked);
   try {
     await request(form, true);
-    $("uploadForm").reset(); $("sira").value = "0"; $("yayinlandi").checked = true;
-    showMessage(uploadMessage, "Tasarım yüklendi.", "success"); await loadDesigns();
+    resetDesignForm();
+    showMessage(uploadMessage, id ? "Tasarım güncellendi." : "Tasarım yüklendi.", "success");
+    await loadDesigns();
   } catch (error) { showMessage(uploadMessage, error.message, "error"); }
-  button.disabled = false; button.textContent = "Tasarımı yükle";
+  button.disabled = false;
+  button.textContent = $("designId").value ? "Değişiklikleri kaydet" : "Tasarımı yükle";
 });
 
 async function loadDesigns() {
   list.innerHTML = "<p>Yükleniyor...</p>";
   try {
     const data = await request({ action: "list" });
-    if (!data.designs.length) { list.innerHTML = "<p>Henüz tasarım yok.</p>"; return; }
+    designs = data.designs || [];
+    if (!designs.length) { list.innerHTML = "<p>Henüz tasarım yok.</p>"; return; }
     list.innerHTML = "";
-    data.designs.forEach(design => {
+    designs.forEach(design => {
       const item = document.createElement("article");
-      item.className = "item";
-      item.innerHTML = `<img class="thumb" src="${escapeHtml(design.gorsel_url)}" alt=""><div><h3>${escapeHtml(design.baslik || "Başlıksız")}</h3><div class="meta">${escapeHtml(design.kategori || "")} ${escapeHtml(design.yil || "")}</div></div><div class="actions"><button class="small toggle" type="button">${design.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete" type="button">Sil</button></div>`;
+      item.className = `item${design.resmi_tasarim ? " gold" : ""}`;
+      item.innerHTML = `<img class="thumb" src="${escapeHtml(design.gorsel_url)}" alt=""><div><h3>${escapeHtml(design.baslik || "Başlıksız")}</h3><div class="meta">${design.resmi_tasarim ? "★ RESMÎ TASARIM · " : ""}${escapeHtml(design.kategori || "")} ${escapeHtml(design.yil || "")}</div></div><div class="actions"><button class="small edit" type="button">Düzenle</button><button class="small toggle" type="button">${design.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete" type="button">Sil</button></div>`;
+      item.querySelector(".edit").addEventListener("click", () => editDesign(design));
       item.querySelector(".toggle").addEventListener("click", async () => {
         try { await request({ action: "toggle", id: design.id, yayinlandi: !design.yayinlandi }); await loadDesigns(); }
         catch (error) { alert(error.message); }

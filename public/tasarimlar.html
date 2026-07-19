@@ -31,6 +31,8 @@
       --muted: #929292;
       --border: #202020;
       --border-light: #383838;
+      --gold: #d9aa35;
+      --gold-light: #ffe49a;
       --container: 1460px;
     }
 
@@ -212,6 +214,34 @@
     }
     .design-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
     .design-card:focus-visible { border-color: #fff; box-shadow: 0 0 0 2px #000, 0 0 0 4px #fff; }
+    .design-card.official-design {
+      border-color: rgba(217, 170, 53, .78);
+      background: linear-gradient(145deg, rgba(217, 170, 53, .1), var(--surface) 48%);
+      box-shadow: 0 0 0 1px rgba(217, 170, 53, .12), 0 16px 45px rgba(127, 85, 0, .12);
+    }
+    .design-card.official-design:hover {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 1px rgba(255, 228, 154, .2), 0 20px 55px rgba(127, 85, 0, .2);
+    }
+    .design-card.official-design:focus-visible {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 2px #000, 0 0 0 4px var(--gold);
+    }
+    .design-official-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      padding: 8px 11px;
+      color: #171000;
+      background: linear-gradient(135deg, #ffe9a5, #c9951d);
+      border: 1px solid rgba(255, 241, 194, .72);
+      border-radius: 999px;
+      box-shadow: 0 7px 22px rgba(0, 0, 0, .38);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
     .design-image {
       width: 100%;
       height: auto;
@@ -240,7 +270,20 @@
     .design-information { padding: 15px 16px 17px; text-align: left; }
     .design-title { color: #fff; font-size: 14px; font-weight: 700; line-height: 1.35; }
     .design-meta { margin-top: 7px; color: #777; font-size: 11px; }
+    .official-design .design-meta { color: #b99543; }
     .design-description { margin-top: 10px; color: #8e8e8e; font-size: 12px; line-height: 1.55; }
+    .lightbox-official {
+      display: inline-flex;
+      width: fit-content;
+      margin-bottom: 12px;
+      padding: 7px 10px;
+      color: #171000;
+      background: linear-gradient(135deg, #ffe9a5, #c9951d);
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
     .loading, .empty, .error-message {
       min-height: 280px;
       display: grid;
@@ -474,6 +517,7 @@
 
     const SUPABASE_URL = "https://phreqbjgynchbynmtefz.supabase.co";
     const SUPABASE_KEY = "sb_publishable_BWfR-8PgH0RIfLDngFDjUA_2vbIo-Ae";
+    const OFFICIAL_DESIGNS_URL = `${SUPABASE_URL}/storage/v1/object/public/tasarimlar/_meta/resmi-tasarimlar.json`;
     const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const elements = {
@@ -545,6 +589,7 @@
       elements.lightboxImage.alt = design.baslik || "BATU tasarımı";
       elements.lightboxCounter.textContent = `${index + 1} / ${visibleDesigns.length}`;
       elements.lightboxCaption.innerHTML = `
+        ${design.resmi_tasarim ? `<span class="lightbox-official">★ RESMÎ TASARIM</span>` : ""}
         ${design.baslik ? `<strong>${escapeHtml(design.baslik)}</strong>` : ""}
         ${meta ? `<span>${escapeHtml(meta)}</span>` : ""}
         ${design.aciklama ? `<p class="lightbox-description">${escapeHtml(design.aciklama)}</p>` : ""}
@@ -596,7 +641,7 @@
 
     const createCard = (design) => {
       const card = document.createElement("article");
-      card.className = "design-card";
+      card.className = `design-card${design.resmi_tasarim ? " official-design" : ""}`;
       card.tabIndex = 0;
       card.setAttribute("role", "button");
       card.setAttribute("aria-label", `${design.baslik || "Tasarım"} — tam ekran incele`);
@@ -605,6 +650,7 @@
 
       card.innerHTML = `
         <img class="design-image" src="${escapeHtml(design.gorsel_url || "")}" alt="${escapeHtml(design.baslik || "BATU tasarımı")}" loading="lazy" decoding="async">
+        ${design.resmi_tasarim ? `<span class="design-official-badge">★ RESMÎ TASARIM</span>` : ""}
         <span class="design-card-action">Tam ekran ↗</span>
         ${hasInformation ? `<div class="design-information">
           ${design.baslik ? `<h2 class="design-title">${escapeHtml(design.baslik)}</h2>` : ""}
@@ -662,12 +708,19 @@
     };
 
     const loadDesigns = async () => {
-      const { data, error } = await client
-        .from("tasarimlar")
-        .select("id, baslik, gorsel_url, kategori, yil, aciklama, sira, created_at")
-        .eq("yayinlandi", true)
-        .order("sira", { ascending: true })
-        .order("created_at", { ascending: false });
+      const [designResult, officialResult] = await Promise.all([
+        client
+          .from("tasarimlar")
+          .select("id, baslik, gorsel_url, kategori, yil, aciklama, sira, created_at")
+          .eq("yayinlandi", true)
+          .order("sira", { ascending: true })
+          .order("created_at", { ascending: false }),
+        fetch(`${OFFICIAL_DESIGNS_URL}?v=${Date.now()}`, { cache: "no-store" })
+          .then((response) => response.ok ? response.json() : [])
+          .catch(() => [])
+      ]);
+
+      const { data, error } = designResult;
 
       elements.loading.hidden = true;
       if (error) {
@@ -677,7 +730,13 @@
         return;
       }
 
-      allDesigns = data || [];
+      const officialIds = new Set(
+        (Array.isArray(officialResult) ? officialResult : []).map(String)
+      );
+      allDesigns = (data || []).map((design) => ({
+        ...design,
+        resmi_tasarim: officialIds.has(String(design.id))
+      }));
       if (!allDesigns.length) {
         elements.empty.hidden = false;
         elements.empty.innerHTML = "<div><strong>Arşiv hazırlanıyor.</strong><span>Henüz yayınlanmış bir tasarım bulunmuyor.</span></div>";
