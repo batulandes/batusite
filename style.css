@@ -1568,6 +1568,17 @@ body.is-leaving > footer {
   font-size: 12px;
 }
 
+.footer-collaborations {
+  margin-top: 10px;
+  color: #777777;
+  font-size: 11px;
+  transition: color 0.2s ease;
+}
+
+.footer-collaborations:hover {
+  color: #ffffff;
+}
+
 .footer-logo {
   width: 72px;
   margin-top: 15px;

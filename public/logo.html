@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BATU Logo Arşivi — Resmî Marka Dosyaları</title>
+  <meta name="description" content="BATU logosunun dikey ve yatay, siyah ve beyaz resmî sürümlerini görüntüle ve tam çözünürlükte indir.">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://www.batuhota.com/logo">
+  <meta property="og:title" content="BATU Logo Arşivi">
+  <meta property="og:description" content="BATU markasının resmî logo dosyaları ve kullanım rehberi.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.batuhota.com/logo">
+  <meta property="og:image" content="https://www.batuhota.com/logolar/BATU%20Logo%20Beyaz.png">
+  <link rel="icon" type="image/png" href="/logolar/BATU%20Logo%20Beyaz.png">
+  <link rel="stylesheet" href="/fonts.css?v=1">
+
+  <style>
+    :root {
+      --bg: #000;
+      --surface: #080808;
+      --border: #202020;
+      --muted: #929292;
+      --container: 1380px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: dark; scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #fff;
+      background: var(--bg);
+      font-family: var(--font-primary, Arial, sans-serif);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a, button { color: inherit; font: inherit; -webkit-tap-highlight-color: transparent; }
+    a { text-decoration: none; }
+    button { border: 0; cursor: pointer; }
+    .container { width: min(var(--container), calc(100% - 48px)); margin-inline: auto; }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      height: 78px;
+      background: rgba(0, 0, 0, .72);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .topbar-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .back { color: #8a8a8a; font-size: 13px; transition: color .2s ease; }
+    .back:hover { color: #fff; }
+    .top-logo { width: 92px; }
+    .top-logo img { width: 100%; height: 24px; object-fit: contain; }
+    .top-label { color: #666; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+    .hero { min-height: 87vh; display: grid; place-items: center; padding: 150px 0 90px; text-align: center; }
+    .eyebrow { margin-bottom: 22px; color: #707070; font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+    h1 { font-size: clamp(64px, 12vw, 170px); line-height: .84; letter-spacing: -.08em; }
+    .hero p:last-child { max-width: 650px; margin: 34px auto 0; color: var(--muted); font-size: 17px; line-height: 1.7; }
+
+    .showcase { padding: 0 0 130px; }
+    .brand-block + .brand-block { margin-top: 110px; }
+    .brand-head { margin-bottom: 28px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+    .brand-index { color: #666; font-size: 11px; letter-spacing: .14em; }
+    .brand-head h2 { margin-top: 8px; font-size: clamp(32px, 5vw, 66px); line-height: .95; letter-spacing: -.055em; }
+    .variant-switch { display: flex; padding: 4px; background: #080808; border: 1px solid #242424; border-radius: 999px; }
+    .variant-button { min-height: 38px; padding: 0 17px; color: #777; background: transparent; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .variant-button.active { color: #000; background: #fff; }
+
+    .logo-preview {
+      min-height: min(62vw, 720px);
+      display: grid;
+      place-items: center;
+      padding: clamp(44px, 8vw, 120px);
+      overflow: hidden;
+      background: #080808;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      transition: background .35s ease, border-color .35s ease;
+    }
+    .logo-preview.light { background: #f5f5f2; border-color: #f5f5f2; }
+    .logo-preview.horizontal { min-height: min(38vw, 480px); }
+    .logo-preview img { width: min(550px, 62vw); max-height: 470px; object-fit: contain; transition: opacity .2s ease, transform .45s cubic-bezier(.16, 1, .3, 1); }
+    .logo-preview.horizontal img { width: min(800px, 72vw); max-height: 210px; }
+    .logo-preview:hover img { transform: scale(1.025); }
+
+    .download-row { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .download {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      color: #aaa;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 12px;
+      transition: color .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .download:hover { color: #fff; background: #0d0d0d; border-color: #555; }
+    .download strong { color: #fff; font-size: 11px; letter-spacing: .08em; }
+
+    .rules { padding: 110px 0 130px; border-top: 1px solid var(--border); }
+    .rules-head { max-width: 760px; }
+    .rules h2 { font-size: clamp(42px, 7vw, 92px); line-height: .9; letter-spacing: -.065em; }
+    .rules-grid { margin-top: 55px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .rule { min-height: 200px; padding: 26px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
+    .rule span { color: #666; font-size: 10px; letter-spacing: .14em; }
+    .rule h3 { margin-top: 48px; font-size: 20px; }
+    .rule p { margin-top: 10px; color: #858585; font-size: 13px; line-height: 1.6; }
+
+    .footer { padding: 34px 24px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); color: #666; font-size: 11px; }
+    .footer img { width: 76px; opacity: .55; }
+
+    @media (max-width: 720px) {
+      .container { width: min(100% - 22px, var(--container)); }
+      .topbar { height: 70px; }
+      .top-label { display: none; }
+      .hero { min-height: 72vh; padding: 125px 0 70px; }
+      .hero p:last-child { font-size: 14px; }
+      .brand-block + .brand-block { margin-top: 78px; }
+      .brand-head { align-items: flex-start; flex-direction: column; }
+      .logo-preview { min-height: 74vw; padding: 35px; border-radius: 18px; }
+      .logo-preview.horizontal { min-height: 50vw; }
+      .logo-preview img { width: min(430px, 68vw); }
+      .logo-preview.horizontal img { width: 76vw; }
+      .download-row { grid-template-columns: 1fr; }
+      .rules { padding: 85px 0; }
+      .rules-grid { grid-template-columns: 1fr; }
+      .rule { min-height: 165px; }
+      .rule h3 { margin-top: 35px; }
+      .footer { flex-direction: column; gap: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="back" href="/">← Ana sayfa</a>
+      <a class="top-logo" href="/" aria-label="BATU ana sayfası"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU"></a>
+      <span class="top-label">Marka dosyaları</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">Resmî marka arşivi</p>
+        <h1>BATU<br>Kimliği.</h1>
+        <p>BATU logosunun resmî sürümlerini doğru zemin üzerinde inceleyebilir ve orijinal PNG dosyalarını indirebilirsin.</p>
+      </div>
+    </section>
+
+    <section class="showcase">
+      <div class="container">
+        <article class="brand-block" data-logo-block data-white="/logolar/BATU%20Logo%20Beyaz.png" data-black="/logolar/BATU%20Logo%20Siyah.png">
+          <div class="brand-head">
+            <div><span class="brand-index">01 · ANA İŞARET</span><h2>BATU Logo</h2></div>
+            <div class="variant-switch" aria-label="Logo görünümü">
+              <button class="variant-button active" type="button" data-variant="white">Beyaz</button>
+              <button class="variant-button" type="button" data-variant="black">Siyah</button>
+            </div>
+          </div>
+          <div class="logo-preview"><img src="/logolar/BATU%20Logo%20Beyaz.png" alt="Beyaz BATU logosu"></div>
+          <div class="download-row">
+            <a class="download" href="/logolar/BATU%20Logo%20Beyaz.png" download><span>Beyaz sürümü indir</span><strong>PNG ↓</strong></a>
+            <a class="download" href="/logolar/BATU%20Logo%20Siyah.png" download><span>Siyah sürümü indir</span><strong>PNG ↓</strong></a>
+          </div>
+        </article>
+
+        <article class="brand-block" data-logo-block data-white="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" data-black="/logolar/Batu%20Logo%20Yatay%20Siyah.png">
+          <div class="brand-head">
+            <div><span class="brand-index">02 · YATAY İŞARET</span><h2>BATU Wordmark</h2></div>
+            <div class="variant-switch" aria-label="Logo görünümü">
+              <button class="variant-button active" type="button" data-variant="white">Beyaz</button>
+              <button class="variant-button" type="button" data-variant="black">Siyah</button>
+            </div>
+          </div>
+          <div class="logo-preview horizontal"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="Beyaz yatay BATU logosu"></div>
+          <div class="download-row">
+            <a class="download" href="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" download><span>Yatay beyaz sürümü indir</span><strong>PNG ↓</strong></a>
+            <a class="download" href="/logolar/Batu%20Logo%20Yatay%20Siyah.png" download><span>Yatay siyah sürümü indir</span><strong>PNG ↓</strong></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="rules">
+      <div class="container">
+        <div class="rules-head"><p class="eyebrow">Kullanım notları</p><h2>Logoyu olduğu gibi kullan.</h2></div>
+        <div class="rules-grid">
+          <article class="rule"><span>01</span><h3>Oranları koru</h3><p>Logoyu yatay veya dikey yönde esnetme; dosyanın orijinal oranlarını kullan.</p></article>
+          <article class="rule"><span>02</span><h3>Kontrastı seç</h3><p>Koyu zeminde beyaz, açık zeminde siyah sürümü tercih et.</p></article>
+          <article class="rule"><span>03</span><h3>Nefes alanı bırak</h3><p>Logonun çevresini metin ve diğer işaretlerle sıkıştırmadan boşluk bırak.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>© 2026 BATU · Resmî marka dosyaları</span><a href="/"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU"></a></footer>
+
+  <script>
+    document.querySelectorAll("[data-logo-block]").forEach(block => {
+      const preview = block.querySelector(".logo-preview");
+      const image = preview.querySelector("img");
+      const buttons = block.querySelectorAll("[data-variant]");
+
+      buttons.forEach(button => button.addEventListener("click", () => {
+        const black = button.dataset.variant === "black";
+        buttons.forEach(item => item.classList.toggle("active", item === button));
+        preview.classList.toggle("light", black);
+        image.style.opacity = "0";
+        window.setTimeout(() => {
+          image.src = black ? block.dataset.black : block.dataset.white;
+          image.alt = black ? "Siyah BATU logosu" : "Beyaz BATU logosu";
+          image.style.opacity = "1";
+        }, 140);
+      }));
+    });
+  </script>
+</body>
+</html>

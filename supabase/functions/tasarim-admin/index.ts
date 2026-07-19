@@ -11,6 +11,7 @@ const DESIGN_BUCKET = "tasarimlar";
 const OFFICIAL_DESIGNS_INDEX = "resmi-tasarimlar.json";
 const TIMELAPSE_BUCKET = "timelapse";
 const TIMELAPSE_INDEX = "events.json";
+const PROJECTS_INDEX = "projects.json";
 const MAX_TIMELAPSE_MEDIA_SIZE = 18 * 1024 * 1024;
 
 type SupabaseClient = ReturnType<typeof createClient>;
@@ -26,6 +27,37 @@ type TimelineEvent = {
   medya_url: string | null;
   medya_turu: "gorsel" | "video" | null;
   dosya_yolu: string | null;
+  yayinlandi: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+type ProjectStep = {
+  id: string;
+  baslik: string;
+  aciklama: string | null;
+  medya_url: string | null;
+  dosya_yolu: string | null;
+};
+
+type PortfolioProject = {
+  id: string;
+  slug: string;
+  baslik: string;
+  kategori: string | null;
+  yil: number | null;
+  ozet: string | null;
+  aciklama: string | null;
+  rol: string | null;
+  araclar: string[];
+  banner_url: string | null;
+  banner_yolu: string | null;
+  once_url: string | null;
+  once_yolu: string | null;
+  sonra_url: string | null;
+  sonra_yolu: string | null;
+  adimlar: ProjectStep[];
+  sira: number;
   yayinlandi: boolean;
   created_at: string;
   updated_at: string;
@@ -102,6 +134,20 @@ function sortTimeline(events: TimelineEvent[]) {
   });
 }
 
+function sortProjects(projects: PortfolioProject[]) {
+  return [...projects].sort((a, b) =>
+    a.sira - b.sira || b.created_at.localeCompare(a.created_at)
+  );
+}
+
+function missingStorageObject(error: unknown) {
+  const details = errorDetails(error);
+  const message = String(details.message || "").toLowerCase();
+  const status = String(details.statusCode || details.code || "");
+
+  return status === "404" || message.includes("not found") || message.includes("does not exist");
+}
+
 async function ensurePublicBucket(supabase: SupabaseClient, name: string) {
   const { data: buckets, error: listError } =
     await supabase.storage.listBuckets();
@@ -176,6 +222,65 @@ async function writeTimeline(
     });
 
   if (error) throw error;
+}
+
+async function readProjects(supabase: SupabaseClient): Promise<PortfolioProject[]> {
+  const { data, error } = await supabase.storage
+    .from(TIMELAPSE_BUCKET)
+    .download(PROJECTS_INDEX);
+
+  if (error) {
+    if (missingStorageObject(error)) return [];
+    throw error;
+  }
+
+  const content = await data.text();
+  if (!content.trim()) return [];
+  const parsed = JSON.parse(content);
+  return Array.isArray(parsed) ? parsed : [];
+}
+
+async function writeProjects(
+  supabase: SupabaseClient,
+  projects: PortfolioProject[],
+) {
+  await ensurePublicBucket(supabase, TIMELAPSE_BUCKET);
+  const content = new Blob([JSON.stringify(sortProjects(projects), null, 2)], {
+    type: "application/json",
+  });
+
+  const { error } = await supabase.storage
+    .from(TIMELAPSE_BUCKET)
+    .upload(PROJECTS_INDEX, content, {
+      contentType: "application/json; charset=utf-8",
+      cacheControl: "0",
+      upsert: true,
+    });
+
+  if (error) throw error;
+}
+
+async function uploadProjectMedia(
+  supabase: SupabaseClient,
+  file: File,
+  projectId: string,
+) {
+  if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+    throw new Error("Proje medyası yalnızca görsel veya video olabilir.");
+  }
+  if (file.size > MAX_TIMELAPSE_MEDIA_SIZE) {
+    throw new Error("Her proje dosyası en fazla 18 MB olabilir.");
+  }
+
+  await ensurePublicBucket(supabase, TIMELAPSE_BUCKET);
+  const path = `projects/${projectId}/${safeFilename(file.name)}`;
+  const { error } = await supabase.storage
+    .from(TIMELAPSE_BUCKET)
+    .upload(path, file, { contentType: file.type, upsert: false });
+  if (error) throw error;
+
+  const { data } = supabase.storage.from(TIMELAPSE_BUCKET).getPublicUrl(path);
+  return { path, url: data.publicUrl };
 }
 
 async function readOfficialDesignIds(
@@ -663,6 +768,194 @@ Deno.serve(async (request) => {
           .remove([event.dosya_yolu]);
       }
 
+      return json({ ok: true });
+    }
+
+    if (action === "project-list") {
+      return json({ projects: sortProjects(await readProjects(supabase)) });
+    }
+
+    if (action === "project-save") {
+      if (!form) return json({ error: "Proje formu alınamadı." }, 400);
+
+      const projects = await readProjects(supabase);
+      const requestedId = String(form.get("id") || "").trim();
+      const existingIndex = requestedId
+        ? projects.findIndex((project) => project.id === requestedId)
+        : -1;
+      if (requestedId && existingIndex < 0) {
+        return json({ error: "Düzenlenecek proje bulunamadı." }, 404);
+      }
+
+      const existing = existingIndex >= 0 ? projects[existingIndex] : null;
+      const id = existing?.id || crypto.randomUUID();
+      const baslik = String(form.get("baslik") || "").trim();
+      const slug = String(form.get("slug") || "").trim().toLowerCase();
+      if (!baslik) return json({ error: "Proje başlığı zorunlu." }, 400);
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+        return json({ error: "Adres yalnızca küçük harf, rakam ve tire içerebilir." }, 400);
+      }
+      if (projects.some((project) => project.slug === slug && project.id !== id)) {
+        return json({ error: "Bu proje adresi zaten kullanılıyor." }, 409);
+      }
+
+      let requestedSteps: Array<Record<string, unknown>> = [];
+      try {
+        const parsed = JSON.parse(String(form.get("adimlar") || "[]"));
+        requestedSteps = Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return json({ error: "Nasıl yaptım adımları okunamadı." }, 400);
+      }
+
+      const uploadedPaths: string[] = [];
+      const oldPathsToRemove: string[] = [];
+      let bannerUrl = existing?.banner_url || null;
+      let bannerPath = existing?.banner_yolu || null;
+      let beforeUrl = existing?.once_url || null;
+      let beforePath = existing?.once_yolu || null;
+      let afterUrl = existing?.sonra_url || null;
+      let afterPath = existing?.sonra_yolu || null;
+
+      const replaceMedia = async (
+        key: "banner" | "once" | "sonra",
+        currentPath: string | null,
+        remove: boolean,
+      ) => {
+        const entry = form!.get(key);
+        if (entry instanceof File && entry.size > 0) {
+          const uploaded = await uploadProjectMedia(supabase, entry, id);
+          uploadedPaths.push(uploaded.path);
+          if (currentPath) oldPathsToRemove.push(currentPath);
+          return uploaded;
+        }
+        if (remove) {
+          if (currentPath) oldPathsToRemove.push(currentPath);
+          return { path: null, url: null };
+        }
+        return null;
+      };
+
+      try {
+        const banner = await replaceMedia("banner", bannerPath, false);
+        if (banner) { bannerPath = banner.path; bannerUrl = banner.url; }
+        const before = await replaceMedia("once", beforePath, String(form.get("once_sil")) === "true");
+        if (before) { beforePath = before.path; beforeUrl = before.url; }
+        const after = await replaceMedia("sonra", afterPath, String(form.get("sonra_sil")) === "true");
+        if (after) { afterPath = after.path; afterUrl = after.url; }
+
+        const oldSteps = new Map((existing?.adimlar || []).map((step) => [step.id, step]));
+        const nextSteps: ProjectStep[] = [];
+
+        for (let index = 0; index < requestedSteps.length; index += 1) {
+          const requested = requestedSteps[index];
+          const stepId = String(requested.id || crypto.randomUUID());
+          const oldStep = oldSteps.get(stepId);
+          let mediaUrl = oldStep?.medya_url || null;
+          let mediaPath = oldStep?.dosya_yolu || null;
+          const externalUrl = String(requested.medya_url || "").trim();
+          const stepFile = form.get(`adim_dosya_${index}`);
+
+          if (externalUrl) {
+            if (!/^https?:\/\//i.test(externalUrl)) {
+              throw new Error("Adım medya bağlantıları http:// veya https:// ile başlamalı.");
+            }
+            if (mediaPath) oldPathsToRemove.push(mediaPath);
+            mediaPath = null;
+            mediaUrl = externalUrl;
+          }
+
+          if (stepFile instanceof File && stepFile.size > 0) {
+            const uploaded = await uploadProjectMedia(supabase, stepFile, id);
+            uploadedPaths.push(uploaded.path);
+            if (mediaPath) oldPathsToRemove.push(mediaPath);
+            mediaPath = uploaded.path;
+            mediaUrl = uploaded.url;
+          }
+
+          nextSteps.push({
+            id: stepId,
+            baslik: String(requested.baslik || "").trim() || `Adım ${index + 1}`,
+            aciklama: String(requested.aciklama || "").trim() || null,
+            medya_url: mediaUrl,
+            dosya_yolu: mediaPath,
+          });
+          oldSteps.delete(stepId);
+        }
+
+        oldSteps.forEach((step) => {
+          if (step.dosya_yolu) oldPathsToRemove.push(step.dosya_yolu);
+        });
+
+        if (String(form.get("yayinlandi")) === "true" && !bannerUrl) {
+          throw new Error("Yayınlanan projede banner görseli zorunlu.");
+        }
+
+        const now = new Date().toISOString();
+        const project: PortfolioProject = {
+          id,
+          slug,
+          baslik,
+          kategori: String(form.get("kategori") || "").trim() || null,
+          yil: numberOrNull(form.get("yil")),
+          ozet: String(form.get("ozet") || "").trim() || null,
+          aciklama: String(form.get("aciklama") || "").trim() || null,
+          rol: String(form.get("rol") || "").trim() || null,
+          araclar: String(form.get("araclar") || "").split(",").map((item) => item.trim()).filter(Boolean),
+          banner_url: bannerUrl,
+          banner_yolu: bannerPath,
+          once_url: beforeUrl,
+          once_yolu: beforePath,
+          sonra_url: afterUrl,
+          sonra_yolu: afterPath,
+          adimlar: nextSteps,
+          sira: Number(form.get("sira") || 0),
+          yayinlandi: String(form.get("yayinlandi")) === "true",
+          created_at: existing?.created_at || now,
+          updated_at: now,
+        };
+
+        if (existingIndex >= 0) projects[existingIndex] = project;
+        else projects.push(project);
+        await writeProjects(supabase, projects);
+
+        if (oldPathsToRemove.length) {
+          await supabase.storage.from(TIMELAPSE_BUCKET).remove([...new Set(oldPathsToRemove)]);
+        }
+        return json({ project });
+      } catch (error) {
+        if (uploadedPaths.length) {
+          await supabase.storage.from(TIMELAPSE_BUCKET).remove(uploadedPaths);
+        }
+        throw error;
+      }
+    }
+
+    if (action === "project-toggle") {
+      const projects = await readProjects(supabase);
+      const project = projects.find((item) => item.id === String(body.id || ""));
+      if (!project) return json({ error: "Proje bulunamadı." }, 404);
+      if (Boolean(body.yayinlandi) && !project.banner_url) {
+        return json({ error: "Yayınlamak için önce banner ekle." }, 400);
+      }
+      project.yayinlandi = Boolean(body.yayinlandi);
+      project.updated_at = new Date().toISOString();
+      await writeProjects(supabase, projects);
+      return json({ ok: true });
+    }
+
+    if (action === "project-delete") {
+      const projects = await readProjects(supabase);
+      const index = projects.findIndex((item) => item.id === String(body.id || ""));
+      if (index < 0) return json({ error: "Proje bulunamadı." }, 404);
+      const [project] = projects.splice(index, 1);
+      await writeProjects(supabase, projects);
+      const paths = [
+        project.banner_yolu,
+        project.once_yolu,
+        project.sonra_yolu,
+        ...project.adimlar.map((step) => step.dosya_yolu),
+      ].filter((path): path is string => Boolean(path));
+      if (paths.length) await supabase.storage.from(TIMELAPSE_BUCKET).remove(paths);
       return json({ ok: true });
     }
 

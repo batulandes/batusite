@@ -2,291 +2,41 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>İşbirlikleri — BATU</title>
-
-  <meta
-    name="description"
-    content="BATU işbirlikleri."
-  >
-
+  <meta name="description" content="BATU ve Lemonhota projelerinde gerçekleştirilen marka iş birlikleri.">
   <meta name="theme-color" content="#000000">
-
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://www.batuhota.com/isbirlikleri">
+  <meta property="og:title" content="BATU İşbirlikleri">
+  <meta property="og:description" content="BATU ve Lemonhota ile birlikte üreten markalar.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.batuhota.com/isbirlikleri">
+  <meta property="og:image" content="https://www.batuhota.com/logolar/BATU%20Logo%20Beyaz.png">
+  <link rel="stylesheet" href="/fonts.css?v=1">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      color-scheme: dark;
-    }
-
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: #ffffff;
-      background: #000000;
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .container {
-      width: min(1200px, calc(100% - 36px));
-      margin-inline: auto;
-    }
-
-    .topbar {
-      position: fixed;
-      inset: 0 0 auto;
-      z-index: 100;
-      height: 76px;
-      background: rgba(0, 0, 0, 0.82);
-      border-bottom: 1px solid #181818;
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-    }
-
-    .topbar-inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .back-link {
-      color: #929292;
-      font-size: 13px;
-      transition: color 0.2s ease;
-    }
-
-    .back-link:hover {
-      color: #ffffff;
-    }
-
-    .brand {
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .empty-space {
-      width: 75px;
-    }
-
-    main {
-      padding: 155px 0 130px;
-    }
-
-    .heading {
-      margin-bottom: 115px;
-      text-align: center;
-    }
-
-    .heading h1 {
-      font-size: clamp(55px, 10vw, 130px);
-      line-height: 0.9;
-      letter-spacing: -0.075em;
-    }
-
-    .logos {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: clamp(115px, 17vw, 230px);
-    }
-
-    .logo {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo img {
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
-    }
-
-    .logo:hover img {
-      opacity: 0.72;
-      transform: scale(0.985);
-    }
-
-    .xdrive img {
-      max-width: min(570px, 78vw);
-      max-height: 180px;
-    }
-
-    .hawk img {
-      max-width: min(470px, 73vw);
-      max-height: 210px;
-    }
-
-    .razer img {
-      max-width: min(550px, 78vw);
-      max-height: 190px;
-    }
-
-    .hytale img {
-      max-width: min(610px, 82vw);
-      max-height: 250px;
-    }
-
-    footer {
-      padding: 35px 20px;
-      color: #555555;
-      border-top: 1px solid #181818;
-      font-size: 11px;
-      text-align: center;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        width: min(100% - 24px, 1200px);
-      }
-
-      .topbar {
-        height: 68px;
-      }
-
-      main {
-        padding: 125px 0 100px;
-      }
-
-      .heading {
-        margin-bottom: 90px;
-      }
-
-      .heading h1 {
-        font-size: clamp(49px, 16vw, 78px);
-      }
-
-      .logos {
-        gap: 125px;
-      }
-
-      .xdrive img {
-        max-width: 82vw;
-      }
-
-      .hawk img {
-        max-width: 75vw;
-      }
-
-      .razer img {
-        max-width: 82vw;
-      }
-
-      .hytale img {
-        max-width: 86vw;
-      }
-
-      .empty-space {
-        width: 55px;
-      }
-    }
+    :root{--bg:#000;--surface:#080808;--border:#202020;--muted:#909090;--container:1320px}
+    *{box-sizing:border-box;margin:0;padding:0}html{color-scheme:dark}body{min-height:100vh;overflow-x:hidden;color:#fff;background:var(--bg);font-family:var(--font-primary,Arial,sans-serif);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}.container{width:min(var(--container),calc(100% - 48px));margin-inline:auto}
+    .topbar{position:fixed;inset:0 0 auto;z-index:100;height:78px;background:rgba(0,0,0,.7);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.topbar-inner{height:100%;display:flex;align-items:center;justify-content:space-between}.back{color:#8b8b8b;font-size:13px}.back:hover{color:#fff}.top-logo{width:90px}.top-logo img{width:100%;height:24px;object-fit:contain}.top-label{color:#666;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+    .hero{min-height:82vh;display:flex;align-items:flex-end;padding:155px 0 95px}.eyebrow{margin-bottom:20px;color:#666;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}h1{max-width:1100px;font-size:clamp(62px,11vw,155px);line-height:.84;letter-spacing:-.08em}.hero-text{max-width:670px;margin-top:34px;color:var(--muted);font-size:17px;line-height:1.7}
+    .partners{padding:20px 0 130px}.partners-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.partner{min-height:470px;display:flex;flex-direction:column;justify-content:space-between;padding:34px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:24px;transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .25s ease}.partner:hover{transform:translateY(-4px);border-color:#454545}.partner:nth-child(3n){grid-column:1/-1;min-height:420px}.partner-top{display:flex;align-items:center;justify-content:space-between;color:#666;font-size:10px;letter-spacing:.13em}.partner-visual{min-height:230px;display:grid;place-items:center;padding:35px}.partner-visual img{width:auto;height:auto;max-width:min(470px,80%);max-height:150px;object-fit:contain;filter:grayscale(1);transition:filter .3s ease,transform .4s cubic-bezier(.16,1,.3,1)}.partner:hover .partner-visual img{filter:grayscale(0);transform:scale(1.025)}.partner:nth-child(3n) .partner-visual img{max-width:min(560px,72%);max-height:175px}.partner-copy h2{font-size:clamp(25px,3vw,43px);letter-spacing:-.045em}.partner-copy p{max-width:540px;margin-top:11px;color:#858585;font-size:13px;line-height:1.65}
+    .cta{padding:120px 0;text-align:center;border-top:1px solid var(--border)}.cta h2{max-width:920px;margin:auto;font-size:clamp(44px,8vw,105px);line-height:.9;letter-spacing:-.07em}.cta p{margin:25px auto 0;color:#888}.cta a{min-height:52px;display:inline-flex;align-items:center;margin-top:32px;padding:0 24px;color:#000;background:#fff;border-radius:999px;font-size:12px;font-weight:700}
+    .footer{padding:36px 24px;display:flex;align-items:center;justify-content:space-between;color:#666;border-top:1px solid var(--border);font-size:11px}.footer img{width:78px;opacity:.55}
+    @media(max-width:720px){.container{width:min(100% - 22px,var(--container))}.topbar{height:70px}.top-label{display:none}.hero{min-height:68vh;padding:125px 0 70px}.hero-text{font-size:14px}.partners{padding-bottom:85px}.partners-grid{grid-template-columns:1fr}.partner,.partner:nth-child(3n){grid-column:auto;min-height:380px;padding:22px;border-radius:17px}.partner-visual{min-height:190px;padding:25px}.partner-visual img,.partner:nth-child(3n) .partner-visual img{max-width:84%;max-height:120px}.cta{padding:85px 0}.footer{flex-direction:column;gap:18px}}
   </style>
 </head>
-
 <body>
-
-  <header class="topbar">
-    <div class="container topbar-inner">
-
-      <a
-        class="back-link"
-        href="/"
-      >
-        ← Ana sayfa
-      </a>
-
-      <a
-        class="brand"
-        href="/"
-      >
-        BATU
-      </a>
-
-      <div class="empty-space"></div>
-
-    </div>
-  </header>
-
+  <header class="topbar"><div class="container topbar-inner"><a class="back" href="/">← Ana sayfa</a><a class="top-logo" href="/"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU"></a><span class="top-label">Marka iş birlikleri</span></div></header>
   <main>
-    <div class="container">
-
-      <div class="heading">
-        <h1>İşbirlikleri.</h1>
-      </div>
-
-      <section
-        class="logos"
-        aria-label="İşbirlikleri"
-      >
-
-        <div class="logo xdrive">
-          <img
-            src="https://cdn.discordapp.com/attachments/1255133297277796474/1527717005250269244/20260717_194135.png?ex=6a5bacd5&is=6a5a5b55&hm=530b9438fc6d1e310b2c0fddb0bbf2a8a4cd01af8052062256f04be4bda25fdd&"
-            alt="XDrive"
-          >
-        </div>
-
-        <div class="logo hawk">
-          <img
-            src="https://cdn.discordapp.com/attachments/1255133297277796474/1527713206133587998/20240830_140258.png?ex=6a5ba94b&is=6a5a57cb&hm=22053b209c5fcf1c4b37366d0b27ba318721d00c59c049cc5bdf76b8a56bc88f&"
-            alt="Hawk Gaming Chair"
-          >
-        </div>
-
-        <div class="logo razer">
-          <img
-            src="https://cdn.discordapp.com/attachments/1282627807901515797/1282633161892691968/2024-creatorprogram-logo-white.png?ex=6a5b46b7&is=6a59f537&hm=b9356ed5f16af638bc5f159a17871328eb4ee9e90837bbff3a25b8d2de66c7f6&"
-            alt="Razer"
-          >
-        </div>
-
-        <div class="logo hytale">
-          <img
-            src="https://cdn.discordapp.com/attachments/1255133297277796474/1527715811492364329/file_0000000028607243a7a4d0ad1fd8b7b2.png?ex=6a5babb9&is=6a5a5a39&hm=53e9f378feff2a0e9a4db13799fcc4f9034c46757cc6ebc7ef5660f53ae5cb0e&"
-            alt="Hytale"
-          >
-        </div>
-
-      </section>
-
-    </div>
+    <section class="hero"><div class="container"><p class="eyebrow">BATU · LEMONHOTA</p><h1>Birlikte üretilen işler.</h1><p class="hero-text">İçerik, topluluk ve özel dijital projelerde yollarımızın kesiştiği markalar.</p></div></section>
+    <section class="partners"><div class="container partners-grid">
+      <article class="partner"><div class="partner-top"><span>01</span><span>MARKA İŞ BİRLİĞİ</span></div><div class="partner-visual"><img src="https://cdn.discordapp.com/attachments/1255133297277796474/1527717005250269244/20260717_194135.png?ex=6a5bacd5&amp;is=6a5a5b55&amp;hm=530b9438fc6d1e310b2c0fddb0bbf2a8a4cd01af8052062256f04be4bda25fdd&amp;" alt="XDrive"></div><div class="partner-copy"><h2>XDrive</h2><p>İçerik ve topluluk projelerinde gerçekleştirilen marka iş birliği.</p></div></article>
+      <article class="partner"><div class="partner-top"><span>02</span><span>PROJE PARTNERİ</span></div><div class="partner-visual"><img src="https://cdn.discordapp.com/attachments/1255133297277796474/1527713206133587998/20240830_140258.png?ex=6a5ba94b&amp;is=6a5a57cb&amp;hm=22053b209c5fcf1c4b37366d0b27ba318721d00c59c049cc5bdf76b8a56bc88f&amp;" alt="Hawk Gaming Chair"></div><div class="partner-copy"><h2>Hawk Gaming Chair</h2><p>Limon Tayfa Özeti 2025 dahil özel içerik projelerinde birlikte üretim.</p></div></article>
+      <article class="partner"><div class="partner-top"><span>03</span><span>CREATOR PROGRAM</span></div><div class="partner-visual"><img src="https://cdn.discordapp.com/attachments/1282627807901515797/1282633161892691968/2024-creatorprogram-logo-white.png?ex=6a5b46b7&amp;is=6a59f537&amp;hm=b9356ed5f16af638bc5f159a17871328eb4ee9e90837bbff3a25b8d2de66c7f6&amp;" alt="Razer"></div><div class="partner-copy"><h2>Razer</h2><p>Razer Creator Program kapsamında kurulan üretici bağlantısı.</p></div></article>
+      <article class="partner"><div class="partner-top"><span>04</span><span>TOPLULUK</span></div><div class="partner-visual"><img src="https://cdn.discordapp.com/attachments/1255133297277796474/1527715811492364329/file_0000000028607243a7a4d0ad1fd8b7b2.png?ex=6a5babb9&amp;is=6a5a5a39&amp;hm=53e9f378feff2a0e9a4db13799fcc4f9034c46757cc6ebc7ef5660f53ae5cb0e&amp;" alt="Hytale"></div><div class="partner-copy"><h2>Hytale</h2><p>Oyun topluluğu ve içerik üretimi odağında gerçekleştirilen çalışma.</p></div></article>
+    </div></section>
+    <section class="cta"><div class="container"><p class="eyebrow">Yeni bir proje</p><h2>Birlikte iz bırakacak bir şey üretelim.</h2><p>Marka ve proje iş birlikleri için doğrudan ulaşabilirsin.</p><a href="mailto:team@lemonhota.com">team@lemonhota.com</a></div></section>
   </main>
-
-  <footer>
-    © 2026 BATU
-  </footer>
-
+  <footer class="footer"><span>© 2026 BATU · İşbirlikleri</span><a href="/logo"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU logo arşivi"></a></footer>
 </body>
 </html>

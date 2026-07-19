@@ -63,6 +63,15 @@
     .form-actions .wide{margin-top:17px}
     .editing{margin:0 0 16px;padding:11px 13px;color:#e8bd57;background:rgba(232,189,87,.08);border:1px solid rgba(232,189,87,.25);border-radius:10px;font-size:12px}
     .hint{font-size:11px;color:#666;margin:7px 0 0}
+    .subcard{margin-top:14px;padding:16px;background:#030303;border:1px solid #262626;border-radius:14px}
+    .subcard-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .subcard-head h3{margin:0;font-size:15px}
+    .step-list{display:grid;gap:10px;margin-top:12px}
+    .process-step{padding:14px;background:#070707;border:1px solid #282828;border-radius:12px}
+    .process-step-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .process-step-top strong{font-size:12px}.process-step .grid{margin-top:5px}
+    .project-link-admin{display:inline-block;margin-top:7px;color:#aaa;font-size:11px;text-decoration:none}
+    .project-link-admin:hover{color:#fff}
     @media(max-width:650px){
       .grid,.date-grid{grid-template-columns:1fr}.full{grid-column:auto}
       .item{grid-template-columns:70px minmax(0,1fr)}
@@ -97,6 +106,7 @@
     <nav class="tabs" aria-label="Admin bölümleri">
       <button class="tab active" type="button" data-tab="timeline">Timelapse</button>
       <button class="tab" type="button" data-tab="designs">Tasarımlar</button>
+      <button class="tab" type="button" data-tab="projects">Projeler</button>
     </nav>
 
     <div id="timelinePanel">
@@ -192,6 +202,57 @@
         <div id="list" class="list"></div>
       </section>
     </div>
+
+    <div id="projectsPanel" hidden>
+      <section class="card">
+        <h2 id="projectFormTitle">Yeni proje</h2>
+        <p>Banner, önce/sonra karşılaştırması ve yapım adımları otomatik proje sayfasına dönüşür.</p>
+        <div id="projectEditing" class="editing" hidden>Proje düzenleniyor. Yeni dosya seçmezsen mevcut medya korunur.</div>
+        <form id="projectForm">
+          <input id="projectId" type="hidden">
+          <div class="grid">
+            <label>Proje başlığı *<input id="projectTitle" type="text" placeholder="Yeni proje" required></label>
+            <label>Sayfa adresi *<input id="projectSlug" type="text" placeholder="yeni-proje" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required><span class="hint">batuhota.com/proje/yeni-proje</span></label>
+            <label>Kategori<input id="projectCategory" type="text" placeholder="Video Projesi"></label>
+            <label>Yıl<input id="projectYear" type="number" min="1900" max="2100" placeholder="2026"></label>
+            <label>Rolüm<input id="projectRole" type="text" placeholder="Konsept, tasarım ve geliştirme"></label>
+            <label>Araçlar<input id="projectTools" type="text" placeholder="Photoshop, Figma, CapCut"><span class="hint">Virgülle ayır.</span></label>
+            <label>Sıra<input id="projectOrder" type="number" value="0"></label>
+            <label>Banner görseli<input id="projectBanner" type="file" accept="image/*"><span class="hint">Yeni ve yayınlanacak projede zorunlu. En fazla 18 MB.</span></label>
+            <label class="full">Ana sayfa özeti<textarea id="projectSummary" placeholder="Projeyi iki üç cümlede anlat."></textarea></label>
+            <label class="full">Proje hikâyesi<textarea id="projectDescription" placeholder="Amaç, fikir ve ortaya çıkan sonuç..."></textarea></label>
+          </div>
+
+          <div class="subcard">
+            <div class="subcard-head"><h3>Önce / Sonra karşılaştırması</h3></div>
+            <div class="grid">
+              <label>Önce görseli<input id="projectBefore" type="file" accept="image/*"></label>
+              <label>Sonra görseli<input id="projectAfter" type="file" accept="image/*"></label>
+              <label class="check"><input id="projectBeforeRemove" type="checkbox">Mevcut “önce” görselini kaldır</label>
+              <label class="check"><input id="projectAfterRemove" type="checkbox">Mevcut “sonra” görselini kaldır</label>
+            </div>
+          </div>
+
+          <div class="subcard">
+            <div class="subcard-head"><h3>Nasıl yaptım?</h3><button id="addProjectStep" class="small" type="button">+ Adım ekle</button></div>
+            <p class="hint">Adımlar eklediğin sırayla otomatik dizilir. Her adıma görsel veya video bağlantısı ekleyebilirsin.</p>
+            <div id="projectSteps" class="step-list"></div>
+          </div>
+
+          <label class="check"><input id="projectPublished" type="checkbox" checked>Hemen yayınla</label>
+          <div class="form-actions">
+            <button id="projectSave" class="wide" type="submit">Projeyi yayınla</button>
+            <button id="projectCancel" class="small" type="button" hidden>Vazgeç</button>
+          </div>
+          <div id="projectMessage" class="message"></div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="toolbar"><h2>Projeler</h2><button id="projectRefresh" class="small" type="button">Yenile</button></div>
+        <div id="projectList" class="list"></div>
+      </section>
+    </div>
   </section>
 </main>
 
@@ -200,6 +261,7 @@ const ENDPOINT = "https://phreqbjgynchbynmtefz.supabase.co/functions/v1/tasarim-
 let adminPassword = "";
 let timelineEvents = [];
 let designs = [];
+let projects = [];
 
 const $ = id => document.getElementById(id);
 const loginView = $("loginView");
@@ -209,6 +271,8 @@ const uploadMessage = $("uploadMessage");
 const timelineMessage = $("timelineMessage");
 const list = $("list");
 const timelineList = $("timelineList");
+const projectList = $("projectList");
+const projectMessage = $("projectMessage");
 const logout = $("logout");
 
 function formatError(value) {
@@ -288,10 +352,13 @@ logout.addEventListener("click", () => {
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach(item => item.classList.toggle("active", item === tab));
-    const timelineActive = tab.dataset.tab === "timeline";
-    $("timelinePanel").hidden = !timelineActive;
-    $("designsPanel").hidden = timelineActive;
-    if (timelineActive) loadTimeline(); else loadDesigns();
+    const selected = tab.dataset.tab;
+    $("timelinePanel").hidden = selected !== "timeline";
+    $("designsPanel").hidden = selected !== "designs";
+    $("projectsPanel").hidden = selected !== "projects";
+    if (selected === "timeline") loadTimeline();
+    if (selected === "designs") loadDesigns();
+    if (selected === "projects") loadProjects();
   });
 });
 
@@ -492,6 +559,174 @@ async function loadDesigns() {
 }
 
 $("refresh").addEventListener("click", loadDesigns);
+
+function projectSlug(value) {
+  return String(value || "")
+    .toLocaleLowerCase("tr-TR")
+    .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+    .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+let projectSlugTouched = false;
+$("projectTitle").addEventListener("input", () => {
+  if (!projectSlugTouched || !$("projectId").value) {
+    $("projectSlug").value = projectSlug($("projectTitle").value);
+  }
+});
+$("projectSlug").addEventListener("input", () => {
+  projectSlugTouched = true;
+  $("projectSlug").value = projectSlug($("projectSlug").value);
+});
+
+function addProjectStep(step = {}) {
+  const row = document.createElement("article");
+  row.className = "process-step";
+  row.dataset.stepId = step.id || crypto.randomUUID();
+  row.innerHTML = `
+    <div class="process-step-top"><strong>Yapım adımı</strong><button class="small danger remove-step" type="button">Kaldır</button></div>
+    <div class="grid">
+      <label>Adım başlığı<input class="step-title" type="text" value="${escapeHtml(step.baslik || "")}" placeholder="Taslak ve fikir"></label>
+      <label>Görsel / video<input class="step-file" type="file" accept="image/*,video/*">${step.medya_url ? `<span class="hint">Mevcut medya korunacak.</span>` : ""}</label>
+      <label class="full">Açıklama<textarea class="step-description" placeholder="Bu aşamada neler yaptığını anlat.">${escapeHtml(step.aciklama || "")}</textarea></label>
+      <label class="full">Harici medya bağlantısı<input class="step-url" type="url" value="${escapeHtml(step.dosya_yolu ? "" : (step.medya_url || ""))}" placeholder="https://youtube.com/..."></label>
+    </div>`;
+  row.querySelector(".remove-step").addEventListener("click", () => row.remove());
+  $("projectSteps").appendChild(row);
+}
+
+$("addProjectStep").addEventListener("click", () => addProjectStep());
+
+function resetProjectForm() {
+  $("projectForm").reset();
+  $("projectId").value = "";
+  $("projectOrder").value = "0";
+  $("projectPublished").checked = true;
+  $("projectSteps").innerHTML = "";
+  $("projectFormTitle").textContent = "Yeni proje";
+  $("projectSave").textContent = "Projeyi yayınla";
+  $("projectEditing").hidden = true;
+  $("projectCancel").hidden = true;
+  projectSlugTouched = false;
+}
+
+function editProject(project) {
+  $("projectId").value = project.id;
+  $("projectTitle").value = project.baslik || "";
+  $("projectSlug").value = project.slug || "";
+  $("projectCategory").value = project.kategori || "";
+  $("projectYear").value = project.yil || "";
+  $("projectRole").value = project.rol || "";
+  $("projectTools").value = (project.araclar || []).join(", ");
+  $("projectOrder").value = project.sira ?? 0;
+  $("projectSummary").value = project.ozet || "";
+  $("projectDescription").value = project.aciklama || "";
+  $("projectPublished").checked = Boolean(project.yayinlandi);
+  $("projectBeforeRemove").checked = false;
+  $("projectAfterRemove").checked = false;
+  $("projectSteps").innerHTML = "";
+  (project.adimlar || []).forEach(addProjectStep);
+  $("projectFormTitle").textContent = "Projeyi düzenle";
+  $("projectSave").textContent = "Değişiklikleri kaydet";
+  $("projectEditing").hidden = false;
+  $("projectCancel").hidden = false;
+  projectSlugTouched = true;
+  $("projectsPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+$("projectCancel").addEventListener("click", resetProjectForm);
+
+$("projectForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const id = $("projectId").value;
+  const files = [$("projectBanner").files[0], $("projectBefore").files[0], $("projectAfter").files[0],
+    ...[...document.querySelectorAll(".step-file")].map(input => input.files[0])].filter(Boolean);
+  if (files.some(file => file.size > 18 * 1024 * 1024)) {
+    return showMessage(projectMessage, "Her dosya en fazla 18 MB olabilir.", "error");
+  }
+  if (!id && !$("projectBanner").files[0] && $("projectPublished").checked) {
+    return showMessage(projectMessage, "Yayınlanacak yeni proje için banner seç.", "error");
+  }
+
+  const button = $("projectSave");
+  button.disabled = true;
+  button.textContent = "Kaydediliyor...";
+  const form = new FormData();
+  form.append("action", "project-save");
+  form.append("id", id);
+  form.append("baslik", $("projectTitle").value);
+  form.append("slug", $("projectSlug").value);
+  form.append("kategori", $("projectCategory").value);
+  form.append("yil", $("projectYear").value);
+  form.append("rol", $("projectRole").value);
+  form.append("araclar", $("projectTools").value);
+  form.append("sira", $("projectOrder").value);
+  form.append("ozet", $("projectSummary").value);
+  form.append("aciklama", $("projectDescription").value);
+  form.append("once_sil", $("projectBeforeRemove").checked);
+  form.append("sonra_sil", $("projectAfterRemove").checked);
+  form.append("yayinlandi", $("projectPublished").checked);
+  if ($("projectBanner").files[0]) form.append("banner", $("projectBanner").files[0]);
+  if ($("projectBefore").files[0]) form.append("once", $("projectBefore").files[0]);
+  if ($("projectAfter").files[0]) form.append("sonra", $("projectAfter").files[0]);
+
+  const steps = [...document.querySelectorAll(".process-step")].map((row, index) => {
+    const file = row.querySelector(".step-file").files[0];
+    if (file) form.append(`adim_dosya_${index}`, file);
+    return {
+      id: row.dataset.stepId,
+      baslik: row.querySelector(".step-title").value,
+      aciklama: row.querySelector(".step-description").value,
+      medya_url: row.querySelector(".step-url").value,
+    };
+  });
+  form.append("adimlar", JSON.stringify(steps));
+
+  try {
+    const data = await request(form, true);
+    resetProjectForm();
+    showMessage(projectMessage, id ? "Proje güncellendi." : "Proje oluşturuldu.", "success");
+    await loadProjects();
+    if (data.project?.yayinlandi) window.open(`/proje/${data.project.slug}`, "_blank", "noopener");
+  } catch (error) { showMessage(projectMessage, error.message, "error"); }
+  button.disabled = false;
+  button.textContent = $("projectId").value ? "Değişiklikleri kaydet" : "Projeyi yayınla";
+});
+
+async function loadProjects() {
+  projectList.innerHTML = "<p>Yükleniyor...</p>";
+  try {
+    const data = await request({ action: "project-list" });
+    projects = data.projects || [];
+    if (!projects.length) {
+      projectList.innerHTML = "<p>Henüz proje yok. İlk projeyi yukarıdaki formdan oluşturabilirsin.</p>";
+      return;
+    }
+    projectList.innerHTML = "";
+    projects.forEach(project => {
+      const item = document.createElement("article");
+      item.className = "item";
+      const image = project.banner_url
+        ? `<img class="thumb" src="${escapeHtml(project.banner_url)}" alt="">`
+        : '<div class="thumb thumb-placeholder">—</div>';
+      item.innerHTML = `${image}<div><h3>${escapeHtml(project.baslik)}</h3><div class="meta">${escapeHtml(project.kategori || "Proje")} · ${escapeHtml(project.yil || "")} · ${project.yayinlandi ? "Yayında" : "Taslak"}</div><a class="project-link-admin" href="/proje/${encodeURIComponent(project.slug)}" target="_blank" rel="noopener">Sayfayı aç ↗</a></div><div class="actions"><button class="small edit" type="button">Düzenle</button><button class="small toggle" type="button">${project.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete" type="button">Sil</button></div>`;
+      item.querySelector(".edit").addEventListener("click", () => editProject(project));
+      item.querySelector(".toggle").addEventListener("click", async () => {
+        try { await request({ action: "project-toggle", id: project.id, yayinlandi: !project.yayinlandi }); await loadProjects(); }
+        catch (error) { alert(error.message); }
+      });
+      item.querySelector(".delete").addEventListener("click", async () => {
+        if (!confirm("Bu proje ve yüklenen bütün medya dosyaları silinsin mi?")) return;
+        try { await request({ action: "project-delete", id: project.id }); await loadProjects(); }
+        catch (error) { alert(error.message); }
+      });
+      projectList.appendChild(item);
+    });
+  } catch (error) { projectList.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`; }
+}
+
+$("projectRefresh").addEventListener("click", loadProjects);
 
 const savedPassword = sessionStorage.getItem("batu_admin_password");
 if (savedPassword) {

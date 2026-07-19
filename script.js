@@ -118,6 +118,76 @@ const loadHeroDesigns = async () => {
 
 loadHeroDesigns();
 
+const loadPortfolioProjects = async () => {
+  const grid = document.getElementById("projects-grid");
+  if (!grid) return;
+
+  const indexUrl =
+    "https://phreqbjgynchbynmtefz.supabase.co/storage/v1/object/public/timelapse/projects.json";
+
+  try {
+    const response = await fetch(`${indexUrl}?v=${Date.now()}`, {
+      cache: "no-store"
+    });
+    if (!response.ok) return;
+
+    const projects = await response.json();
+    if (!Array.isArray(projects)) return;
+
+    projects
+      .filter(project => project.yayinlandi && project.banner_url)
+      .sort((a, b) => (a.sira || 0) - (b.sira || 0))
+      .forEach(project => {
+        const article = document.createElement("article");
+        const imageLink = document.createElement("a");
+        const imageWrap = document.createElement("div");
+        const image = document.createElement("img");
+        const hover = document.createElement("div");
+        const content = document.createElement("div");
+        const meta = document.createElement("div");
+        const title = document.createElement("h3");
+        const summary = document.createElement("p");
+        const detailLink = document.createElement("a");
+        const url = `/proje/${encodeURIComponent(project.slug)}`;
+
+        article.className = "project-card project-card-featured reveal visible";
+        imageLink.className = "project-image-link";
+        imageLink.href = url;
+        imageLink.setAttribute("aria-label", `${project.baslik} proje sayfasını görüntüle`);
+        imageWrap.className = "project-image-wrap";
+        image.className = "project-image";
+        image.src = project.banner_url;
+        image.alt = `${project.baslik} proje kapağı`;
+        image.loading = "lazy";
+        hover.className = "project-hover";
+        hover.setAttribute("aria-hidden", "true");
+        hover.innerHTML = "<span>Projeyi Gör</span><strong>↗</strong>";
+        content.className = "project-content";
+        meta.className = "project-meta";
+        [project.kategori || "Proje", project.yil].filter(Boolean).forEach(value => {
+          const span = document.createElement("span");
+          span.textContent = value;
+          meta.appendChild(span);
+        });
+        title.textContent = project.baslik;
+        summary.textContent = project.ozet || project.aciklama || "";
+        detailLink.className = "project-link";
+        detailLink.href = url;
+        detailLink.innerHTML = "Projeyi İncele <span>↗</span>";
+
+        imageWrap.append(image, hover);
+        imageLink.appendChild(imageWrap);
+        content.append(meta, title, summary, detailLink);
+        article.append(imageLink, content);
+        grid.appendChild(article);
+      });
+  } catch (error) {
+    console.error("Proje arşivi yüklenemedi", error);
+  }
+};
+
+loadPortfolioProjects();
+
 const pageTransition = document.getElementById("page-transition");
 
 document.querySelectorAll('a[href="/tasarimlar"]').forEach((link) => {
