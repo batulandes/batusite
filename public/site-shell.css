@@ -4,8 +4,8 @@
 .batu-shell-container{width:min(1320px,calc(100% - 48px));margin-inline:auto}
 .batu-site-nav__inner{position:relative;min-height:var(--batu-nav-height);display:flex;align-items:center;justify-content:space-between;transition:min-height .2s ease}
 .batu-site-nav.is-compact .batu-site-nav__inner{min-height:var(--batu-nav-compact)}
-.batu-site-home{display:inline-flex;align-items:center;min-height:34px;padding:0 13px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:#8a8a8a!important;background:#080808;text-decoration:none!important;font-size:11px!important;font-weight:500;line-height:1;transition:color .2s ease,border-color .2s ease,background .2s ease}
-.batu-site-home:hover{color:#fff!important;border-color:rgba(255,255,255,.3);background:#0d0d0d}
+.batu-site-home{display:inline-flex;align-items:center;min-height:34px;padding:0 13px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:#aaa!important;background:rgba(255,255,255,.035);box-shadow:inset 0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-decoration:none!important;font-size:11px!important;font-weight:500;line-height:1;transition:color .2s ease,border-color .2s ease,background .2s ease}
+.batu-site-home:hover{color:#fff!important;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.075)}
 .batu-site-logo{position:absolute;top:50%;left:50%;z-index:3;width:58px;height:58px;transform:translate(-50%,-50%);transform-style:preserve-3d;perspective:500px;transition:width .2s ease,height .2s ease}
 .batu-site-nav.is-compact .batu-site-logo{width:50px;height:50px}
 .batu-site-logo__mark,.batu-site-logo__mark img{position:absolute;inset:0;display:block;width:100%;height:100%}
