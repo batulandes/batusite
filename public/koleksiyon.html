@@ -280,7 +280,7 @@
       clone.addEventListener("transitionend",onTransitionEnd);
       clone.classList.add("is-closing");clone.classList.remove("is-open");backdrop.classList.remove("is-open");document.body.classList.remove("card-open");
       document.removeEventListener("keydown",escapeClose);
-      setTimeout(cleanup,1100);
+      setTimeout(cleanup,850);
     }
 
     function applyFilter(){
@@ -301,3 +301,4 @@
   </script>
 </body>
 </html>
+
