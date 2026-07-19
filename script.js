@@ -118,6 +118,32 @@ const loadHeroDesigns = async () => {
 
 loadHeroDesigns();
 
+const pageTransition = document.getElementById("page-transition");
+
+document.querySelectorAll('a[href="/tasarimlar"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      reduceMotion
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    document.body.classList.add("is-leaving");
+    pageTransition?.classList.add("active");
+
+    window.setTimeout(() => {
+      window.location.assign(link.href);
+    }, 620);
+  });
+});
+
 const updateScrollState = () => {
   const scrollTop =
     window.scrollY ||
