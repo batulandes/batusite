@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 const DESIGN_BUCKET = "tasarimlar";
-const OFFICIAL_DESIGNS_INDEX = "_meta/resmi-tasarimlar.json";
+const OFFICIAL_DESIGNS_INDEX = "resmi-tasarimlar.json";
 const TIMELAPSE_BUCKET = "timelapse";
 const TIMELAPSE_INDEX = "events.json";
 const MAX_TIMELAPSE_MEDIA_SIZE = 18 * 1024 * 1024;
@@ -182,7 +182,7 @@ async function readOfficialDesignIds(
   supabase: SupabaseClient,
 ): Promise<string[]> {
   const { data, error } = await supabase.storage
-    .from(DESIGN_BUCKET)
+    .from(TIMELAPSE_BUCKET)
     .download(OFFICIAL_DESIGNS_INDEX);
 
   if (error) {
@@ -209,7 +209,7 @@ async function writeOfficialDesignIds(
   supabase: SupabaseClient,
   ids: string[],
 ) {
-  await ensurePublicBucket(supabase, DESIGN_BUCKET);
+  await ensurePublicBucket(supabase, TIMELAPSE_BUCKET);
 
   const uniqueIds = [...new Set(ids.map(String))];
   const content = new Blob([JSON.stringify(uniqueIds, null, 2)], {
@@ -217,7 +217,7 @@ async function writeOfficialDesignIds(
   });
 
   const { error } = await supabase.storage
-    .from(DESIGN_BUCKET)
+    .from(TIMELAPSE_BUCKET)
     .upload(OFFICIAL_DESIGNS_INDEX, content, {
       contentType: "application/json; charset=utf-8",
       cacheControl: "0",
