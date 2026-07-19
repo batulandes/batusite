@@ -1,0 +1,30 @@
+:root{--batu-nav-height:88px;--batu-nav-compact:72px;--batu-shell-border:rgba(255,255,255,.08)}
+.batu-site-nav{position:fixed!important;inset:0 0 auto!important;z-index:1000!important;width:100%!important;height:auto!important;background:rgba(0,0,0,.52)!important;border:0!important;border-bottom:1px solid var(--batu-shell-border)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+.batu-site-nav *,.batu-site-footer *{box-sizing:border-box}
+.batu-shell-container{width:min(1320px,calc(100% - 48px));margin-inline:auto}
+.batu-site-nav__inner{position:relative;min-height:var(--batu-nav-height);display:flex;align-items:center;justify-content:space-between;transition:min-height .2s ease}
+.batu-site-nav.is-compact .batu-site-nav__inner{min-height:var(--batu-nav-compact)}
+.batu-site-home{display:inline-flex;align-items:center;min-height:34px;padding:0 13px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:#8a8a8a!important;background:#080808;text-decoration:none!important;font-size:11px!important;font-weight:500;line-height:1;transition:color .2s ease,border-color .2s ease,background .2s ease}
+.batu-site-home:hover{color:#fff!important;border-color:rgba(255,255,255,.3);background:#0d0d0d}
+.batu-site-logo{position:absolute;top:50%;left:50%;z-index:3;width:58px;height:58px;transform:translate(-50%,-50%);transform-style:preserve-3d;perspective:500px;transition:width .2s ease,height .2s ease}
+.batu-site-nav.is-compact .batu-site-logo{width:50px;height:50px}
+.batu-site-logo__mark,.batu-site-logo__mark img{position:absolute;inset:0;display:block;width:100%;height:100%}
+.batu-site-logo__mark{transition:opacity .34s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.batu-site-logo__mark img{object-fit:contain}
+.batu-site-logo__wordmark{position:absolute;top:50%;left:50%;display:block!important;width:136px!important;max-width:none!important;height:38px!important;object-fit:contain;opacity:0;transform:translate(-50%,-50%) rotateY(-78deg) scale(.72);transition:opacity .3s ease,transform .52s cubic-bezier(.16,1,.3,1)}
+.batu-site-nav__actions{display:flex;align-items:center;justify-content:flex-end;min-width:84px}
+.batu-site-nav__actions:empty::after{content:"";width:84px}
+.batu-site-nav__actions #logout{margin:0!important;min-height:34px!important;padding:0 13px!important;border:1px solid rgba(255,255,255,.15)!important;border-radius:999px!important;color:#aaa!important;background:#080808!important;font-size:11px!important}
+.batu-site-footer{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:0!important;width:100%!important;margin:0!important;padding:30px 24px 38px!important;border:0!important;border-top:1px solid rgba(255,255,255,.1)!important;background:#000!important;color:#666!important;text-align:center!important;font-family:var(--font-primary,Arial,sans-serif)!important}
+.batu-site-footer__copy{margin:0!important;color:#666!important;font-size:12px!important;line-height:1.4!important}
+.batu-site-footer__link{margin-top:10px;color:#777!important;text-decoration:none!important;font-size:11px!important;transition:color .2s ease}
+.batu-site-footer__link:hover{color:#fff!important}
+.batu-site-footer__logo{display:block!important;width:72px!important;height:auto!important;margin-top:15px!important;opacity:.48;object-fit:contain!important;transition:opacity .2s ease}
+.batu-site-footer__logo:hover{opacity:.8}
+.batu-page-transition{position:fixed;inset:0;z-index:5000;display:grid;place-items:center;background:#000;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility .28s ease}
+.batu-page-transition.is-active{opacity:1;visibility:visible;pointer-events:auto}
+.batu-page-transition img{display:block;width:clamp(132px,15vw,205px);height:auto;opacity:0;transform:translateY(5px) scale(.9);transition:opacity .24s ease,transform .38s cubic-bezier(.16,1,.3,1)}
+.batu-page-transition.is-active img{opacity:1;transform:translateY(0) scale(1)}
+@media (min-width:901px) and (hover:hover){.batu-site-logo:hover .batu-site-logo__mark{opacity:0;transform:rotateY(78deg) scale(.7)}.batu-site-logo:hover .batu-site-logo__wordmark{opacity:1;transform:translate(-50%,-50%) rotateY(0) scale(1)}}
+@media(max-width:700px){:root{--batu-nav-height:74px;--batu-nav-compact:65px}.batu-shell-container{width:min(100% - 28px,1320px)}.batu-site-logo{width:52px;height:52px}.batu-site-nav.is-compact .batu-site-logo{width:46px;height:46px}.batu-site-home{min-width:36px;width:36px;padding:0;justify-content:center;font-size:0!important}.batu-site-home::after{content:"←";font-size:17px}.batu-site-nav__actions{min-width:36px}.batu-site-nav__actions:empty::after{width:36px}.batu-site-footer{padding:27px 18px 34px!important}}
+@media(prefers-reduced-motion:reduce){.batu-site-nav__inner,.batu-site-logo,.batu-site-logo__mark,.batu-site-logo__wordmark,.batu-page-transition,.batu-page-transition img{transition-duration:.01ms!important}}
