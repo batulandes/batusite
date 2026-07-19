@@ -140,7 +140,7 @@ document.querySelectorAll('a[href="/tasarimlar"]').forEach((link) => {
 
     window.setTimeout(() => {
       window.location.assign(link.href);
-    }, 620);
+    }, 450);
   });
 });
 
