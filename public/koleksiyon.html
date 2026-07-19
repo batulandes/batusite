@@ -297,7 +297,8 @@
       const card=available[Math.floor(Math.random()*available.length)];card.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>openCard(card),450);
     });
 
-    fetch(`${DATA_URL}?v=${Date.now()}`,{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error();return response.json()}).then(data=>{cards=(Array.isArray(data)?data:DEFAULT_CARDS).sort((a,b)=>(a.sira||0)-(b.sira||0));render()}).catch(()=>{cards=DEFAULT_CARDS;render()});
+    cards=DEFAULT_CARDS;render();
+    fetch(`${DATA_URL}?v=${Date.now()}`,{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error();return response.json()}).then(data=>{if(Array.isArray(data)){cards=data.sort((a,b)=>(a.sira||0)-(b.sira||0));render()}}).catch(()=>{});
   </script>
 </body>
 </html>
