@@ -3,6 +3,6 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/proje/:slug", "destination": "/proje.html" }
+    { "source": "/proje/:slug", "destination": "/proje" }
   ]
 }
