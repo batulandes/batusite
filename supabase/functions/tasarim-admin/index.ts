@@ -207,10 +207,10 @@ const DEFAULT_CHANNELS: PortfolioChannel[] = [
 ];
 
 const DEFAULT_COLLABORATIONS: Collaboration[] = [
-  { id: "collab-xdrive", ad: "XDrive", tur: "Marka İşbirliği", aciklama: "İçerik ve topluluk projelerinde gerçekleştirilen marka iş birliği.", logo_url: "https://cdn.discordapp.com/attachments/1255133297277796474/1527717005250269244/20260717_194135.png", logo_yolu: null, link: null, sira: 0, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
-  { id: "collab-hawk", ad: "Hawk Gaming Chair", tur: "Proje Partneri", aciklama: "Limon Tayfa Özeti 2025 dahil özel içerik projelerinde birlikte üretim.", logo_url: "https://cdn.discordapp.com/attachments/1255133297277796474/1527713206133587998/20240830_140258.png", logo_yolu: null, link: null, sira: 1, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
-  { id: "collab-razer", ad: "Razer", tur: "Creator Program", aciklama: "Razer Creator Program kapsamında kurulan üretici bağlantısı.", logo_url: "https://cdn.discordapp.com/attachments/1282627807901515797/1282633161892691968/2024-creatorprogram-logo-white.png", logo_yolu: null, link: null, sira: 2, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
-  { id: "collab-hytale", ad: "Hytale", tur: "Topluluk", aciklama: "Oyun topluluğu ve içerik üretimi odağında gerçekleştirilen çalışma.", logo_url: "https://cdn.discordapp.com/attachments/1255133297277796474/1527715811492364329/file_0000000028607243a7a4d0ad1fd8b7b2.png", logo_yolu: null, link: null, sira: 3, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "collab-xdrive", ad: "XDrive", tur: "Marka İşbirliği", aciklama: "İçerik ve topluluk projelerinde gerçekleştirilen marka iş birliği.", logo_url: "https://www.xdrive.com.tr/theme/v5-xdrive/assets/icons/footer-logo.svg", logo_yolu: null, link: null, sira: 0, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "collab-hawk", ad: "Hawk Gaming Chair", tur: "Proje Partneri", aciklama: "Limon Tayfa Özeti 2025 dahil özel içerik projelerinde birlikte üretim.", logo_url: "https://percdn.com/f/619128/bzR6WmFtNG0vcUp3ZUdFOVU1NG5hQT09/l/logo-21213039-sw320sh116.webp", logo_yolu: null, link: null, sira: 1, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "collab-razer", ad: "Razer", tur: "Creator Program", aciklama: "Razer Creator Program kapsamında kurulan üretici bağlantısı.", logo_url: "https://cdn.simpleicons.org/razer/FFFFFF", logo_yolu: null, link: null, sira: 2, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "collab-hytale", ad: "Hytale", tur: "Topluluk", aciklama: "Oyun topluluğu ve içerik üretimi odağında gerçekleştirilen çalışma.", logo_url: "https://hytale.com/images/logo.webp", logo_yolu: null, link: null, sira: 3, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
 ];
 
 function json(body: unknown, status = 200) {
