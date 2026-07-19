@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/proje/:slug", "destination": "/proje" }
+    { "source": "/proje/:slug", "destination": "/proje" },
+    { "source": "/kanal/:slug", "destination": "/kanal" }
   ]
 }

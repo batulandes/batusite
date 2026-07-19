@@ -478,6 +478,26 @@
           font-weight: 600;
         }
 
+        #channels .channel-actions {
+          width: 100%;
+          max-width: 540px;
+          margin-top: 27px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 9px;
+        }
+
+        #channels .channel-actions .channel-button {
+          max-width: none;
+          margin-top: 0;
+        }
+
+        #channels .channel-detail-button {
+          color: #ffffff;
+          background: rgba(0, 0, 0, .42);
+          border-color: #3a3a3a;
+        }
+
         #channels .channel-button img {
           width: 21px;
           height: 21px;
@@ -532,6 +552,10 @@
           #channels .channel-stat span {
             font-size: 10px;
           }
+
+          #channels .channel-actions {
+            grid-template-columns: 1fr;
+          }
         }
       </style>
 
@@ -556,7 +580,7 @@
 
         <div class="channels-grid">
 
-          <article class="channel-card">
+          <article class="channel-card" data-channel-slug="batu">
 
             <img
               class="channel-background"
@@ -601,7 +625,7 @@
 
               </div>
 
-              <a
+              <div class="channel-actions"><a
                 href="https://youtube.com/@batuclips?si=XvTEtROSBASyxXv4"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -614,13 +638,13 @@
                 >
 
                 <span>Kanala Git</span>
-              </a>
+              </a><a href="/kanal/batu" class="channel-button channel-detail-button"><span>Detaylı İncele</span></a></div>
 
             </div>
 
           </article>
 
-          <article class="channel-card">
+          <article class="channel-card" data-channel-slug="lemonhota">
 
             <img
               class="channel-background"
@@ -665,7 +689,7 @@
 
               </div>
 
-              <a
+              <div class="channel-actions"><a
                 href="https://youtube.com/@lemonhota"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -678,7 +702,7 @@
                 >
 
                 <span>Kanala Git</span>
-              </a>
+              </a><a href="/kanal/lemonhota" class="channel-button channel-detail-button"><span>Detaylı İncele</span></a></div>
 
             </div>
 

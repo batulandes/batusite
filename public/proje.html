@@ -23,7 +23,7 @@
     img,video{display:block;max-width:100%}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}
     [hidden]{display:none!important}.container{width:min(var(--container),calc(100% - 48px));margin-inline:auto}
     .topbar{position:fixed;inset:0 0 auto;z-index:100;height:78px;background:rgba(0,0,0,.7);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-    .topbar-inner{height:100%;display:flex;align-items:center;justify-content:space-between}.back{color:#929292;font-size:13px}.back:hover{color:#fff}.top-logo{width:88px}.top-logo img{width:100%;height:24px;object-fit:contain}.top-project{color:#666;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+    .topbar-inner{position:relative;height:100%;display:flex;align-items:center;justify-content:space-between}.back{color:#929292;font-size:13px}.back:hover{color:#fff}.top-logo{position:absolute;left:50%;width:54px;height:54px;transform:translateX(-50%)}.top-logo img{width:100%;height:100%;object-fit:contain}.top-project{color:#666;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
     .loading,.not-found{min-height:100vh;display:grid;place-items:center;padding:100px 24px;text-align:center}.loading{color:#777}.not-found h1{font-size:clamp(52px,10vw,130px);letter-spacing:-.07em}.not-found p{margin:20px 0 30px;color:#888}.button{min-height:48px;display:inline-flex;align-items:center;padding:0 22px;background:#fff;color:#000;border-radius:999px;font-size:12px;font-weight:700}
     .project-page{animation:arrive .55s cubic-bezier(.16,1,.3,1) both}@keyframes arrive{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
     .hero{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden;padding:150px 0 85px;background:#050505;text-align:center}.hero-media{position:absolute;inset:0}.hero-media img{width:100%;height:100%;object-fit:cover}.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.38) 42%,#000 100%)}
@@ -41,7 +41,7 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="container topbar-inner"><a class="back" href="/#work">← Projeler</a><a class="top-logo" href="/"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU"></a><span class="top-project">Proje arşivi</span></div>
+    <div class="container topbar-inner"><a class="back" href="/#work">← Projeler</a><a class="top-logo" href="/"><img src="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png" alt="BATU"></a><span class="top-project">PROJE ARŞİVİ</span></div>
   </header>
   <div class="loading" id="loading">Proje yükleniyor…</div>
   <div class="not-found" id="not-found" hidden><div><h1>Proje bulunamadı.</h1><p>Bu proje gizlenmiş, silinmiş veya adresi değişmiş olabilir.</p><a class="button" href="/#work">Projelere dön</a></div></div>
@@ -51,7 +51,7 @@
     <section class="compare-section" id="compare-section" hidden><div class="container"><div class="section-head"><p class="eyebrow">Önce / Sonra</p><h2 class="section-title">Değişimi karşılaştır.</h2><p>Çizgiyi sürükleyerek projenin iki aşaması arasındaki farkı inceleyebilirsin.</p></div><div class="compare" id="compare"><img class="compare-before" id="before-image" src="" alt="Projenin önceki hâli"><div class="compare-after-wrap"><img class="compare-after" id="after-image" src="" alt="Projenin son hâli"></div><span class="compare-label before">ÖNCE</span><span class="compare-label after">SONRA</span><div class="compare-handle">↔</div><input class="compare-range" id="compare-range" type="range" min="0" max="100" value="50" aria-label="Önce ve sonra karşılaştırması"></div></div></section>
     <section class="process" id="process" hidden><div class="container"><div class="section-head"><p class="eyebrow">Nasıl yaptım?</p><h2 class="section-title">Sürecin içinden.</h2></div><div class="steps" id="steps"></div></div></section>
   </main>
-  <footer class="footer" id="footer" hidden><span>© 2026 BATU · Proje arşivi</span><a href="/logo"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU logo arşivi"></a></footer>
+  <footer class="footer" id="footer" hidden><span>© 2026 BATU · Tüm hakları saklıdır.</span><a href="/logo"><img src="/logolar/BATU%20Logo%20Yatay%20Beyaz.png" alt="BATU logo arşivi"></a></footer>
   <script>
     const INDEX_URL="https://phreqbjgynchbynmtefz.supabase.co/storage/v1/object/public/timelapse/projects.json";
     const querySlug=new URLSearchParams(location.search).get("slug");
@@ -66,7 +66,7 @@
       document.title=`${project.baslik} — BATU`;
       document.querySelector('meta[name="description"]').content=project.ozet||project.aciklama||"BATU projesi";
       setMeta('link[rel="canonical"]',"href",location.href);setMeta('meta[property="og:title"]',"content",project.baslik);setMeta('meta[property="og:description"]',"content",project.ozet||"");setMeta('meta[property="og:url"]',"content",location.href);if(project.banner_url)setMeta('meta[property="og:image"]',"content",project.banner_url);
-      $("hero-image").src=project.banner_url;$("hero-image").alt=`${project.baslik} proje bannerı`;$("title").textContent=project.baslik;$("category").textContent=project.kategori||"Proje";$("year").textContent=project.yil||"";$("summary").textContent=project.ozet||"";$("description").textContent=project.aciklama||project.ozet||"";$("role").textContent=project.rol||"";$("role-fact").hidden=!project.rol;
+      $("hero-image").src=project.detay_banner_url||project.banner_url;$("hero-image").alt=`${project.baslik} proje arka planı`;$("title").textContent=project.baslik;$("category").textContent=project.kategori||"Proje";$("year").textContent=project.yil||"";$("summary").textContent=project.ozet||"";$("description").textContent=project.aciklama||project.ozet||"";$("role").textContent=project.rol||"";$("role-fact").hidden=!project.rol;
       const tools=project.araclar||[];$("tools-fact").hidden=!tools.length;$("tools").innerHTML=tools.map(tool=>`<span class="tool">${escapeHtml(tool)}</span>`).join("");
       if(project.ozel_sayfa_url){$("special-presentation").hidden=false;$("special-presentation").href=project.ozel_sayfa_url}
       if(project.once_url&&project.sonra_url){$("compare-section").hidden=false;$("before-image").src=project.once_url;$("after-image").src=project.sonra_url;const range=$("compare-range");range.addEventListener("input",()=>$("compare").style.setProperty("--position",`${range.value}%`))}

@@ -10,19 +10,19 @@
   <style>
     :root{--bg:#000;--surface:#080808;--border:#292929;--muted:#888;--gold:#e8bd57}
     *{box-sizing:border-box}
-    body{position:relative;margin:0;min-height:100vh;background:var(--bg);color:#fff;font-family:var(--font-primary,Arial,sans-serif)}
-    body::before{content:"";position:fixed;inset:10% 4%;z-index:0;background:url("https://i.ibb.co/hR1sF79y/BATUDUZ.png") center/62% auto no-repeat;opacity:.085;filter:blur(24px);pointer-events:none}
+    body{position:relative;margin:0;min-height:100vh;background:var(--bg);color:#fff;font-family:var(--font-primary,Arial,sans-serif);-webkit-font-smoothing:antialiased}
     [hidden]{display:none!important}
     button,input,textarea,select{font:inherit}
     button{cursor:pointer}
-    .wrap{width:min(920px,calc(100% - 28px));margin:auto}
+    .wrap{width:min(1240px,calc(100% - 32px));margin:auto}
     header,main{position:relative;z-index:1}
-    header{height:70px;background:rgba(0,0,0,.62);border-bottom:1px solid #222;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-    header .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}
-    .admin-logo{display:block;width:96px;height:38px}
+    header{position:fixed;inset:0 0 auto;z-index:50;height:78px;background:rgba(0,0,0,.78);border-bottom:1px solid #222;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+    header .wrap{position:relative;height:100%;display:flex;align-items:center;justify-content:space-between}
+    .admin-home{color:#888;font-size:12px;text-decoration:none}
+    .admin-logo{position:absolute;left:50%;display:block;width:54px;height:54px;transform:translateX(-50%)}
     .admin-logo img{width:100%;height:100%;object-fit:contain}
-    main{padding:35px 0 80px}
-    .card{padding:22px;background:rgba(8,8,8,.88);border:1px solid var(--border);border-radius:18px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    main{padding:112px 0 80px}
+    .card{padding:24px;background:#080808;border:1px solid var(--border);border-radius:18px}
     .card+.card{margin-top:18px}
     .login{min-height:calc(100vh - 140px);display:grid;place-items:center}
     .login .card{width:min(420px,100%)}
@@ -56,8 +56,16 @@
     .gold .meta{color:var(--gold)}
     .actions{display:flex;flex-direction:column;gap:6px}
     .actions button{min-height:34px;font-size:11px}
-    .tabs{display:flex;gap:8px;margin-bottom:18px;padding:5px;background:#080808;border:1px solid #222;border-radius:999px}
-    .tab{flex:1;min-height:43px;background:transparent;color:#777}
+    .admin-intro{margin-bottom:22px;text-align:center}
+    .admin-intro span{color:#666;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+    .admin-intro h1{margin:10px 0 0;font-size:clamp(38px,6vw,72px);line-height:.9;letter-spacing:-.06em}
+    .admin-intro p{max-width:540px;margin:16px auto 0;font-size:13px}
+    .panel-switcher{margin-bottom:20px;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:8px;align-items:center}
+    .panel-arrow{min-height:44px;padding:0;background:#080808;color:#aaa;border:1px solid #292929}
+    .tab-window{min-width:0;overflow:hidden}
+    .tabs{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 16px)/3);gap:8px;padding:5px;background:#080808;border:1px solid #222;border-radius:999px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{min-height:43px;background:transparent;color:#777;white-space:nowrap}
     .tab.active{background:#fff;color:#000}
     .form-actions{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
     .form-actions .wide{margin-top:17px}
@@ -73,6 +81,8 @@
     .project-link-admin{display:inline-block;margin-top:7px;color:#aaa;font-size:11px;text-decoration:none}
     .project-link-admin:hover{color:#fff}
     @media(max-width:650px){
+      header{height:70px}.admin-home{font-size:0}.admin-home::after{content:"←";font-size:18px}main{padding-top:94px}
+      .panel-switcher{grid-template-columns:40px minmax(0,1fr) 40px}.tabs{grid-auto-columns:100%}
       .grid,.date-grid{grid-template-columns:1fr}.full{grid-column:auto}
       .item{grid-template-columns:70px minmax(0,1fr)}
       .thumb{width:70px;height:65px}.actions{grid-column:1/-1;flex-direction:row}.actions button{flex:1}
@@ -84,8 +94,9 @@
 <body>
 <header>
   <div class="wrap">
+    <a class="admin-home" href="/">← Ana sayfa</a>
     <a class="admin-logo" href="/" aria-label="BATU ana sayfa">
-      <img src="https://i.ibb.co/hR1sF79y/BATUDUZ.png" alt="BATU">
+      <img src="https://i.ibb.co/vCkfYL5M/batulogo2026png-1.png" alt="BATU">
     </a>
     <button id="logout" class="small" type="button" hidden>Çıkış</button>
   </div>
@@ -103,11 +114,14 @@
   </section>
 
   <section id="panel" hidden>
-    <nav class="tabs" aria-label="Admin bölümleri">
+    <div class="admin-intro"><span>BATU · YÖNETİM MERKEZİ</span><h1>Admin Panel</h1><p>İçeriklerini seç, düzenle ve yayına al. Aynı anda en fazla üç bölüm görünür; diğer bölümlere oklarla geçebilirsin.</p></div>
+    <div class="panel-switcher"><button class="panel-arrow" id="panelPrev" type="button" aria-label="Önceki yönetim bölümleri">‹</button><div class="tab-window"><nav class="tabs" id="adminTabs" aria-label="Admin bölümleri">
       <button class="tab active" type="button" data-tab="timeline">Timelapse</button>
       <button class="tab" type="button" data-tab="designs">Tasarımlar</button>
       <button class="tab" type="button" data-tab="projects">Projeler</button>
-    </nav>
+      <button class="tab" type="button" data-tab="channels">Kanallar</button>
+      <button class="tab" type="button" data-tab="collaborations">İşbirlikleri</button>
+    </nav></div><button class="panel-arrow" id="panelNext" type="button" aria-label="Sonraki yönetim bölümleri">›</button></div>
 
     <div id="timelinePanel">
       <section class="card">
@@ -218,7 +232,8 @@
             <label>Rolüm<input id="projectRole" type="text" placeholder="Konsept, tasarım ve geliştirme"></label>
             <label>Araçlar<input id="projectTools" type="text" placeholder="Photoshop, Figma, CapCut"><span class="hint">Virgülle ayır.</span></label>
             <label>Sıra<input id="projectOrder" type="number" value="0"></label>
-            <label>Banner görseli<input id="projectBanner" type="file" accept="image/*"><span class="hint">Yeni ve yayınlanacak projede zorunlu. En fazla 18 MB.</span></label>
+            <label>Ana sayfa kart bannerı<input id="projectBanner" type="file" accept="image/*"><span class="hint">Projeler bölümündeki kısa kartta görünür. Yeni projede zorunlu.</span></label>
+            <label>Proje sayfası arka planı<input id="projectDetailBanner" type="file" accept="image/*"><span class="hint">Proje açıldığında büyük başlık arkasında görünür. Boş bırakırsan kart bannerı kullanılır.</span></label>
             <label class="full">Ana sayfa özeti<textarea id="projectSummary" placeholder="Projeyi iki üç cümlede anlat."></textarea></label>
             <label class="full">Proje hikâyesi<textarea id="projectDescription" placeholder="Amaç, fikir ve ortaya çıkan sonuç..."></textarea></label>
           </div>
@@ -253,6 +268,30 @@
         <div id="projectList" class="list"></div>
       </section>
     </div>
+
+    <div id="channelsPanel" hidden>
+      <section class="card"><h2 id="channelFormTitle">Kanal düzenle</h2><p>Kanal kartını ve detay sayfasını aynı yerden yönet.</p><form id="channelForm"><input id="channelId" type="hidden"><div class="grid">
+        <label>Kanal adı *<input id="channelName" required></label><label>Sayfa adresi *<input id="channelSlug" placeholder="batu" required></label>
+        <label>Abone<input id="channelSubscribers" placeholder="60,5 B"></label><label>Görüntülenme<input id="channelViews" placeholder="165 M"></label>
+        <label>Video sayısı<input id="channelVideoCount" placeholder="255"></label><label>Sıra<input id="channelOrder" type="number" value="0"></label>
+        <label>Logo yükle<input id="channelLogo" type="file" accept="image/*"></label><label>Logo bağlantısı<input id="channelLogoUrl" type="url" placeholder="https://..."></label>
+        <label>Banner yükle<input id="channelBanner" type="file" accept="image/*"></label><label>Banner bağlantısı<input id="channelBannerUrl" type="url" placeholder="https://..."></label>
+        <label class="full">YouTube / kanal bağlantısı<input id="channelUrl" type="url" placeholder="https://youtube.com/@..."></label>
+        <label class="full">Kanal açıklaması<textarea id="channelDescription"></textarea></label>
+      </div><div class="subcard"><div class="subcard-head"><h3>Kanal videoları</h3><button id="addChannelVideo" class="small" type="button">+ Video ekle</button></div><p class="hint">Videoyu “En sevilen” veya “En çok beğenilen” bölümüne yerleştirebilirsin.</p><div id="channelVideos" class="step-list"></div></div>
+      <label class="check"><input id="channelPublished" type="checkbox" checked>Yayında</label><div class="form-actions"><button id="channelSave" class="wide" type="submit">Kanalı kaydet</button><button id="channelCancel" class="small" type="button" hidden>Vazgeç</button></div><div id="channelMessage" class="message"></div></form></section>
+      <section class="card"><div class="toolbar"><h2>Kanallar</h2><button id="channelRefresh" class="small" type="button">Yenile</button></div><div id="channelList" class="list"></div></section>
+    </div>
+
+    <div id="collaborationsPanel" hidden>
+      <section class="card"><h2 id="collaborationFormTitle">İşbirliği düzenle</h2><p>Marka logosu ve sayfadaki bütün metinler buradan yönetilir.</p><form id="collaborationForm"><input id="collaborationId" type="hidden"><div class="grid">
+        <label>Marka adı *<input id="collaborationName" required></label><label>İşbirliği türü<input id="collaborationType" placeholder="Proje Partneri"></label>
+        <label>Logo yükle<input id="collaborationLogo" type="file" accept="image/*"></label><label>Logo bağlantısı<input id="collaborationLogoUrl" type="url" placeholder="https://..."></label>
+        <label>Marka bağlantısı<input id="collaborationLink" type="url" placeholder="https://..."></label><label>Sıra<input id="collaborationOrder" type="number" value="0"></label>
+        <label class="full">Açıklama<textarea id="collaborationDescription"></textarea></label>
+      </div><label class="check"><input id="collaborationPublished" type="checkbox" checked>Yayında</label><div class="form-actions"><button id="collaborationSave" class="wide" type="submit">İşbirliğini kaydet</button><button id="collaborationCancel" class="small" type="button" hidden>Vazgeç</button></div><div id="collaborationMessage" class="message"></div></form></section>
+      <section class="card"><div class="toolbar"><h2>İşbirlikleri</h2><button id="collaborationRefresh" class="small" type="button">Yenile</button></div><div id="collaborationList" class="list"></div></section>
+    </div>
   </section>
 </main>
 
@@ -262,6 +301,8 @@ let adminPassword = "";
 let timelineEvents = [];
 let designs = [];
 let projects = [];
+let channels = [];
+let collaborations = [];
 
 const $ = id => document.getElementById(id);
 const loginView = $("loginView");
@@ -273,6 +314,10 @@ const list = $("list");
 const timelineList = $("timelineList");
 const projectList = $("projectList");
 const projectMessage = $("projectMessage");
+const channelList = $("channelList");
+const channelMessage = $("channelMessage");
+const collaborationList = $("collaborationList");
+const collaborationMessage = $("collaborationMessage");
 const logout = $("logout");
 
 function formatError(value) {
@@ -356,11 +401,18 @@ document.querySelectorAll(".tab").forEach(tab => {
     $("timelinePanel").hidden = selected !== "timeline";
     $("designsPanel").hidden = selected !== "designs";
     $("projectsPanel").hidden = selected !== "projects";
+    $("channelsPanel").hidden = selected !== "channels";
+    $("collaborationsPanel").hidden = selected !== "collaborations";
     if (selected === "timeline") loadTimeline();
     if (selected === "designs") loadDesigns();
     if (selected === "projects") loadProjects();
+    if (selected === "channels") loadChannels();
+    if (selected === "collaborations") loadCollaborations();
   });
 });
+
+$("panelPrev").addEventListener("click", () => $("adminTabs").scrollBy({ left: -$("adminTabs").clientWidth, behavior: "smooth" }));
+$("panelNext").addEventListener("click", () => $("adminTabs").scrollBy({ left: $("adminTabs").clientWidth, behavior: "smooth" }));
 
 function formatTimelineDate(event) {
   const months = ["", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
@@ -640,7 +692,7 @@ $("projectCancel").addEventListener("click", resetProjectForm);
 $("projectForm").addEventListener("submit", async event => {
   event.preventDefault();
   const id = $("projectId").value;
-  const files = [$("projectBanner").files[0], $("projectBefore").files[0], $("projectAfter").files[0],
+  const files = [$("projectBanner").files[0], $("projectDetailBanner").files[0], $("projectBefore").files[0], $("projectAfter").files[0],
     ...[...document.querySelectorAll(".step-file")].map(input => input.files[0])].filter(Boolean);
   if (files.some(file => file.size > 18 * 1024 * 1024)) {
     return showMessage(projectMessage, "Her dosya en fazla 18 MB olabilir.", "error");
@@ -668,6 +720,7 @@ $("projectForm").addEventListener("submit", async event => {
   form.append("sonra_sil", $("projectAfterRemove").checked);
   form.append("yayinlandi", $("projectPublished").checked);
   if ($("projectBanner").files[0]) form.append("banner", $("projectBanner").files[0]);
+  if ($("projectDetailBanner").files[0]) form.append("detay_banner", $("projectDetailBanner").files[0]);
   if ($("projectBefore").files[0]) form.append("once", $("projectBefore").files[0]);
   if ($("projectAfter").files[0]) form.append("sonra", $("projectAfter").files[0]);
 
@@ -730,6 +783,63 @@ async function loadProjects() {
 }
 
 $("projectRefresh").addEventListener("click", loadProjects);
+
+function addChannelVideo(video = {}) {
+  const row = document.createElement("article");
+  row.className = "process-step channel-video-row";
+  row.dataset.videoId = video.id || crypto.randomUUID();
+  row.innerHTML = `<div class="process-step-top"><strong>Kanal videosu</strong><button class="small danger remove-video" type="button">Kaldır</button></div><div class="grid"><label>Başlık<input class="channel-video-title" value="${escapeHtml(video.baslik || "")}"></label><label>Bölüm<select class="channel-video-type"><option value="sevilen" ${video.tur !== "begenilen" ? "selected" : ""}>En sevilen</option><option value="begenilen" ${video.tur === "begenilen" ? "selected" : ""}>En çok beğenilen</option></select></label><label class="full">Video bağlantısı<input class="channel-video-url" type="url" value="${escapeHtml(video.url || "")}" placeholder="https://youtube.com/..."></label><label class="full">Kapak görseli bağlantısı<input class="channel-video-image" type="url" value="${escapeHtml(video.gorsel_url || "")}" placeholder="https://..."></label><label class="full">Kısa not<textarea class="channel-video-description">${escapeHtml(video.aciklama || "")}</textarea></label></div>`;
+  row.querySelector(".remove-video").addEventListener("click", () => row.remove());
+  $("channelVideos").appendChild(row);
+}
+
+$("addChannelVideo").addEventListener("click", () => addChannelVideo());
+
+function resetChannelForm() {
+  $("channelForm").reset(); $("channelId").value = ""; $("channelOrder").value = "0";
+  $("channelPublished").checked = true; $("channelVideos").innerHTML = "";
+  $("channelFormTitle").textContent = "Kanal düzenle"; $("channelCancel").hidden = true;
+}
+
+function editChannel(channel) {
+  $("channelId").value = channel.id; $("channelName").value = channel.ad || ""; $("channelSlug").value = channel.slug || "";
+  $("channelSubscribers").value = channel.abone || ""; $("channelViews").value = channel.goruntulenme || ""; $("channelVideoCount").value = channel.video_sayisi || "";
+  $("channelOrder").value = channel.sira ?? 0; $("channelLogoUrl").value = channel.logo_yolu ? "" : (channel.logo_url || "");
+  $("channelBannerUrl").value = channel.banner_yolu ? "" : (channel.banner_url || ""); $("channelUrl").value = channel.kanal_url || "";
+  $("channelDescription").value = channel.aciklama || ""; $("channelPublished").checked = Boolean(channel.yayinlandi); $("channelVideos").innerHTML = "";
+  (channel.videolar || []).forEach(addChannelVideo); $("channelFormTitle").textContent = `${channel.ad} kanalını düzenle`; $("channelCancel").hidden = false;
+  $("channelsPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+$("channelCancel").addEventListener("click", resetChannelForm);
+$("channelForm").addEventListener("submit", async event => {
+  event.preventDefault(); const button = $("channelSave"); button.disabled = true; button.textContent = "Kaydediliyor...";
+  const form = new FormData(); form.append("action", "channel-save"); form.append("id", $("channelId").value);
+  [["ad","channelName"],["slug","channelSlug"],["abone","channelSubscribers"],["goruntulenme","channelViews"],["video_sayisi","channelVideoCount"],["sira","channelOrder"],["logo_url","channelLogoUrl"],["banner_url","channelBannerUrl"],["kanal_url","channelUrl"],["aciklama","channelDescription"]].forEach(([key,id]) => form.append(key, $(id).value));
+  if ($("channelLogo").files[0]) form.append("logo", $("channelLogo").files[0]); if ($("channelBanner").files[0]) form.append("banner", $("channelBanner").files[0]);
+  form.append("yayinlandi", $("channelPublished").checked);
+  const videos = [...document.querySelectorAll(".channel-video-row")].map(row => ({ id: row.dataset.videoId, baslik: row.querySelector(".channel-video-title").value, tur: row.querySelector(".channel-video-type").value, url: row.querySelector(".channel-video-url").value, gorsel_url: row.querySelector(".channel-video-image").value, aciklama: row.querySelector(".channel-video-description").value }));
+  form.append("videolar", JSON.stringify(videos));
+  try { await request(form, true); resetChannelForm(); showMessage(channelMessage, "Kanal kaydedildi.", "success"); await loadChannels(); }
+  catch (error) { showMessage(channelMessage, error.message, "error"); }
+  button.disabled = false; button.textContent = "Kanalı kaydet";
+});
+
+async function loadChannels() {
+  channelList.innerHTML = "<p>Yükleniyor...</p>";
+  try { const data = await request({ action: "channel-list" }); channels = data.channels || []; channelList.innerHTML = "";
+    channels.forEach(channel => { const item = document.createElement("article"); item.className = "item"; item.innerHTML = `${channel.logo_url ? `<img class="thumb" src="${escapeHtml(channel.logo_url)}" alt="">` : '<div class="thumb thumb-placeholder">—</div>'}<div><h3>${escapeHtml(channel.ad)}</h3><div class="meta">/${escapeHtml(channel.slug)} · ${channel.yayinlandi ? "Yayında" : "Gizli"}</div><a class="project-link-admin" href="/kanal/${encodeURIComponent(channel.slug)}" target="_blank">Sayfayı aç ↗</a></div><div class="actions"><button class="small edit">Düzenle</button><button class="small toggle">${channel.yayinlandi ? "Gizle" : "Yayınla"}</button><button class="small danger delete">Sil</button></div>`;
+      item.querySelector(".edit").onclick = () => editChannel(channel); item.querySelector(".toggle").onclick = async () => { await request({ action:"channel-toggle", id:channel.id, yayinlandi:!channel.yayinlandi }); loadChannels(); }; item.querySelector(".delete").onclick = async () => { if(confirm("Kanal silinsin mi?")){await request({action:"channel-delete",id:channel.id});loadChannels();} }; channelList.appendChild(item); });
+  } catch (error) { channelList.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`; }
+}
+$("channelRefresh").addEventListener("click", loadChannels);
+
+function resetCollaborationForm(){ $("collaborationForm").reset(); $("collaborationId").value=""; $("collaborationOrder").value="0"; $("collaborationPublished").checked=true; $("collaborationFormTitle").textContent="İşbirliği düzenle"; $("collaborationCancel").hidden=true; }
+function editCollaboration(item){ $("collaborationId").value=item.id; $("collaborationName").value=item.ad||""; $("collaborationType").value=item.tur||""; $("collaborationLogoUrl").value=item.logo_yolu?"":(item.logo_url||""); $("collaborationLink").value=item.link||""; $("collaborationOrder").value=item.sira??0; $("collaborationDescription").value=item.aciklama||""; $("collaborationPublished").checked=Boolean(item.yayinlandi); $("collaborationFormTitle").textContent=`${item.ad} işbirliğini düzenle`; $("collaborationCancel").hidden=false; $("collaborationsPanel").scrollIntoView({behavior:"smooth",block:"start"}); }
+$("collaborationCancel").addEventListener("click",resetCollaborationForm);
+$("collaborationForm").addEventListener("submit",async event=>{event.preventDefault();const button=$("collaborationSave");button.disabled=true;button.textContent="Kaydediliyor...";const form=new FormData();form.append("action","collaboration-save");form.append("id",$("collaborationId").value);[["ad","collaborationName"],["tur","collaborationType"],["logo_url","collaborationLogoUrl"],["link","collaborationLink"],["sira","collaborationOrder"],["aciklama","collaborationDescription"]].forEach(([key,id])=>form.append(key,$(id).value));if($("collaborationLogo").files[0])form.append("logo",$("collaborationLogo").files[0]);form.append("yayinlandi",$("collaborationPublished").checked);try{await request(form,true);resetCollaborationForm();showMessage(collaborationMessage,"İşbirliği kaydedildi.","success");await loadCollaborations();}catch(error){showMessage(collaborationMessage,error.message,"error");}button.disabled=false;button.textContent="İşbirliğini kaydet";});
+async function loadCollaborations(){collaborationList.innerHTML="<p>Yükleniyor...</p>";try{const data=await request({action:"collaboration-list"});collaborations=data.collaborations||[];collaborationList.innerHTML="";collaborations.forEach(value=>{const item=document.createElement("article");item.className="item";item.innerHTML=`${value.logo_url?`<img class="thumb" src="${escapeHtml(value.logo_url)}" alt="">`:'<div class="thumb thumb-placeholder">—</div>'}<div><h3>${escapeHtml(value.ad)}</h3><div class="meta">${escapeHtml(value.tur||"")} · ${value.yayinlandi?"Yayında":"Gizli"}</div></div><div class="actions"><button class="small edit">Düzenle</button><button class="small toggle">${value.yayinlandi?"Gizle":"Yayınla"}</button><button class="small danger delete">Sil</button></div>`;item.querySelector(".edit").onclick=()=>editCollaboration(value);item.querySelector(".toggle").onclick=async()=>{await request({action:"collaboration-toggle",id:value.id,yayinlandi:!value.yayinlandi});loadCollaborations();};item.querySelector(".delete").onclick=async()=>{if(confirm("İşbirliği silinsin mi?")){await request({action:"collaboration-delete",id:value.id});loadCollaborations();}};collaborationList.appendChild(item);});}catch(error){collaborationList.innerHTML=`<p class="error">${escapeHtml(error.message)}</p>`;}}
+$("collaborationRefresh").addEventListener("click",loadCollaborations);
 
 const savedPassword = sessionStorage.getItem("batu_admin_password");
 if (savedPassword) {

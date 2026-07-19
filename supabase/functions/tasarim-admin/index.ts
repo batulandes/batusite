@@ -12,6 +12,8 @@ const OFFICIAL_DESIGNS_INDEX = "resmi-tasarimlar.json";
 const TIMELAPSE_BUCKET = "timelapse";
 const TIMELAPSE_INDEX = "events.json";
 const PROJECTS_INDEX = "projects.json";
+const CHANNELS_INDEX = "channels.json";
+const COLLABORATIONS_INDEX = "collaborations.json";
 const MAX_TIMELAPSE_MEDIA_SIZE = 18 * 1024 * 1024;
 
 type SupabaseClient = ReturnType<typeof createClient>;
@@ -52,6 +54,8 @@ type PortfolioProject = {
   araclar: string[];
   banner_url: string | null;
   banner_yolu: string | null;
+  detay_banner_url: string | null;
+  detay_banner_yolu: string | null;
   once_url: string | null;
   once_yolu: string | null;
   sonra_url: string | null;
@@ -61,6 +65,47 @@ type PortfolioProject = {
   sira: number;
   yayinlandi: boolean;
   created_at: string;
+  updated_at: string;
+};
+
+type ChannelVideo = {
+  id: string;
+  baslik: string;
+  url: string;
+  gorsel_url: string | null;
+  aciklama: string | null;
+  tur: "sevilen" | "begenilen";
+};
+
+type PortfolioChannel = {
+  id: string;
+  slug: string;
+  ad: string;
+  aciklama: string | null;
+  logo_url: string | null;
+  logo_yolu: string | null;
+  banner_url: string | null;
+  banner_yolu: string | null;
+  kanal_url: string | null;
+  abone: string | null;
+  goruntulenme: string | null;
+  video_sayisi: string | null;
+  videolar: ChannelVideo[];
+  sira: number;
+  yayinlandi: boolean;
+  updated_at: string;
+};
+
+type Collaboration = {
+  id: string;
+  ad: string;
+  tur: string | null;
+  aciklama: string | null;
+  logo_url: string | null;
+  logo_yolu: string | null;
+  link: string | null;
+  sira: number;
+  yayinlandi: boolean;
   updated_at: string;
 };
 
@@ -77,6 +122,8 @@ const DEFAULT_PROJECTS: PortfolioProject[] = [
     araclar: [],
     banner_url: "https://i.ibb.co/zq12TxH/Screenshot-20260716-224309-Chrome.jpg",
     banner_yolu: null,
+    detay_banner_url: "https://i.ibb.co/zq12TxH/Screenshot-20260716-224309-Chrome.jpg",
+    detay_banner_yolu: null,
     once_url: null,
     once_yolu: null,
     sonra_url: null,
@@ -100,6 +147,8 @@ const DEFAULT_PROJECTS: PortfolioProject[] = [
     araclar: [],
     banner_url: "https://i.ibb.co/gMZFXJZJ/ltoobatu.jpg",
     banner_yolu: null,
+    detay_banner_url: "https://i.ibb.co/gMZFXJZJ/ltoobatu.jpg",
+    detay_banner_yolu: null,
     once_url: null,
     once_yolu: null,
     sonra_url: null,
@@ -123,6 +172,8 @@ const DEFAULT_PROJECTS: PortfolioProject[] = [
     araclar: [],
     banner_url: "https://static.wixstatic.com/media/6fb8dd_aa7b0a675ae3472a8076476a89dc5ff4~mv2.png/v1/fill/w_1905,h_785,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/6fb8dd_aa7b0a675ae3472a8076476a89dc5ff4~mv2.png",
     banner_yolu: null,
+    detay_banner_url: "https://static.wixstatic.com/media/6fb8dd_aa7b0a675ae3472a8076476a89dc5ff4~mv2.png/v1/fill/w_1905,h_785,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/6fb8dd_aa7b0a675ae3472a8076476a89dc5ff4~mv2.png",
+    detay_banner_yolu: null,
     once_url: null,
     once_yolu: null,
     sonra_url: null,
@@ -134,6 +185,32 @@ const DEFAULT_PROJECTS: PortfolioProject[] = [
     created_at: "2026-01-02T00:00:00.000Z",
     updated_at: "2026-07-19T00:00:00.000Z",
   },
+];
+
+const DEFAULT_CHANNELS: PortfolioChannel[] = [
+  {
+    id: "channel-batu", slug: "batu", ad: "BATU",
+    aciklama: "Kısa kesitler, yayın anları ve özgün video projelerinin buluştuğu ana BATU kanalı.",
+    logo_url: "https://i.ibb.co/3ypbvs47/batumetal26renk.png", logo_yolu: null,
+    banner_url: "https://i.ibb.co/vC08Ty4X/20260715-215703.jpg", banner_yolu: null,
+    kanal_url: "https://youtube.com/@batuclips", abone: "60,5 B", goruntulenme: "165 M", video_sayisi: "255",
+    videolar: [], sira: 0, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z",
+  },
+  {
+    id: "channel-lemonhota", slug: "lemonhota", ad: "Lemonhota",
+    aciklama: "Limon Tayfa içerikleri, topluluk projeleri ve özel yıllık yapımların merkezi.",
+    logo_url: "https://yt3.googleusercontent.com/crso4xn6gfLnyIBaX8n2-I9NralQ3TY-DphR90vlPuC2RZNErRnh45a1OI8o2cQ7FB1J44LLQg=s900-c-k-c0x00ffffff-no-rj", logo_yolu: null,
+    banner_url: "https://i.ibb.co/s9jZj0Bf/20260715-221218.jpg", banner_yolu: null,
+    kanal_url: "https://youtube.com/@lemonhota", abone: "48,1 B", goruntulenme: "14 M", video_sayisi: "240",
+    videolar: [], sira: 1, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z",
+  },
+];
+
+const DEFAULT_COLLABORATIONS: Collaboration[] = [
+  { id: "collab-xdrive", ad: "XDrive", tur: "Marka İşbirliği", aciklama: "İçerik ve topluluk projelerinde gerçekleştirilen marka iş birliği.", logo_url: "https://cdn.discordapp.com/attachments/1255133297277796474/1527717005250269244/20260717_194135.png", logo_yolu: null, link: null, sira: 0, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "collab-hawk", ad: "Hawk Gaming Chair", tur: "Proje Partneri", aciklama: "Limon Tayfa Özeti 2025 dahil özel içerik projelerinde birlikte üretim.", logo_url: "https://cdn.discordapp.com/attachments/1255133297277796474/1527713206133587998/20240830_140258.png", logo_yolu: null, link: null, sira: 1, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "collab-razer", ad: "Razer", tur: "Creator Program", aciklama: "Razer Creator Program kapsamında kurulan üretici bağlantısı.", logo_url: "https://cdn.discordapp.com/attachments/1282627807901515797/1282633161892691968/2024-creatorprogram-logo-white.png", logo_yolu: null, link: null, sira: 2, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
+  { id: "collab-hytale", ad: "Hytale", tur: "Topluluk", aciklama: "Oyun topluluğu ve içerik üretimi odağında gerçekleştirilen çalışma.", logo_url: "https://cdn.discordapp.com/attachments/1255133297277796474/1527715811492364329/file_0000000028607243a7a4d0ad1fd8b7b2.png", logo_yolu: null, link: null, sira: 3, yayinlandi: true, updated_at: "2026-07-19T00:00:00.000Z" },
 ];
 
 function json(body: unknown, status = 200) {
@@ -363,6 +440,51 @@ async function uploadProjectMedia(
     .upload(path, file, { contentType: file.type, upsert: false });
   if (error) throw error;
 
+  const { data } = supabase.storage.from(TIMELAPSE_BUCKET).getPublicUrl(path);
+  return { path, url: data.publicUrl };
+}
+
+async function readManagedIndex<T>(
+  supabase: SupabaseClient,
+  filename: string,
+  defaults: T[],
+): Promise<T[]> {
+  const { data, error } = await supabase.storage.from(TIMELAPSE_BUCKET).download(filename);
+  if (error) {
+    if (missingStorageObject(error)) return structuredClone(defaults);
+    throw error;
+  }
+  const parsed = JSON.parse(await data.text());
+  return Array.isArray(parsed) ? parsed : structuredClone(defaults);
+}
+
+async function writeManagedIndex<T>(
+  supabase: SupabaseClient,
+  filename: string,
+  values: T[],
+) {
+  await ensurePublicBucket(supabase, TIMELAPSE_BUCKET);
+  const file = new Blob([JSON.stringify(values, null, 2)], { type: "application/json" });
+  const { error } = await supabase.storage.from(TIMELAPSE_BUCKET).upload(filename, file, {
+    contentType: "application/json; charset=utf-8", cacheControl: "0", upsert: true,
+  });
+  if (error) throw error;
+}
+
+async function uploadManagedImage(
+  supabase: SupabaseClient,
+  file: File,
+  folder: string,
+  id: string,
+) {
+  if (!file.type.startsWith("image/")) throw new Error("Yalnızca görsel yüklenebilir.");
+  if (file.size > MAX_TIMELAPSE_MEDIA_SIZE) throw new Error("Görsel en fazla 18 MB olabilir.");
+  await ensurePublicBucket(supabase, TIMELAPSE_BUCKET);
+  const path = `${folder}/${id}/${safeFilename(file.name)}`;
+  const { error } = await supabase.storage.from(TIMELAPSE_BUCKET).upload(path, file, {
+    contentType: file.type, upsert: false,
+  });
+  if (error) throw error;
   const { data } = supabase.storage.from(TIMELAPSE_BUCKET).getPublicUrl(path);
   return { path, url: data.publicUrl };
 }
@@ -897,13 +1019,15 @@ Deno.serve(async (request) => {
       const oldPathsToRemove: string[] = [];
       let bannerUrl = existing?.banner_url || null;
       let bannerPath = existing?.banner_yolu || null;
+      let detailBannerUrl = existing?.detay_banner_url || existing?.banner_url || null;
+      let detailBannerPath = existing?.detay_banner_yolu || null;
       let beforeUrl = existing?.once_url || null;
       let beforePath = existing?.once_yolu || null;
       let afterUrl = existing?.sonra_url || null;
       let afterPath = existing?.sonra_yolu || null;
 
       const replaceMedia = async (
-        key: "banner" | "once" | "sonra",
+        key: "banner" | "detay_banner" | "once" | "sonra",
         currentPath: string | null,
         remove: boolean,
       ) => {
@@ -924,6 +1048,8 @@ Deno.serve(async (request) => {
       try {
         const banner = await replaceMedia("banner", bannerPath, false);
         if (banner) { bannerPath = banner.path; bannerUrl = banner.url; }
+        const detailBanner = await replaceMedia("detay_banner", detailBannerPath, false);
+        if (detailBanner) { detailBannerPath = detailBanner.path; detailBannerUrl = detailBanner.url; }
         const before = await replaceMedia("once", beforePath, String(form.get("once_sil")) === "true");
         if (before) { beforePath = before.path; beforeUrl = before.url; }
         const after = await replaceMedia("sonra", afterPath, String(form.get("sonra_sil")) === "true");
@@ -989,6 +1115,8 @@ Deno.serve(async (request) => {
           araclar: String(form.get("araclar") || "").split(",").map((item) => item.trim()).filter(Boolean),
           banner_url: bannerUrl,
           banner_yolu: bannerPath,
+          detay_banner_url: detailBannerUrl || bannerUrl,
+          detay_banner_yolu: detailBannerPath,
           once_url: beforeUrl,
           once_yolu: beforePath,
           sonra_url: afterUrl,
@@ -1038,11 +1166,150 @@ Deno.serve(async (request) => {
       await writeProjects(supabase, projects);
       const paths = [
         project.banner_yolu,
+        project.detay_banner_yolu,
         project.once_yolu,
         project.sonra_yolu,
         ...project.adimlar.map((step) => step.dosya_yolu),
       ].filter((path): path is string => Boolean(path));
       if (paths.length) await supabase.storage.from(TIMELAPSE_BUCKET).remove(paths);
+      return json({ ok: true });
+    }
+
+    if (action === "channel-list") {
+      const channels = (await readManagedIndex(supabase, CHANNELS_INDEX, DEFAULT_CHANNELS))
+        .sort((a, b) => a.sira - b.sira);
+      await writeManagedIndex(supabase, CHANNELS_INDEX, channels);
+      return json({ channels });
+    }
+
+    if (action === "channel-save") {
+      if (!form) return json({ error: "Kanal formu alınamadı." }, 400);
+      const channels = await readManagedIndex(supabase, CHANNELS_INDEX, DEFAULT_CHANNELS);
+      const requestedId = String(form.get("id") || "");
+      const index = requestedId ? channels.findIndex((item) => item.id === requestedId) : -1;
+      const existing = index >= 0 ? channels[index] : null;
+      const id = existing?.id || crypto.randomUUID();
+      const slug = String(form.get("slug") || "").trim().toLowerCase();
+      const ad = String(form.get("ad") || "").trim();
+      if (!ad || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+        return json({ error: "Kanal adı ve geçerli sayfa adresi zorunlu." }, 400);
+      }
+      if (channels.some((item) => item.slug === slug && item.id !== id)) {
+        return json({ error: "Bu kanal adresi kullanılıyor." }, 409);
+      }
+      let videos: ChannelVideo[] = [];
+      try {
+        const parsed = JSON.parse(String(form.get("videolar") || "[]"));
+        videos = Array.isArray(parsed) ? parsed : [];
+      } catch { return json({ error: "Video listesi okunamadı." }, 400); }
+
+      let logoUrl = String(form.get("logo_url") || "").trim() || existing?.logo_url || null;
+      let logoPath = existing?.logo_yolu || null;
+      let bannerUrl = String(form.get("banner_url") || "").trim() || existing?.banner_url || null;
+      let bannerPath = existing?.banner_yolu || null;
+      const oldPaths: string[] = [];
+      const logoFile = form.get("logo");
+      const bannerFile = form.get("banner");
+      if (logoFile instanceof File && logoFile.size) {
+        const uploaded = await uploadManagedImage(supabase, logoFile, "channels", id);
+        if (logoPath) oldPaths.push(logoPath); logoUrl = uploaded.url; logoPath = uploaded.path;
+      }
+      if (bannerFile instanceof File && bannerFile.size) {
+        const uploaded = await uploadManagedImage(supabase, bannerFile, "channels", id);
+        if (bannerPath) oldPaths.push(bannerPath); bannerUrl = uploaded.url; bannerPath = uploaded.path;
+      }
+      const channel: PortfolioChannel = {
+        id, slug, ad,
+        aciklama: String(form.get("aciklama") || "").trim() || null,
+        logo_url: logoUrl, logo_yolu: logoPath, banner_url: bannerUrl, banner_yolu: bannerPath,
+        kanal_url: String(form.get("kanal_url") || "").trim() || null,
+        abone: String(form.get("abone") || "").trim() || null,
+        goruntulenme: String(form.get("goruntulenme") || "").trim() || null,
+        video_sayisi: String(form.get("video_sayisi") || "").trim() || null,
+        videolar: videos.map((video) => ({
+          id: String(video.id || crypto.randomUUID()), baslik: String(video.baslik || "Video"),
+          url: String(video.url || ""), gorsel_url: video.gorsel_url ? String(video.gorsel_url) : null,
+          aciklama: video.aciklama ? String(video.aciklama) : null,
+          tur: video.tur === "begenilen" ? "begenilen" : "sevilen",
+        })),
+        sira: Number(form.get("sira") || 0),
+        yayinlandi: String(form.get("yayinlandi")) === "true",
+        updated_at: new Date().toISOString(),
+      };
+      if (index >= 0) channels[index] = channel; else channels.push(channel);
+      await writeManagedIndex(supabase, CHANNELS_INDEX, channels.sort((a, b) => a.sira - b.sira));
+      if (oldPaths.length) await supabase.storage.from(TIMELAPSE_BUCKET).remove(oldPaths);
+      return json({ channel });
+    }
+
+    if (action === "channel-toggle") {
+      const channels = await readManagedIndex(supabase, CHANNELS_INDEX, DEFAULT_CHANNELS);
+      const channel = channels.find((item) => item.id === String(body.id || ""));
+      if (!channel) return json({ error: "Kanal bulunamadı." }, 404);
+      channel.yayinlandi = Boolean(body.yayinlandi); channel.updated_at = new Date().toISOString();
+      await writeManagedIndex(supabase, CHANNELS_INDEX, channels); return json({ ok: true });
+    }
+
+    if (action === "channel-delete") {
+      const channels = await readManagedIndex(supabase, CHANNELS_INDEX, DEFAULT_CHANNELS);
+      const index = channels.findIndex((item) => item.id === String(body.id || ""));
+      if (index < 0) return json({ error: "Kanal bulunamadı." }, 404);
+      const [channel] = channels.splice(index, 1); await writeManagedIndex(supabase, CHANNELS_INDEX, channels);
+      const paths = [channel.logo_yolu, channel.banner_yolu].filter((item): item is string => Boolean(item));
+      if (paths.length) await supabase.storage.from(TIMELAPSE_BUCKET).remove(paths); return json({ ok: true });
+    }
+
+    if (action === "collaboration-list") {
+      const collaborations = (await readManagedIndex(supabase, COLLABORATIONS_INDEX, DEFAULT_COLLABORATIONS))
+        .sort((a, b) => a.sira - b.sira);
+      await writeManagedIndex(supabase, COLLABORATIONS_INDEX, collaborations);
+      return json({ collaborations });
+    }
+
+    if (action === "collaboration-save") {
+      if (!form) return json({ error: "İşbirliği formu alınamadı." }, 400);
+      const values = await readManagedIndex(supabase, COLLABORATIONS_INDEX, DEFAULT_COLLABORATIONS);
+      const requestedId = String(form.get("id") || "");
+      const index = requestedId ? values.findIndex((item) => item.id === requestedId) : -1;
+      const existing = index >= 0 ? values[index] : null;
+      const id = existing?.id || crypto.randomUUID();
+      const ad = String(form.get("ad") || "").trim();
+      if (!ad) return json({ error: "Marka adı zorunlu." }, 400);
+      let logoUrl = String(form.get("logo_url") || "").trim() || existing?.logo_url || null;
+      let logoPath = existing?.logo_yolu || null;
+      const logoFile = form.get("logo");
+      if (logoFile instanceof File && logoFile.size) {
+        const uploaded = await uploadManagedImage(supabase, logoFile, "collaborations", id);
+        if (logoPath) await supabase.storage.from(TIMELAPSE_BUCKET).remove([logoPath]);
+        logoUrl = uploaded.url; logoPath = uploaded.path;
+      }
+      const collaboration: Collaboration = {
+        id, ad, tur: String(form.get("tur") || "").trim() || null,
+        aciklama: String(form.get("aciklama") || "").trim() || null,
+        logo_url: logoUrl, logo_yolu: logoPath,
+        link: String(form.get("link") || "").trim() || null,
+        sira: Number(form.get("sira") || 0), yayinlandi: String(form.get("yayinlandi")) === "true",
+        updated_at: new Date().toISOString(),
+      };
+      if (index >= 0) values[index] = collaboration; else values.push(collaboration);
+      await writeManagedIndex(supabase, COLLABORATIONS_INDEX, values.sort((a, b) => a.sira - b.sira));
+      return json({ collaboration });
+    }
+
+    if (action === "collaboration-toggle") {
+      const values = await readManagedIndex(supabase, COLLABORATIONS_INDEX, DEFAULT_COLLABORATIONS);
+      const item = values.find((value) => value.id === String(body.id || ""));
+      if (!item) return json({ error: "İşbirliği bulunamadı." }, 404);
+      item.yayinlandi = Boolean(body.yayinlandi); item.updated_at = new Date().toISOString();
+      await writeManagedIndex(supabase, COLLABORATIONS_INDEX, values); return json({ ok: true });
+    }
+
+    if (action === "collaboration-delete") {
+      const values = await readManagedIndex(supabase, COLLABORATIONS_INDEX, DEFAULT_COLLABORATIONS);
+      const index = values.findIndex((value) => value.id === String(body.id || ""));
+      if (index < 0) return json({ error: "İşbirliği bulunamadı." }, 404);
+      const [item] = values.splice(index, 1); await writeManagedIndex(supabase, COLLABORATIONS_INDEX, values);
+      if (item.logo_yolu) await supabase.storage.from(TIMELAPSE_BUCKET).remove([item.logo_yolu]);
       return json({ ok: true });
     }
 

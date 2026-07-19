@@ -223,6 +223,42 @@ const loadPortfolioProjects = async () => {
 
 loadPortfolioProjects();
 
+const loadPortfolioChannels = async () => {
+  const cards = [...document.querySelectorAll("[data-channel-slug]")];
+  if (!cards.length) return;
+  const indexUrl = "https://phreqbjgynchbynmtefz.supabase.co/storage/v1/object/public/timelapse/channels.json";
+  try {
+    const response = await fetch(`${indexUrl}?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) return;
+    const channels = await response.json();
+    if (!Array.isArray(channels)) return;
+    cards.forEach(card => {
+      const channel = channels.find(item => item.slug === card.dataset.channelSlug);
+      if (!channel) return;
+      card.hidden = !channel.yayinlandi;
+      if (!channel.yayinlandi) return;
+      const background = card.querySelector(".channel-background");
+      const logo = card.querySelector(".channel-logo");
+      const name = card.querySelector(".channel-name");
+      const stats = card.querySelectorAll(".channel-stat strong");
+      const external = card.querySelector(".channel-actions .channel-button:not(.channel-detail-button)");
+      const detail = card.querySelector(".channel-detail-button");
+      if (background && channel.banner_url) background.src = channel.banner_url;
+      if (logo && channel.logo_url) logo.src = channel.logo_url;
+      if (name) name.textContent = channel.ad;
+      [channel.abone, channel.goruntulenme, channel.video_sayisi].forEach((value, index) => {
+        if (stats[index]) stats[index].textContent = value || "—";
+      });
+      if (external && channel.kanal_url) external.href = channel.kanal_url;
+      if (detail) detail.href = `/kanal/${encodeURIComponent(channel.slug)}`;
+    });
+  } catch (error) {
+    console.error("Kanal arşivi yüklenemedi", error);
+  }
+};
+
+loadPortfolioChannels();
+
 const pageTransition = document.getElementById("page-transition");
 
 document.querySelectorAll('a[href="/tasarimlar"]').forEach((link) => {
