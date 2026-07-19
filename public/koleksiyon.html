@@ -47,34 +47,32 @@
     @media(hover:hover) and (pointer:fine){.collection-card:not(.focus-clone):hover{z-index:4;transform:translateY(-8px)}.collection-card:not(.focus-clone):hover .card-rotator{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.025)}}
     .card-face{position:absolute;inset:0;overflow:hidden;clip-path:polygon(50% 0,96% 16%,96% 84%,50% 100%,4% 84%,4% 16%);backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#111}
     .card-face::before{content:"";position:absolute;inset:2px;z-index:0;clip-path:inherit;background:#050505}
-    .card-face::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.34),transparent 20%),linear-gradient(115deg,transparent 18%,rgba(255,255,255,.1) 36%,transparent 53%);mix-blend-mode:screen;opacity:.28;transform:translateZ(2px)}
+    .card-face::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.24),transparent 19%),linear-gradient(115deg,transparent 24%,rgba(255,255,255,.08) 42%,transparent 58%);mix-blend-mode:screen;opacity:.12;transform:translateZ(2px);transition:opacity .3s ease}
+    .collection-card:hover .card-face::after{opacity:.3}
     .card-back{transform:rotateY(180deg)}
-    .card-media{position:absolute;inset:7% 8%;z-index:1;overflow:hidden;clip-path:polygon(50% 0,100% 16%,100% 84%,50% 100%,0 84%,0 16%);background:#0b0b0b}
-    .card-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05);transition:transform .7s var(--ease)}
+    .card-media{position:absolute;inset:3px;z-index:1;overflow:hidden;clip-path:polygon(50% 0,96% 16%,96% 84%,50% 100%,4% 84%,4% 16%);background:#0b0b0b}
+    .card-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04);transition:transform .7s var(--ease)}
     .collection-card:hover .card-media img{transform:scale(1.035)}
-    .card-shade{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.04) 30%,rgba(0,0,0,.92) 89%)}
-    .card-content{position:absolute;z-index:3;inset:auto 14% 12%;text-align:left}
-    .card-kicker{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#aaa;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-    .card-title{margin:9px 0 0;font-size:clamp(18px,1.8vw,27px);line-height:.94;letter-spacing:-.045em}
-    .card-year{position:absolute;z-index:3;top:11%;left:50%;transform:translateX(-50%);padding:6px 11px;border:1px solid rgba(255,255,255,.17);border-radius:999px;background:rgba(0,0,0,.55);font-size:9px;font-weight:700;letter-spacing:.14em;backdrop-filter:blur(9px)}
-    .card-number{position:absolute;z-index:4;right:11%;bottom:18%;color:rgba(255,255,255,.42);font-size:8px;letter-spacing:.16em;writing-mode:vertical-rl}
-    .rarity{position:absolute;z-index:4;left:12%;bottom:19%;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff}
+    .card-shade{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,transparent 64%,rgba(0,0,0,.74) 100%)}
+    .card-year,.locked-label{position:absolute;z-index:4;bottom:7%;left:50%;transform:translateX(-50%);padding:7px 13px;white-space:nowrap;border:1px solid rgba(255,255,255,.17);border-radius:999px;background:rgba(0,0,0,.62);color:#fff;font-size:9px;font-weight:700;letter-spacing:.16em;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+    .locked-label{bottom:8%;color:#bbb;border-color:rgba(255,255,255,.12);letter-spacing:.18em}
     .level-beyaz .card-face{background:linear-gradient(145deg,#fff,#777 38%,#eee 66%,#666)}
     .level-silver .card-face{background:linear-gradient(125deg,#2f3540,#e6edf4 26%,#68717d 49%,#f8fbff 66%,#343a43)}
-    .level-silver .rarity{background:#dce9f7;box-shadow:0 0 16px #bcdcff}
     .level-gold .card-face{background:linear-gradient(125deg,#5d3d04,#f7dc7c 21%,#8c5a05 43%,#fff0a5 61%,#8b5a08 82%,#f6d36a)}
-    .level-gold .rarity{background:#ffdc78;box-shadow:0 0 18px #ffc53d}
-    .level-gold .card-face::after{opacity:.55;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,244,179,.75),transparent 17%),linear-gradient(115deg,transparent 18%,rgba(255,226,124,.12) 28%,rgba(139,190,255,.22) 39%,rgba(255,139,211,.16) 47%,transparent 61%);background-size:100% 100%,180% 180%;animation:holoDrift 5s ease-in-out infinite alternate}
-    .level-gold.is-valuable .card-face{filter:drop-shadow(0 0 12px rgba(255,199,65,.28))}
-    .level-gold.is-valuable::after{content:"";position:absolute;inset:8%;z-index:5;pointer-events:none;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.8px);background-size:43px 51px;opacity:.22;animation:stars 3.8s ease-in-out infinite}
-    @keyframes holoDrift{to{background-position:100% 20%,100% 100%}}
-    @keyframes stars{50%{opacity:.48;transform:translateY(-3px)}}
+    .level-gold .card-face::after{opacity:.2;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,239,161,.62),transparent 18%),linear-gradient(118deg,transparent 22%,rgba(116,188,255,.12) 36%,rgba(255,130,214,.1) 46%,rgba(255,221,121,.16) 54%,transparent 67%);background-size:100% 100%,170% 170%}
+    .level-gold:hover .card-face::after{opacity:.46}
+    .level-gold.is-valuable .card-face{filter:drop-shadow(0 0 10px rgba(255,199,65,.2))}
     .is-locked .card-face{background:linear-gradient(135deg,#080808,#353535 34%,#090909 64%,#242424)}
     .is-locked .card-media{display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,#191919,#030303 65%)}
     .locked-mark{position:relative;z-index:2;font-size:clamp(90px,10vw,150px);font-weight:900;line-height:1;color:#111;text-shadow:-1px -1px 0 #444,1px 1px 0 #000;filter:drop-shadow(0 0 22px rgba(255,255,255,.05))}
     .locked-grid{position:absolute;inset:0;opacity:.3;background-image:linear-gradient(30deg,transparent 48%,rgba(255,255,255,.05) 49%,rgba(255,255,255,.05) 51%,transparent 52%);background-size:18px 18px}
     .is-locked.near-goal .card-face{background:linear-gradient(135deg,#090909,#42340e 35%,#080808 64%,#2c2209)}
-    .is-locked.near-goal{filter:drop-shadow(0 0 13px rgba(245,196,74,.16))}
+    .is-locked.near-goal{filter:drop-shadow(0 0 10px rgba(245,196,74,.12))}
+    .locked-section{margin-top:110px;padding-top:68px;border-top:1px solid var(--line)}
+    .locked-section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:38px}
+    .locked-section-head h2{margin:10px 0 0;font-size:clamp(36px,5vw,68px);line-height:.9;letter-spacing:-.06em}
+    .locked-section-head p{max-width:430px;margin:0;color:#777;font-size:13px;line-height:1.6;text-align:right}
+    .locked-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
     .back-panel{position:absolute;z-index:2;inset:9% 9%;display:flex;flex-direction:column;justify-content:center;padding:17% 12%;clip-path:polygon(50% 0,100% 16%,100% 84%,50% 100%,0 84%,0 16%);background:linear-gradient(180deg,#111,#030303);text-align:center}
     .back-panel .back-year{margin:0 0 14px;color:#888;font-size:9px;font-weight:700;letter-spacing:.2em}
     .back-panel h2{margin:0;font-size:clamp(21px,2.4vw,34px);line-height:.95;letter-spacing:-.05em}
@@ -93,8 +91,8 @@
     .focus-clone.is-open .card-rotator{transform:rotateY(180deg)}
     .focus-clone.is-closing{pointer-events:none}
     .footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 40px;border-top:1px solid var(--line);color:#666;font-size:10px}.footer img{width:110px;height:34px;object-fit:contain}
-    @media(max-width:980px){.collection-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{min-height:540px}}
-    @media(max-width:720px){.container{width:min(100% - 24px,1220px)}.topbar{height:68px}.top-logo{width:48px;height:48px}.page-label{font-size:0}.page-label::after{content:"KOLEKSİYON";font-size:8px}.back{font-size:0}.back::after{content:"←";font-size:17px}.hero{min-height:510px}.hero-content{padding:80px 0 65px}.hero-copy{font-size:14px}.collection-stats{gap:22px}.toolbar{top:78px;margin-bottom:34px;border-radius:18px;align-items:stretch}.filters{flex:1}.random{padding:0 14px}.collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 12px}.card-title{font-size:17px}.card-content{inset:auto 15% 13%}.card-kicker{font-size:7px}.card-number{display:none}.focus-clone .back-panel{padding:17% 11%}.footer{padding:24px 18px}}
+    @media(max-width:980px){.collection-grid,.locked-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{min-height:540px}}
+    @media(max-width:720px){.container{width:min(100% - 24px,1220px)}.topbar{height:68px}.top-logo{width:48px;height:48px}.page-label{font-size:0}.page-label::after{content:"KOLEKSİYON";font-size:8px}.back{font-size:0}.back::after{content:"←";font-size:17px}.hero{min-height:510px}.hero-content{padding:80px 0 65px}.hero-copy{font-size:14px}.collection-stats{gap:22px}.toolbar{top:78px;margin-bottom:34px;border-radius:18px;align-items:stretch}.filters{flex:1}.random{padding:0 14px}.collection-grid,.locked-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 12px}.locked-section{margin-top:76px;padding-top:48px}.locked-section-head{display:block;text-align:center}.locked-section-head p{margin:16px auto 0;text-align:center}.focus-clone .back-panel{padding:17% 11%}.footer{padding:24px 18px}}
     @media(max-width:390px){.collection-grid{grid-template-columns:1fr;max-width:270px;margin:auto}.toolbar{position:relative;top:auto}.random{display:none}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}.collection-card:hover{transform:none!important}}
   </style>
@@ -135,6 +133,10 @@
         <button class="random" id="randomCard" type="button">Rastgele kart ↗</button>
       </div>
       <section class="collection-grid" id="collectionGrid" aria-live="polite"><p class="loading">Koleksiyon yükleniyor…</p></section>
+      <section class="locked-section" id="lockedSection" hidden>
+        <div class="locked-section-head"><div><p class="eyebrow">DEVAM EDEN HEDEFLER</p><h2>Kilitli kartlar.</h2></div><p>Bu kartlar hedef tamamlanana kadar kapalı kalır. Kartı açarak güncel ilerlemeyi ve kalan miktarı görebilirsin.</p></div>
+        <div class="collection-grid locked-grid" id="lockedGrid"></div>
+      </section>
     </div>
   </main>
 
@@ -153,6 +155,8 @@
     ];
 
     const grid = document.getElementById("collectionGrid");
+    const lockedGrid = document.getElementById("lockedGrid");
+    const lockedSection = document.getElementById("lockedSection");
     let cards = [];
     let activeFilter = "all";
     let focused = null;
@@ -172,7 +176,6 @@
       const percentage = progress(card);
       const remaining = Math.max(0,(Number(card.hedef_deger)||0)-(Number(card.mevcut_deger)||0));
       const image = safeUrl(card.gorsel_url);
-      const cardNumber = `BATU ${String(index+1).padStart(3,"0")}`;
       const media = locked
         ? `<div class="locked-grid"></div><span class="locked-mark">?</span>`
         : image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">` : `<span class="locked-mark">B</span>`;
@@ -188,9 +191,7 @@
         <span class="card-rotator">
           <span class="card-face card-front">
             <span class="card-media">${media}</span><span class="card-shade"></span>
-            <span class="card-year">${escapeHtml(card.yil || "—")}</span>
-            <span class="card-content"><span class="card-kicker"><span>${escapeHtml(card.kategori || "Koleksiyon")}</span><span>${locked?"KİLİTLİ":level.toUpperCase()}</span></span><strong class="card-title">${escapeHtml(card.baslik)}</strong></span>
-            <span class="rarity"></span><span class="card-number">${cardNumber}</span>
+            ${locked?`<span class="locked-label">KİLİTLİ · ${escapeHtml(card.yil || "—")}</span>`:`<span class="card-year">${escapeHtml(card.yil || "—")}</span>`}
           </span>
           <span class="card-face card-back">
             <span class="back-panel"><span class="back-year">${escapeHtml(card.yil || "BATU")} · ${locked?"HEDEF":level.toUpperCase()}</span><h2>${escapeHtml(locked?(card.hedef_baslik||card.baslik):card.baslik)}</h2>${backBody}</span>
@@ -201,7 +202,10 @@
 
     function render(){
       const visible = cards.filter(card => card.yayinlandi !== false);
-      grid.innerHTML = visible.length ? visible.map(cardMarkup).join("") : '<p class="empty">Henüz yayınlanmış koleksiyon kartı yok.</p>';
+      const openCards=visible.filter(card=>!card.kilitli),lockedCards=visible.filter(card=>card.kilitli);
+      grid.innerHTML = openCards.length ? openCards.map(card=>cardMarkup(card,visible.indexOf(card))).join("") : '<p class="empty">Henüz yayınlanmış açık koleksiyon kartı yok.</p>';
+      lockedGrid.innerHTML=lockedCards.map(card=>cardMarkup(card,visible.indexOf(card))).join("");
+      lockedSection.hidden=!lockedCards.length;
       document.getElementById("totalCount").textContent = visible.length;
       document.getElementById("goldCount").textContent = visible.filter(c=>!c.kilitli&&c.seviye==="gold").length;
       document.getElementById("lockedCount").textContent = visible.filter(c=>c.kilitli).length;
@@ -209,7 +213,7 @@
     }
 
     function bindCards(){
-      grid.querySelectorAll(".collection-card").forEach(card => {
+      document.querySelectorAll("#collectionGrid .collection-card,#lockedGrid .collection-card").forEach(card => {
         card.addEventListener("pointermove",event=>{
           if(event.pointerType==="touch") return;
           const rect=card.getBoundingClientRect();
@@ -255,13 +259,17 @@
       setTimeout(()=>{original.style.opacity="";clone.remove();backdrop.remove();original.focus({preventScroll:true})},780);
     }
 
-    function applyFilter(){grid.querySelectorAll(".collection-card").forEach(card=>card.classList.toggle("is-hidden",activeFilter!=="all"&&card.dataset.level!==activeFilter))}
+    function applyFilter(){
+      document.querySelectorAll("#collectionGrid .collection-card,#lockedGrid .collection-card").forEach(card=>card.classList.toggle("is-hidden",activeFilter!=="all"&&card.dataset.level!==activeFilter));
+      grid.hidden=activeFilter==="locked";
+      lockedSection.hidden=!cards.some(card=>card.yayinlandi!==false&&card.kilitli)||(!["all","locked"].includes(activeFilter));
+    }
     document.getElementById("filters").addEventListener("click",event=>{
       const button=event.target.closest(".filter");if(!button)return;activeFilter=button.dataset.filter;
       document.querySelectorAll(".filter").forEach(item=>item.classList.toggle("active",item===button));applyFilter();
     });
     document.getElementById("randomCard").addEventListener("click",()=>{
-      const available=[...grid.querySelectorAll(".collection-card:not(.is-hidden)")];if(!available.length)return;
+      const available=[...document.querySelectorAll("#collectionGrid .collection-card:not(.is-hidden),#lockedGrid .collection-card:not(.is-hidden)")];if(!available.length)return;
       const card=available[Math.floor(Math.random()*available.length)];card.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>openCard(card),450);
     });
 
@@ -269,3 +277,4 @@
   </script>
 </body>
 </html>
+
